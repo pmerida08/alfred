@@ -1,0 +1,28 @@
+# Credenciales y secrets
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Archivos temporales de trabajo
+.tmp/
+
+# Configuración local de Claude Code
+.claude/
+
+# Notas de memoria diaria (privadas)
+memory/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
