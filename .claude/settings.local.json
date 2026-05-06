@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__651cf300-3969-445f-8086-ff4816cf2b6b__search_threads",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}
