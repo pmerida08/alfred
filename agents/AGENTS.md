@@ -1,0 +1,10 @@
+# AGENTS
+
+Agentes especializados disponibles para Alfred. Cada agente tiene su propio archivo en esta carpeta.
+
+| Agente | Archivo |
+|--------|---------|
+| Búsqueda en codebase | [explore.md](explore.md) |
+| Investigación y tareas multi-paso | [general-purpose.md](general-purpose.md) |
+| Planificación de implementación | [plan.md](plan.md) |
+| FORGE — Entrenador personal | [forge.md](forge.md) |
