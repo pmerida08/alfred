@@ -8,6 +8,8 @@
 
 # Archivos temporales de trabajo
 .tmp/
+.claude/worktrees/
+.claude/skills/
 
 # Python
 __pycache__/
