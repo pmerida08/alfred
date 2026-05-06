@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alfred</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #08080d;
+      --surface:     #0d0d14;
+      --surface2:    #111120;
+      --border:      #1f1f34;
+      --border2:     #2e2e50;
+      --gold:        #d4b578;
+      --gold-dim:    rgba(212,181,120,0.11);
+      --gold-glow:   rgba(212,181,120,0.35);
+      --cream:       #eee8d8;
+      --muted:       #6a6a88;
+      --muted2:      #9898b8;
+      --green:       #4db896;
+      --blue:        #5e90d4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 15px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* Subtle radial glow from top-left */
+      background-image:
+        radial-gradient(ellipse at 0% 0%, rgba(200,169,110,0.03) 0%, transparent 55%),
+        radial-gradient(ellipse at 100% 100%, rgba(77,126,188,0.02) 0%, transparent 50%);
+    }
+
+    /* ─────────────────────────────────────────
+       HEADER
+    ───────────────────────────────────────── */
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 28px 40px 22px;
+      border-bottom: 1px solid var(--border);
+      animation: fade-up 0.6s ease both;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .header-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--muted2);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 7px;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      padding-bottom: 3px;
+    }
+
+    #clock {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+
+    .header-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted2);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 7px var(--green);
+      animation: blink 2.8s ease-in-out infinite;
+    }
+
+    /* ─────────────────────────────────────────
+       LAYOUT
+    ───────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 332px;
+      border-top: 0;
+    }
+
+    /* Hairline divider between columns */
+    .col-right {
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-left {
+      padding: 32px 40px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: fade-up 0.6s 0.08s ease both;
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION LABELS
+    ───────────────────────────────────────── */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─────────────────────────────────────────
+       SVG DIAGRAM (CSS for dynamically created elements)
+    ───────────────────────────────────────── */
+    #skill-svg {
+      width: 100%;
+      max-width: 580px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      overflow: visible;
+    }
+
+    .spoke-line {
+      stroke: var(--border2);
+      stroke-width: 1;
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    .node-circle {
+      fill: var(--surface2);
+      stroke: var(--border2);
+      stroke-width: 1;
+      transition: fill 0.25s, stroke 0.25s, stroke-width 0.25s;
+      cursor: pointer;
+    }
+
+    .node-group:hover .node-circle {
+      fill: var(--gold-dim);
+      stroke: var(--gold);
+      stroke-width: 1.5;
+    }
+
+    .node-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: var(--muted2);
+      pointer-events: none;
+      transition: fill 0.25s;
+    }
+
+    .node-group:hover .node-number {
+      fill: var(--gold);
+    }
+
+    .node-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      fill: var(--muted2);
+      pointer-events: none;
+      transition: fill 0.25s;
+    }
+
+    .node-group:hover .node-name {
+      fill: var(--cream);
+    }
+
+    .center-ring {
+      fill: var(--surface2);
+      stroke: var(--gold);
+      stroke-width: 1;
+    }
+
+    .center-outer {
+      fill: none;
+      stroke: var(--border2);
+      stroke-width: 0.5;
+    }
+
+    .center-word {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      fill: var(--gold);
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+    }
+
+    .center-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      fill: var(--muted2);
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+    }
+
+    .orbit-dashed {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 0.5;
+      stroke-dasharray: 3 7;
+    }
+
+    .orbit-solid {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 0.5;
+    }
+
+    /* ─────────────────────────────────────────
+       DETAIL STRIP (below diagram)
+    ───────────────────────────────────────── */
+    .detail-strip {
+      max-width: 580px;
+      margin: 0 auto;
+      width: 100%;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      min-height: 72px;
+    }
+
+    .detail-hint {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-align: center;
+      padding: 18px 0 10px;
+    }
+
+    .detail-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .detail-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+    }
+
+    .detail-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted2);
+      letter-spacing: 0.1em;
+    }
+
+    .detail-leaves {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .leaf-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted2);
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      padding: 5px 12px;
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .leaf-tag:hover {
+      border-color: var(--gold-glow);
+      color: var(--cream);
+    }
+
+    /* ─────────────────────────────────────────
+       SIDEBAR SECTIONS
+    ───────────────────────────────────────── */
+    .sidebar-block {
+      padding: 24px 26px;
+      border-bottom: 1px solid var(--border);
+      flex: 1;
+    }
+
+    .sidebar-block:last-child { border-bottom: none; }
+
+    /* HEARTBEAT */
+    .hb-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hb-row:last-child { border-bottom: none; }
+
+    .hb-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gold);
+      min-width: 46px;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+
+    .hb-info { flex: 1; min-width: 0; }
+
+    .hb-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--cream);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hb-file {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--muted2);
+      margin-top: 2px;
+    }
+
+    .hb-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      padding: 3px 7px;
+      border: 1px solid;
+      flex-shrink: 0;
+    }
+
+    .hb-badge.daily   { color: var(--green); border-color: rgba(61,158,126,0.5); }
+    .hb-badge.session { color: var(--blue);  border-color: rgba(77,126,188,0.5); }
+
+    /* TOOLS */
+    .tool-row {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      margin-bottom: 7px;
+      transition: border-color 0.2s;
+      cursor: default;
+    }
+
+    .tool-row:last-child { margin-bottom: 0; }
+
+    .tool-row:hover { border-color: var(--border2); }
+
+    .tool-icon { font-size: 15px; flex-shrink: 0; }
+
+    .tool-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--cream);
+      flex: 1;
+    }
+
+    .tool-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--muted2);
+      display: block;
+      margin-top: 1px;
+    }
+
+    .tool-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+    }
+
+    /* STANDING ORDERS */
+    .orders-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+    }
+
+    .order-chip {
+      text-align: center;
+      padding: 12px 4px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      cursor: default;
+      transition: border-color 0.2s;
+    }
+
+    .order-chip:hover { border-color: var(--gold-glow); }
+
+    .order-icon { font-size: 18px; display: block; margin-bottom: 5px; }
+
+    .order-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      color: var(--muted2);
+      letter-spacing: 0.06em;
+      display: block;
+    }
+
+    .order-ok {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--green);
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      border-top: 1px solid var(--border);
+      animation: fade-up 0.6s 0.25s ease both;
+    }
+
+    .footer-mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* ─────────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────────── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+
+    @keyframes draw-spoke {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes pop-in {
+      from { opacity: 0; transform: scale(0.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .col-right {
+      animation: fade-up 0.6s 0.16s ease both;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
+<header>
+  <div>
+    <div class="wordmark">Alfred</div>
+    <div class="header-sub">Sistema de asistencia personal · Pablo Mérida</div>
+  </div>
+  <div class="header-right">
+    <div id="clock">--:--:--</div>
+    <div class="header-date" id="header-date">—</div>
+    <div class="status-line">
+      <div class="status-dot"></div>
+      <span>Operativo</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     MAIN
+══════════════════════════════════════════ -->
+<main>
+
+  <!-- LEFT: Diagram + detail strip -->
+  <div class="col-left">
+    <div>
+      <div class="section-label">Mapa de capacidades</div>
+
+      <!-- SVG filled by JS -->
+      <svg id="skill-svg" viewBox="0 0 580 540" xmlns="http://www.w3.org/2000/svg">
+        <g id="rings"></g>
+        <g id="ticks"></g>
+        <g id="spokes"></g>
+        <g id="nodes"></g>
+
+        <!-- Center node -->
+        <circle id="center-outer" cx="290" cy="272" r="58" class="center-outer"/>
+        <circle id="center-ring"  cx="290" cy="272" r="48" class="center-ring"/>
+        <text x="290" y="269" class="center-word">ALFRED</text>
+        <text x="290" y="284" class="center-sub">DOE · v2</text>
+      </svg>
+
+      <!-- Detail strip -->
+      <div class="detail-strip">
+        <div class="detail-hint" id="detail-hint">— pasar el cursor sobre un nodo para explorar —</div>
+        <div id="detail-content" style="display:none">
+          <div class="detail-head">
+            <div class="detail-title" id="detail-title"></div>
+            <div class="detail-count" id="detail-count"></div>
+          </div>
+          <div class="detail-leaves" id="detail-leaves"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Sidebar -->
+  <div class="col-right">
+
+    <!-- Heartbeat -->
+    <div class="sidebar-block">
+      <div class="section-label">Heartbeat</div>
+
+      <div class="hb-row">
+        <div class="hb-time">07:00</div>
+        <div class="hb-info">
+          <div class="hb-name">Resumen de emails</div>
+          <div class="hb-file">email_resumen_diario.md</div>
+        </div>
+        <div class="hb-badge daily">DIARIO</div>
+      </div>
+
+      <div class="hb-row">
+        <div class="hb-time">08:00</div>
+        <div class="hb-info">
+          <div class="hb-name">Agenda del día</div>
+          <div class="hb-file">calendar_agenda_semanal.md</div>
+        </div>
+        <div class="hb-badge daily">DIARIO</div>
+      </div>
+
+      <div class="hb-row">
+        <div class="hb-time">23:00</div>
+        <div class="hb-info">
+          <div class="hb-name">Consolidación nocturna</div>
+          <div class="hb-file">memory_consolidacion_nocturna.md</div>
+        </div>
+        <div class="hb-badge daily">DIARIO</div>
+      </div>
+
+      <div class="hb-row">
+        <div class="hb-time">—</div>
+        <div class="hb-info">
+          <div class="hb-name">Carga de contexto</div>
+          <div class="hb-file">session_inicio.md</div>
+        </div>
+        <div class="hb-badge session">SESIÓN</div>
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <div class="sidebar-block">
+      <div class="section-label">Herramientas conectadas</div>
+
+      <div class="tool-row">
+        <span class="tool-icon">📧</span>
+        <div>
+          <div class="tool-name">Gmail</div>
+          <span class="tool-meta">MCP · pablomerida03@gmail.com</span>
+        </div>
+        <span class="tool-status">activo</span>
+      </div>
+
+      <div class="tool-row">
+        <span class="tool-icon">📅</span>
+        <div>
+          <div class="tool-name">Google Calendar</div>
+          <span class="tool-meta">MCP · lectura + escritura</span>
+        </div>
+        <span class="tool-status">activo</span>
+      </div>
+
+      <div class="tool-row">
+        <span class="tool-icon">🗒</span>
+        <div>
+          <div class="tool-name">Notion</div>
+          <span class="tool-meta">MCP · Mis Tareas</span>
+        </div>
+        <span class="tool-status">activo</span>
+      </div>
+
+      <div class="tool-row">
+        <span class="tool-icon">🔮</span>
+        <div>
+          <div class="tool-name">Obsidian</div>
+          <span class="tool-meta">Acceso directo · Mi Bóveda</span>
+        </div>
+        <span class="tool-status">activo</span>
+      </div>
+
+      <div class="tool-row">
+        <span class="tool-icon">🎨</span>
+        <div>
+          <div class="tool-name">Figma</div>
+          <span class="tool-meta">MCP · diseño</span>
+        </div>
+        <span class="tool-status">activo</span>
+      </div>
+    </div>
+
+    <!-- Standing Orders -->
+    <div class="sidebar-block">
+      <div class="section-label">Autonomía autorizada</div>
+      <div class="orders-grid">
+        <div class="order-chip">
+          <span class="order-icon">📁</span>
+          <span class="order-name">Archivos</span>
+          <span class="order-ok">OK</span>
+        </div>
+        <div class="order-chip">
+          <span class="order-icon">📧</span>
+          <span class="order-name">Email</span>
+          <span class="order-ok">OK</span>
+        </div>
+        <div class="order-chip">
+          <span class="order-icon">📅</span>
+          <span class="order-name">Agenda</span>
+          <span class="order-ok">OK</span>
+        </div>
+        <div class="order-chip">
+          <span class="order-icon">🗒</span>
+          <span class="order-name">Notion</span>
+          <span class="order-ok">OK</span>
+        </div>
+        <div class="order-chip">
+          <span class="order-icon">🔮</span>
+          <span class="order-name">Obsidian</span>
+          <span class="order-ok">OK</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer>
+  <span class="footer-mono">Alfred · Directives / Orchestration / Execution</span>
+  <span class="footer-mono">4 directives · 1 script · 4 agentes · 13 skills</span>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     SCRIPT
+══════════════════════════════════════════ -->
+<script>
+  /* ── Clock ── */
+  const DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+    document.getElementById('header-date').textContent =
+      `${DIAS[now.getDay()]} · ${now.getDate()} ${MESES[now.getMonth()]} ${now.getFullYear()}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  /* ── SVG Diagram ── */
+  const NS  = 'http://www.w3.org/2000/svg';
+  const CX  = 290, CY = 272, R = 178, NODE_R = 30;
+
+  const BRANCHES = [
+    { label: 'Información',    n: '01', angle: -90,  leaves: ['Resumen diario de email','Búsqueda en Gmail','Agenda del día','Gestión de eventos','Notas en Obsidian'] },
+    { label: 'Investigación',  n: '02', angle: -30,  leaves: ['Búsqueda rápida','Análisis de contratos','Council de decisiones','Síntesis de documentos'] },
+    { label: 'Código',         n: '03', angle:  30,  leaves: ['Code review','Debug estructurado','Claude API / SDK','Frontend + diseño'] },
+    { label: 'Automatización', n: '04', angle:  90,  leaves: ['Scripts Python','Memory dreaming','Flujos de trabajo','Browser control','Google Workspace'] },
+    { label: 'Diseño',         n: '05', angle: 150,  leaves: ['Diagramas Excalidraw','Visualizador de flujos','Componentes UI'] },
+    { label: 'Agentes',        n: '06', angle: 210,  leaves: ['Explore (exploración)','Plan (arquitectura)','Forge (construcción)','General purpose'] },
+  ];
+
+  function rad(deg) { return deg * Math.PI / 180; }
+
+  function nodePos(angle) {
+    return { x: CX + R * Math.cos(rad(angle)), y: CY + R * Math.sin(rad(angle)) };
+  }
+
+  function svgEl(tag, attrs) {
+    const el = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+    return el;
+  }
+
+  /* Orbit rings */
+  const ringsG = document.getElementById('rings');
+  ringsG.appendChild(svgEl('circle', { cx: CX, cy: CY, r: R, class: 'orbit-dashed' }));
+  ringsG.appendChild(svgEl('circle', { cx: CX, cy: CY, r: R + 38, class: 'orbit-solid' }));
+
+  /* Tick marks on outer ring */
+  const ticksG = document.getElementById('ticks');
+  const TICK_R = R + 38;
+  for (let i = 0; i < 72; i++) {
+    const a    = rad(i * 5);
+    const major = i % 6 === 0;
+    const len  = major ? 9 : 4;
+    const r1   = TICK_R - len;
+    ticksG.appendChild(svgEl('line', {
+      x1: CX + r1 * Math.cos(a),   y1: CY + r1 * Math.sin(a),
+      x2: CX + TICK_R * Math.cos(a), y2: CY + TICK_R * Math.sin(a),
+      stroke: major ? '#252540' : '#191928',
+      'stroke-width': major ? '1' : '0.5',
+    }));
+  }
+
+  /* Spokes + nodes */
+  const spokesG = document.getElementById('spokes');
+  const nodesG  = document.getElementById('nodes');
+
+  BRANCHES.forEach((b, i) => {
+    const pos  = nodePos(b.angle);
+    const delay = 0.3 + i * 0.09;
+
+    /* ── Spoke ── */
+    const spoke = svgEl('line', {
+      x1: CX, y1: CY, x2: pos.x, y2: pos.y,
+      class: 'spoke-line',
+    });
+    spoke.style.strokeDasharray  = `${R}`;
+    spoke.style.strokeDashoffset = `${R}`;
+    spoke.style.animation = `draw-spoke 0.55s ${delay}s cubic-bezier(.4,0,.2,1) forwards`;
+    spokesG.appendChild(spoke);
+
+    /* ── Node group ── */
+    const g = svgEl('g', { class: 'node-group' });
+    g.style.animation = `pop-in 0.35s ${delay + 0.4}s ease both`;
+    g.style.opacity   = '0'; /* pre-animation state */
+
+    /* Circle */
+    const circle = svgEl('circle', {
+      cx: pos.x, cy: pos.y, r: NODE_R,
+      class: 'node-circle',
+    });
+
+    /* Number */
+    const num = svgEl('text', {
+      x: pos.x, y: pos.y,
+      class: 'node-number',
+    });
+    num.textContent = b.n;
+
+    /* External label — direction outward from center */
+    const dx   = (pos.x - CX) / R;
+    const dy   = (pos.y - CY) / R;
+    const GAP  = NODE_R + 14;
+    const lx   = pos.x + dx * GAP;
+    const ly   = pos.y + dy * GAP;
+    const anchor = Math.abs(dx) > 0.3
+      ? (dx > 0 ? 'start' : 'end')
+      : 'middle';
+
+    const label = svgEl('text', {
+      x: lx, y: ly,
+      class: 'node-name',
+      'text-anchor': anchor,
+      'dominant-baseline': 'middle',
+    });
+    label.textContent = b.label;
+
+    g.appendChild(circle);
+    g.appendChild(num);
+    g.appendChild(label);
+
+    /* Hover → detail strip */
+    g.addEventListener('mouseenter', () => {
+      document.getElementById('detail-hint').style.display    = 'none';
+      document.getElementById('detail-content').style.display = 'block';
+      document.getElementById('detail-title').textContent     = b.label;
+      document.getElementById('detail-count').textContent     = `${b.leaves.length} capacidades`;
+      document.getElementById('detail-leaves').innerHTML =
+        b.leaves.map(l => `<span class="leaf-tag">${l}</span>`).join('');
+    });
+
+    g.addEventListener('mouseleave', () => {
+      document.getElementById('detail-hint').style.display    = 'block';
+      document.getElementById('detail-content').style.display = 'none';
+    });
+
+    nodesG.appendChild(g);
+  });
+</script>
+</body>
+</html>
