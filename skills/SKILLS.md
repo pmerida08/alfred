@@ -16,4 +16,5 @@ Skills disponibles para Alfred. Cada skill tiene su propio archivo en esta carpe
 | Automatización de navegador web | [browser-use.md](browser-use.md) |
 | Diagramas Excalidraw visuales | [excalidraw-diagram.md](excalidraw-diagram.md) |
 | Google Workspace (Gmail, Calendar, Drive) | [google-workspace.md](google-workspace.md) |
+| Crear agente especializado nuevo | [crear-agente.md](crear-agente.md) |
 | Subir cambios a Alfred (GitHub) | [deploy-alfred.md](deploy-alfred.md) |

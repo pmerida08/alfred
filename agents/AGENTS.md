@@ -1,12 +1,19 @@
 # AGENTS
 
-Agentes especializados disponibles para Alfred. Cada agente tiene su propio archivo en esta carpeta.
+Agentes especializados disponibles para Alfred. Cada agente vive en su propia carpeta.
 
-| Agente | Archivo |
+## Meta-agentes (tipos built-in de Claude Code)
+
+| Agente | Carpeta |
 |--------|---------|
-| Búsqueda en codebase | [explore.md](explore.md) |
-| Investigación y tareas multi-paso | [general-purpose.md](general-purpose.md) |
-| Planificación de implementación | [plan.md](plan.md) |
-| FORGE — Entrenador personal | [forge.md](forge.md) |
-| ADA — Desarrollo de aplicaciones web y móvil | [ada.md](ada.md) |
+| Explore — búsqueda rápida en codebase | [agents/explore/](explore/CLAUDE.md) |
+| General Purpose — investigación y tareas multi-paso | [agents/general-purpose/](general-purpose/CLAUDE.md) |
+| Plan — planificación de implementación | [agents/plan/](plan/CLAUDE.md) |
+
+## Agentes especializados
+
+| Agente | Carpeta |
+|--------|---------|
+| FORGE — Entrenador personal | [agents/forge/](forge/CLAUDE.md) |
+| ADA — Desarrollo de aplicaciones web y móvil | [agents/ada/](ada/CLAUDE.md) |
 | BASILIO — Archivero de documentos | [basilio.md](basilio.md) |

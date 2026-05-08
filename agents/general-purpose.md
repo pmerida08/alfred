@@ -1,5 +1,4 @@
-# Agent: General Purpose
+# General Purpose — Redirección
 
-**subagent_type:** `general-purpose`
-**Uso:** Investigación compleja, búsquedas multi-paso, tareas que combinan varias herramientas.
-**Cuándo:** Por defecto cuando no aplica un agente más específico.
+> Este archivo está obsoleto. El agente General Purpose ha migrado a su carpeta propia.
+> Ver: [agents/general-purpose/CLAUDE.md](general-purpose/CLAUDE.md)
