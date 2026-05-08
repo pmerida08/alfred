@@ -3,14 +3,15 @@ import json
 import re
 
 try:
-    data = json.load(sys.stdin)
+    raw = sys.stdin.read()
+    data = json.loads(raw)
     msg = ""
     if isinstance(data, dict):
         msg = data.get("message", "") or data.get("user_message", "") or str(data)
     else:
         msg = str(data)
 except Exception:
-    msg = sys.stdin.read()
+    msg = ""
 
 msg_lower = msg.lower().strip()
 
