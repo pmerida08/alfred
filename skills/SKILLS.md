@@ -18,3 +18,4 @@ Skills disponibles para Alfred. Cada skill tiene su propio archivo en esta carpe
 | Google Workspace (Gmail, Calendar, Drive) | [google-workspace.md](google-workspace.md) |
 | Crear agente especializado nuevo | [crear-agente.md](crear-agente.md) |
 | Subir cambios a Alfred (GitHub) | [deploy-alfred.md](deploy-alfred.md) |
+| BASILIO — Archivero de documentos | [basilio.md](basilio.md) |

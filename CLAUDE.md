@@ -131,7 +131,10 @@ La bóveda está en `D:\Obsidian\Mi Bóveda\`. Sigue el patrón LLM Wiki.
 - `raw/` son fuentes inmutables — Alfred nunca las modifica
 
 ### Documentos
-Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
+Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
+
+### Búsqueda de empleo
+Cualquier pregunta sobre ofertas de trabajo, análisis de candidaturas, cartas de presentación, adaptación del CV o seguimiento de procesos de selección → delegar a HUNTER (`agents/hunter/CLAUDE.md`). No responder directamente. HUNTER lee el CV de Pablo, analiza el encaje con la oferta y genera los materiales en Notion.
 
 ## Registro de errores
 
