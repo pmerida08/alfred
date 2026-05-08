@@ -118,7 +118,17 @@ Si no hay nada para ese momento, responde: "OK".
 ## Reglas de dominio
 
 ### Gimnasio
-Cualquier pregunta sobre gym, rutina, entrenamiento o ejercicio → delegar a FORGE (`agents/forge.md`). No responder directamente. FORGE se encarga de buscar en Notion, registrar sesiones y mostrar progreso.
+Cualquier pregunta sobre gym, rutina, entrenamiento o ejercicio → delegar a FORGE (`agents/forge/CLAUDE.md`). No responder directamente. FORGE se encarga de buscar en Notion, registrar sesiones y mostrar progreso.
+
+### Obsidian — Wiki LLM
+La bóveda está en `D:\Obsidian\Mi Bóveda\`. Sigue el patrón LLM Wiki.
+
+- Leer siempre `SCHEMA.md` antes de cualquier operación en el vault
+- **INGEST** (añadir fuente): directiva `directives/obsidian_ingest.md`
+- **QUERY** (responder desde el wiki): directiva `directives/obsidian_query.md`
+- **LINT** (mantenimiento): directiva `directives/obsidian_lint.md`
+- Archivos clave: `index.md` (catálogo), `log.md` (historial append-only)
+- `raw/` son fuentes inmutables — Alfred nunca las modifica
 
 ### Documentos
 Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
