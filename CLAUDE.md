@@ -120,6 +120,9 @@ Si no hay nada para ese momento, responde: "OK".
 ### Gimnasio
 Cualquier pregunta sobre gym, rutina, entrenamiento o ejercicio → delegar a FORGE (`agents/forge.md`). No responder directamente. FORGE se encarga de buscar en Notion, registrar sesiones y mostrar progreso.
 
+### Documentos
+Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
+
 ## Registro de errores
 
 | Fecha | Error | Qué hacer en su lugar |
