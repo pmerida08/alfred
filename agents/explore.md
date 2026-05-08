@@ -1,6 +1,4 @@
-# Agent: Explore
+# Explore — Redirección
 
-**subagent_type:** `Explore`
-**Uso:** Búsqueda rápida en el codebase — localizar archivos, símbolos o keywords.
-**No usar para:** Análisis profundo, revisión cross-file o tareas abiertas.
-**Parámetro breadth:** `quick` | `medium` | `very thorough`
+> Este archivo está obsoleto. El agente Explore ha migrado a su carpeta propia.
+> Ver: [agents/explore/CLAUDE.md](explore/CLAUDE.md)
