@@ -32,3 +32,7 @@ Alfred lo lee al inicio de cada sesión junto con `memory/user.md`.
 ---
 
 *Última actualización: 2026-05-05*
+
+## Hooks de Claude Code
+
+Los hooks de tipo `UserPromptSubmit` que leen de `sys.stdin` (Python) bloquean todas las sesiones nuevas si Claude Code no cierra stdin. No usar `sys.stdin.read()` ni `json.load(sys.stdin)` en hooks — o eliminarlos directamente.
