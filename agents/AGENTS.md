@@ -16,4 +16,4 @@ Agentes especializados disponibles para Alfred. Cada agente vive en su propia ca
 |--------|---------|
 | FORGE — Entrenador personal | [agents/forge/](forge/CLAUDE.md) |
 | ADA — Desarrollo de aplicaciones web y móvil | [agents/ada/](ada/CLAUDE.md) |
-| BASILIO — Archivero de documentos | [basilio.md](basilio.md) |
+| BASILIO — Archivero de documentos | [agents/basilio/](basilio/CLAUDE.md) |
