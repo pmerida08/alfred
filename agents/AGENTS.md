@@ -9,3 +9,4 @@ Agentes especializados disponibles para Alfred. Cada agente tiene su propio arch
 | Planificación de implementación | [plan.md](plan.md) |
 | FORGE — Entrenador personal | [forge.md](forge.md) |
 | ADA — Desarrollo de aplicaciones web y móvil | [ada.md](ada.md) |
+| BASILIO — Archivero de documentos | [basilio.md](basilio.md) |
