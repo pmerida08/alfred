@@ -10,6 +10,7 @@ Detener: Ctrl+C
 import asyncio
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
@@ -23,6 +24,44 @@ ALLOWED_USER_ID: int | None = int(_allowed_raw) if _allowed_raw else None
 TMP_DIR = PROJECT_ROOT / ".tmp"
 
 WHISPER_MODEL = "small"  # opciones: tiny, base, small, medium, large
+
+
+def strip_markdown(text: str) -> str:
+    """Convierte Markdown a texto plano legible para Telegram sin parse_mode."""
+    # Bloques de código (``` ... ```)
+    text = re.sub(r"```[a-zA-Z]*\n?", "", text)
+    text = re.sub(r"```", "", text)
+    # Código inline
+    text = re.sub(r"`([^`]+)`", r"\1", text)
+    # Encabezados (# ## ###)
+    text = re.sub(r"^#{1,6}\s+", "", text, flags=re.MULTILINE)
+    # Negrita e itálica (**text**, __text__, *text*, _text_)
+    text = re.sub(r"\*\*(.+?)\*\*", r"\1", text)
+    text = re.sub(r"__(.+?)__", r"\1", text)
+    text = re.sub(r"\*(.+?)\*", r"\1", text)
+    text = re.sub(r"_(.+?)_", r"\1", text)
+    # Tachado (~~text~~)
+    text = re.sub(r"~~(.+?)~~", r"\1", text)
+    # Líneas de tabla: reemplazar separadores y pipes
+    lines = text.splitlines()
+    clean_lines = []
+    for line in lines:
+        stripped = line.strip()
+        # Fila separadora de tabla (|---|---|)
+        if re.match(r"^\|?[\s\-:]+(\|[\s\-:]+)+\|?$", stripped):
+            continue
+        # Fila de datos de tabla
+        if "|" in stripped:
+            cells = [c.strip() for c in stripped.strip("|").split("|")]
+            clean_lines.append("  ".join(cells))
+        else:
+            clean_lines.append(line)
+    text = "\n".join(clean_lines)
+    # Links [texto](url) → texto
+    text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
+    # Limpiar líneas en blanco múltiples
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
 
 
 def load_whisper_model():
@@ -120,6 +159,7 @@ def main():
             typing_task.cancel()
 
         # Telegram limita mensajes a 4096 caracteres
+        response = strip_markdown(response)
         for i in range(0, max(len(response), 1), 4096):
             await update.message.reply_text(response[i:i + 4096])
 
