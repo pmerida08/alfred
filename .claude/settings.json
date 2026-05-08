@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$gitDir = & git rev-parse --git-dir 2>$null; $workTree = & git rev-parse --show-toplevel 2>$null; if ($gitDir -and ($gitDir -ne \"$workTree\\.git\")) { Write-Output '{\"systemMessage\": \"AVISO: Esta sesion se abrio en un worktree automatico (Desktop app). Para trabajar en la rama alfred directamente, cierra esta sesion y ejecuta: D:\\\\Programas\\\\Alfred\\\\alfred.bat\"}' } else { $branch = & git branch --show-current 2>$null; if ($branch -ne 'alfred') { & git checkout alfred 2>$null; Write-Output '{\"systemMessage\": \"Cambiado a rama alfred.\"}' } else { Write-Output '{}' } }",
+            "statusMessage": "Verificando rama alfred..."
+          }
+        ]
+      }
+    ]
+  }
+}
