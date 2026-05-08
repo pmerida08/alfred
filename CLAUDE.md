@@ -131,7 +131,7 @@ La bóveda está en `D:\Obsidian\Mi Bóveda\`. Sigue el patrón LLM Wiki.
 - `raw/` son fuentes inmutables — Alfred nunca las modifica
 
 ### Documentos
-Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
+Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
 
 ## Registro de errores
 
