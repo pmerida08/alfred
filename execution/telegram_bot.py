@@ -18,6 +18,8 @@ PROJECT_ROOT = Path(__file__).parent.parent
 load_dotenv(PROJECT_ROOT / ".env", override=True)
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+_allowed_raw = os.getenv("TELEGRAM_ALLOWED_USER_ID", "").strip()
+ALLOWED_USER_ID: int | None = int(_allowed_raw) if _allowed_raw else None
 TMP_DIR = PROJECT_ROOT / ".tmp"
 
 WHISPER_MODEL = "small"  # opciones: tiny, base, small, medium, large
@@ -84,6 +86,18 @@ def main():
     whisper_model = load_whisper_model()
     chat_sessions: dict[int, str] = {}  # chat_id → session_id de Claude Code
 
+    async def is_authorized(update: Update) -> bool:
+        user_id = update.effective_user.id if update.effective_user else None
+        if ALLOWED_USER_ID is None:
+            # Sin restricción configurada: logear el ID para facilitar la configuración
+            print(f"[AVISO] TELEGRAM_ALLOWED_USER_ID no configurado. Mensaje de user_id={user_id}")
+            return True
+        if user_id != ALLOWED_USER_ID:
+            print(f"[BLOQUEADO] Intento de acceso de user_id={user_id}")
+            await update.message.reply_text("No autorizado.")
+            return False
+        return True
+
     async def keep_typing(chat, stop_event: asyncio.Event):
         while not stop_event.is_set():
             await chat.send_action("typing")
@@ -110,18 +124,22 @@ def main():
             await update.message.reply_text(response[i:i + 4096])
 
     async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not await is_authorized(update): return
         chat_sessions.pop(update.effective_chat.id, None)
         await update.message.reply_text("Alfred operativo.")
 
     async def cmd_reset(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not await is_authorized(update): return
         chat_sessions.pop(update.effective_chat.id, None)
         await update.message.reply_text("Conversación reiniciada.")
 
     async def cmd_new(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not await is_authorized(update): return
         chat_sessions.pop(update.effective_chat.id, None)
         await update.message.reply_text("Sesión nueva. Contexto borrado.")
 
     async def cmd_compact(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not await is_authorized(update): return
         chat_id = update.effective_chat.id
         session_id = chat_sessions.get(chat_id)
         if not session_id:
@@ -141,10 +159,13 @@ def main():
             typing_task.cancel()
 
     async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not await is_authorized(update): return
         await reply_to(update, update.message.text)
 
     async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not await is_authorized(update): return
         voice = update.message.voice
+
         audio_path = TMP_DIR / f"voice_{update.message.message_id}.ogg"
         try:
             file = await context.bot.get_file(voice.file_id)
