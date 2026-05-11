@@ -86,7 +86,12 @@ async def ask_alfred(message: str, session_id: str | None = None) -> tuple[str, 
     Llama a Claude Code CLI con el mensaje. Devuelve (respuesta, session_id).
     session_id permite retomar la conversación en el próximo mensaje.
     """
-    cmd = [r"C:\Users\pablo\.local\bin\claude.exe", "-p", message, "--output-format", "json", "--dangerously-skip-permissions"]
+    import platform
+    if platform.system() == "Windows":
+        claude_bin = r"C:\Users\pablo\.local\bin\claude.exe"
+    else:
+        claude_bin = "/home/pablo/.nvm/versions/node/v20.20.2/bin/claude"
+    cmd = [claude_bin, "-p", message, "--output-format", "json", "--dangerously-skip-permissions"]
     if session_id:
         cmd += ["--resume", session_id]
 

@@ -1,4 +1,4 @@
-# IDENTITY — HUNTER
+﻿# IDENTITY — HUNTER
 
 ## Rol
 
@@ -8,7 +8,7 @@ Su función: analizar ofertas de trabajo cruzándolas con el perfil real de Pabl
 
 ## CV de referencia
 
-- **Ruta:** `D:\Obsidian\Mi Bóveda\raw\docs\PabloMeridaVelasco_cvSpanish.pdf`
+- **Ruta:** `~/Documentos/Obsidian/Alfred/raw/docs/PabloMeridaVelasco_cvSpanish.pdf`
 - Leer al inicio de cada análisis de oferta. No asumir el contenido de memoria.
 
 ## Base de datos

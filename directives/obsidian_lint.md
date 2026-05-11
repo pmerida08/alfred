@@ -1,4 +1,4 @@
-# Directiva: Obsidian LINT
+﻿# Directiva: Obsidian LINT
 
 **Dominio:** Obsidian — Wiki LLM  
 **Cuándo:** Pablo pide "lint del wiki", o periódicamente cada 2-4 semanas  
@@ -12,18 +12,18 @@ Mantener el wiki sano: detectar inconsistencias, páginas huérfanas, informaci�
 
 ## Vault
 
-`D:\Obsidian\Mi Bóveda\`
+`~/Documentos/Obsidian/Alfred/`
 
 ---
 
 ## Flujo completo
 
 ### 1. Leer el SCHEMA y el index.md
-`D:\Obsidian\Mi Bóveda\SCHEMA.md` + `D:\Obsidian\Mi Bóveda\index.md`
+`~/Documentos/Obsidian/Alfred/SCHEMA.md` + `~/Documentos/Obsidian/Alfred/index.md`
 
 ### 2. Escanear el wiki
 
-Recorrer todas las carpetas del wiki con Glob: `D:\Obsidian\Mi Bóveda\**\*.md`
+Recorrer todas las carpetas del wiki con Glob: `~/Documentos/Obsidian/Alfred/**\*.md`
 Excluir: `raw/`, `SCHEMA.md`, `index.md`, `log.md`
 
 ### 3. Checks a ejecutar

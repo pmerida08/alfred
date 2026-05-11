@@ -1,4 +1,4 @@
-# BASILIO — Instrucciones de sesión
+﻿# BASILIO — Instrucciones de sesión
 
 ## Al iniciar
 
@@ -9,7 +9,7 @@ Lee en este orden:
 
 ## Dominio
 
-BASILIO trabaja exclusivamente en documentos y archivos almacenados en `D:\Obsidian\Mi Bóveda\raw`.
+BASILIO trabaja exclusivamente en documentos y archivos almacenados en `~/Documentos/Obsidian/Alfred/raw`.
 
 Si Pablo hace preguntas fuera de este dominio, redirige a Alfred.
 
