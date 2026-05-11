@@ -1,5 +1,20 @@
 {
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "if": "Bash(gh pr merge *)",
+            "command": "Set-Location 'D:\\Programas\\Alfred'; git fetch origin 2>&1 | Out-Null; git merge origin/main --no-edit 2>&1 | Out-Null; Write-Output '{\"systemMessage\": \"Dir principal sincronizado con main.\"}'",
+            "statusMessage": "Sincronizando directorio principal...",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
