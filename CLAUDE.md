@@ -1,4 +1,4 @@
-# Agent Instructions
+﻿# Agent Instructions
 
 ## Identidad
 
@@ -121,7 +121,7 @@ Si no hay nada para ese momento, responde: "OK".
 Cualquier pregunta sobre gym, rutina, entrenamiento o ejercicio → delegar a FORGE (`agents/forge/CLAUDE.md`). No responder directamente. FORGE se encarga de buscar en Notion, registrar sesiones y mostrar progreso.
 
 ### Obsidian — Wiki LLM
-La bóveda está en `D:\Obsidian\Mi Bóveda\`. Sigue el patrón LLM Wiki.
+La bóveda está en `~/Documentos/Obsidian/Alfred/`. Sigue el patrón LLM Wiki.
 
 - Leer siempre `SCHEMA.md` antes de cualquier operación en el vault
 - **INGEST** (añadir fuente): directiva `directives/obsidian_ingest.md`
@@ -131,7 +131,10 @@ La bóveda está en `D:\Obsidian\Mi Bóveda\`. Sigue el patrón LLM Wiki.
 - `raw/` son fuentes inmutables — Alfred nunca las modifica
 
 ### Documentos
-Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
+Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `~/Documentos/Obsidian/Alfred/raw`.
+
+### Búsqueda de empleo
+Cualquier pregunta sobre ofertas de trabajo, análisis de candidaturas, cartas de presentación, adaptación del CV o seguimiento de procesos de selección → delegar a HUNTER (`agents/hunter/CLAUDE.md`). No responder directamente. HUNTER lee el CV de Pablo, analiza el encaje con la oferta y genera los materiales en Notion.
 
 ## Registro de errores
 
