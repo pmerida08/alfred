@@ -1,4 +1,4 @@
-# Directiva: Obsidian QUERY
+﻿# Directiva: Obsidian QUERY
 
 **Dominio:** Obsidian — Wiki LLM  
 **Cuándo:** Pablo hace una pregunta sobre algo que podría estar en el wiki, o pide analizar/comparar temas del wiki  
@@ -12,14 +12,14 @@ Responder preguntas usando el conocimiento acumulado en el wiki. Si la respuesta
 
 ## Vault
 
-`D:\Obsidian\Mi Bóveda\`
+`~/Documentos/Obsidian/Alfred/`
 
 ---
 
 ## Flujo completo
 
 ### 1. Leer el SCHEMA
-`D:\Obsidian\Mi Bóveda\SCHEMA.md`
+`~/Documentos/Obsidian/Alfred/SCHEMA.md`
 
 ### 2. Leer el index.md
 Identificar qué páginas son relevantes para la pregunta.

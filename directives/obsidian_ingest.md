@@ -1,4 +1,4 @@
-# Directiva: Obsidian INGEST
+﻿# Directiva: Obsidian INGEST
 
 **Dominio:** Obsidian — Wiki LLM  
 **Cuándo:** Pablo añade una fuente a `raw/` y pide procesarla, o pega un artículo/contenido para guardar  
@@ -12,14 +12,14 @@ Integrar una nueva fuente en el wiki de forma que el conocimiento quede estructu
 
 ## Vault
 
-`D:\Obsidian\Mi Bóveda\`
+`~/Documentos/Obsidian/Alfred/`
 
 ---
 
 ## Flujo completo
 
 ### 1. Leer el SCHEMA
-Antes de empezar: `D:\Obsidian\Mi Bóveda\SCHEMA.md`
+Antes de empezar: `~/Documentos/Obsidian/Alfred/SCHEMA.md`
 
 ### 2. Leer la fuente
 - Si está en `raw/`: leer el archivo directamente

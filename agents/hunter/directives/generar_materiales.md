@@ -1,4 +1,4 @@
-# Directiva: Generar materiales de candidatura
+﻿# Directiva: Generar materiales de candidatura
 
 ## Objetivo
 
@@ -11,7 +11,7 @@ Esta directiva solo se ejecuta después de haber completado `analizar_oferta.md`
 ## Inputs
 
 - Análisis de la oferta (resultado de `analizar_oferta.md`)
-- CV de Pablo: `D:\Obsidian\Mi Bóveda\raw\docs\PabloMeridaVelasco_cvSpanish.pdf`
+- CV de Pablo: `~/Documentos/Obsidian/Alfred/raw/docs/PabloMeridaVelasco_cvSpanish.pdf`
 - Idioma objetivo: mismo que la oferta, salvo indicación de Pablo
 
 ## Proceso

@@ -1,4 +1,4 @@
-# Directiva: Analizar oferta de trabajo
+﻿# Directiva: Analizar oferta de trabajo
 
 ## Objetivo
 
@@ -7,7 +7,7 @@ Evaluar el encaje entre el perfil de Pablo y una oferta de trabajo concreta, pro
 ## Inputs
 
 - Oferta de trabajo: texto completo, URL o descripción proporcionada por Pablo
-- CV de Pablo: `D:\Obsidian\Mi Bóveda\raw\docs\PabloMeridaVelasco_cvSpanish.pdf`
+- CV de Pablo: `~/Documentos/Obsidian/Alfred/raw/docs/PabloMeridaVelasco_cvSpanish.pdf`
 
 ## Proceso
 
