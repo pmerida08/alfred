@@ -117,8 +117,8 @@ Si no hay nada para ese momento, responde: "OK".
 
 ## Reglas de dominio
 
-### Gimnasio
-Cualquier pregunta sobre gym, rutina, entrenamiento o ejercicio → delegar a FORGE (`agents/forge/CLAUDE.md`). No responder directamente. FORGE se encarga de buscar en Notion, registrar sesiones y mostrar progreso.
+### Gimnasio y nutrición
+Cualquier pregunta sobre gym, rutina, entrenamiento, ejercicio, calorías, macros, comidas o registro nutricional → delegar a FORGE (`agents/forge/CLAUDE.md`). No responder directamente. FORGE registra sesiones en Notion, muestra progreso, y gestiona el log de comidas en Google Sheets (automático vía foto de Telegram).
 
 ### Obsidian — Wiki LLM
 La bóveda está en `~/Documentos/Obsidian/Alfred/`. Sigue el patrón LLM Wiki.
