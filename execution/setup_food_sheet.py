@@ -219,20 +219,20 @@ def create_stats_sheet():
     else:
         print(f"[OK] Hoja 'Resumen' ya existe (gid={gid})")
 
-    # El spreadsheet está en locale español: las funciones deben ir en español.
+    # Locale español: separador de args = ";" (no ","), año en formato = "AAAA" (no "YYYY").
     # Las fechas se guardan como texto "YYYY-MM-DD" → comparaciones texto-vs-texto.
-    T   = 'TEXTO(HOY(),"YYYY-MM-DD")'
-    WS  = 'TEXTO(HOY()-DIASEM(HOY(),2)+1,"YYYY-MM-DD")'  # lunes de esta semana
-    M30 = 'TEXTO(HOY()-30,"YYYY-MM-DD")'
+    T   = 'TEXTO(HOY();"AAAA-MM-DD")'
+    WS  = 'TEXTO(HOY()-DIASEM(HOY();2)+1;"AAAA-MM-DD")'  # lunes de esta semana
+    M30 = 'TEXTO(HOY()-30;"AAAA-MM-DD")'
 
     def hoy(col):
-        return f'=SUMAR.SI(Comidas!A:A,{T},Comidas!{col}:{col})'
+        return f'=SUMAR.SI(Comidas!A:A;{T};Comidas!{col}:{col})'
 
     def semana(col):
-        return f'=SUMAR.SI.CONJUNTO(Comidas!{col}:{col},Comidas!A:A,">="&{WS},Comidas!A:A,"<="&{T})'
+        return f'=SUMAR.SI.CONJUNTO(Comidas!{col}:{col};Comidas!A:A;">="&{WS};Comidas!A:A;"<="&{T})'
 
     def media30(col):
-        return f'=SI.ERROR(REDONDEAR(SUMAR.SI.CONJUNTO(Comidas!{col}:{col},Comidas!A:A,">="&{M30})/30,1),0)'
+        return f'=SI.ERROR(REDONDEAR(SUMAR.SI.CONJUNTO(Comidas!{col}:{col};Comidas!A:A;">="&{M30})/30;1);0)'
 
     # Contenido de la hoja de resumen
     values = [
@@ -243,9 +243,9 @@ def create_stats_sheet():
         ["Carbohidratos (g)", hoy("F"), "", "", "Carbohidratos (g)", semana("F"), "", ""],
         ["Grasas (g)",        hoy("G"), "", "", "Grasas (g)",        semana("G"), "", ""],
         ["Comidas registradas",
-         f"=CONTAR.SI(Comidas!A:A,{T})", "", "",
+         f"=CONTAR.SI(Comidas!A:A;{T})", "", "",
          "Comidas esta semana",
-         f'=CONTAR.SI.CONJUNTO(Comidas!A2:A,">="&{WS},Comidas!A2:A,"<="&{T},Comidas!A2:A,"<>")',
+         f'=CONTAR.SI.CONJUNTO(Comidas!A2:A;">="&{WS};Comidas!A2:A;"<="&{T};Comidas!A2:A;"<>")',
          "", ""],
         ["", "", "", "", "", "", "", ""],
         # Sección MEDIAS DIARIAS (últimos 30 días)
@@ -255,7 +255,7 @@ def create_stats_sheet():
         ["Total registros",   "=CONTARA(Comidas!A2:A)", "", "", "", "", "", ""],
         # ORDENAR+FILTRAR ordena fechas YYYY-MM-DD lexicográficamente (= cronológicamente)
         ["Primer registro",
-         '=SI.ERROR(INDICE(ORDENAR(FILTRAR(Comidas!A2:A,Comidas!A2:A<>""),1,1),1),"—")',
+         '=SI.ERROR(INDICE(ORDENAR(FILTRAR(Comidas!A2:A;Comidas!A2:A<>"");1;1);1);"—")',
          "", "", "", "", "", ""],
     ]
 
