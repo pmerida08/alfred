@@ -219,20 +219,20 @@ def create_stats_sheet():
     else:
         print(f"[OK] Hoja 'Resumen' ya existe (gid={gid})")
 
-    # Las fechas se almacenan como texto "YYYY-MM-DD" (USER_ENTERED en locale español).
-    # TEXT(TODAY(),"YYYY-MM-DD") garantiza comparaciones correctas texto-vs-texto.
-    T   = 'TEXT(TODAY(),"YYYY-MM-DD")'
-    WS  = 'TEXT(TODAY()-WEEKDAY(TODAY(),2)+1,"YYYY-MM-DD")'  # lunes de esta semana
-    M30 = 'TEXT(TODAY()-30,"YYYY-MM-DD")'
+    # El spreadsheet está en locale español: las funciones deben ir en español.
+    # Las fechas se guardan como texto "YYYY-MM-DD" → comparaciones texto-vs-texto.
+    T   = 'TEXTO(HOY(),"YYYY-MM-DD")'
+    WS  = 'TEXTO(HOY()-DIASEM(HOY(),2)+1,"YYYY-MM-DD")'  # lunes de esta semana
+    M30 = 'TEXTO(HOY()-30,"YYYY-MM-DD")'
 
     def hoy(col):
-        return f'=SUMIF(Comidas!A:A,{T},Comidas!{col}:{col})'
+        return f'=SUMAR.SI(Comidas!A:A,{T},Comidas!{col}:{col})'
 
     def semana(col):
-        return f'=SUMIFS(Comidas!{col}:{col},Comidas!A:A,">="&{WS},Comidas!A:A,"<="&{T})'
+        return f'=SUMAR.SI.CONJUNTO(Comidas!{col}:{col},Comidas!A:A,">="&{WS},Comidas!A:A,"<="&{T})'
 
     def media30(col):
-        return f'=IFERROR(ROUND(SUMIFS(Comidas!{col}:{col},Comidas!A:A,">="&{M30})/30,1),0)'
+        return f'=SI.ERROR(REDONDEAR(SUMAR.SI.CONJUNTO(Comidas!{col}:{col},Comidas!A:A,">="&{M30})/30,1),0)'
 
     # Contenido de la hoja de resumen
     values = [
@@ -243,18 +243,19 @@ def create_stats_sheet():
         ["Carbohidratos (g)", hoy("F"), "", "", "Carbohidratos (g)", semana("F"), "", ""],
         ["Grasas (g)",        hoy("G"), "", "", "Grasas (g)",        semana("G"), "", ""],
         ["Comidas registradas",
-         f"=COUNTIF(Comidas!A:A,{T})", "", "",
+         f"=CONTAR.SI(Comidas!A:A,{T})", "", "",
          "Comidas esta semana",
-         f'=COUNTIFS(Comidas!A2:A,">="&{WS},Comidas!A2:A,"<="&{T},Comidas!A2:A,"<>")',
+         f'=CONTAR.SI.CONJUNTO(Comidas!A2:A,">="&{WS},Comidas!A2:A,"<="&{T},Comidas!A2:A,"<>")',
          "", ""],
         ["", "", "", "", "", "", "", ""],
         # Sección MEDIAS DIARIAS (últimos 30 días)
         ["MEDIAS DIARIAS (últimos 30 días)", "", "", "", "", "", "", ""],
-        ["Calorías/día",    media30("D"), "", "", "", "", "", ""],
+        ["Calorías/día",      media30("D"), "", "", "", "", "", ""],
         ["Proteínas/día (g)", media30("E"), "", "", "", "", "", ""],
-        ["Total registros", f"=COUNTA(Comidas!A2:A)", "", "", "", "", "", ""],
+        ["Total registros",   "=CONTARA(Comidas!A2:A)", "", "", "", "", "", ""],
+        # ORDENAR+FILTRAR ordena fechas YYYY-MM-DD lexicográficamente (= cronológicamente)
         ["Primer registro",
-         f'=IFERROR(TEXT(MIN(IF(Comidas!A2:A<>"",Comidas!A2:A)),"YYYY-MM-DD"),"—")',
+         '=SI.ERROR(INDICE(ORDENAR(FILTRAR(Comidas!A2:A,Comidas!A2:A<>""),1,1),1),"—")',
          "", "", "", "", "", ""],
     ]
 
