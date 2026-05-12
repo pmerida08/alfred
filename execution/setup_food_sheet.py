@@ -6,6 +6,8 @@ Uso: python execution/setup_food_sheet.py
 """
 
 import os
+import sys
+import urllib.request
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -217,27 +219,43 @@ def create_stats_sheet():
     else:
         print(f"[OK] Hoja 'Resumen' ya existe (gid={gid})")
 
+    # Las fechas se almacenan como texto "YYYY-MM-DD" (USER_ENTERED en locale español).
+    # TEXT(TODAY(),"YYYY-MM-DD") garantiza comparaciones correctas texto-vs-texto.
+    T   = 'TEXT(TODAY(),"YYYY-MM-DD")'
+    WS  = 'TEXT(TODAY()-WEEKDAY(TODAY(),2)+1,"YYYY-MM-DD")'  # lunes de esta semana
+    M30 = 'TEXT(TODAY()-30,"YYYY-MM-DD")'
+
+    def hoy(col):
+        return f'=SUMIF(Comidas!A:A,{T},Comidas!{col}:{col})'
+
+    def semana(col):
+        return f'=SUMIFS(Comidas!{col}:{col},Comidas!A:A,">="&{WS},Comidas!A:A,"<="&{T})'
+
+    def media30(col):
+        return f'=IFERROR(ROUND(SUMIFS(Comidas!{col}:{col},Comidas!A:A,">="&{M30})/30,1),0)'
+
     # Contenido de la hoja de resumen
     values = [
         # Sección HOY
         ["HOY", "", "", "", "ESTA SEMANA", "", "", ""],
-        ["Calorías", f"=SUMIF(Comidas!A:A,TODAY(),Comidas!D:D)", "", "",
-         "Calorías", f"=SUMIFS(Comidas!D:D,Comidas!A:A,\">=\"&(TODAY()-WEEKDAY(TODAY(),2)+1),Comidas!A:A,\"<=\"&TODAY())", "", ""],
-        ["Proteínas (g)", f"=SUMIF(Comidas!A:A,TODAY(),Comidas!E:E)", "", "",
-         "Proteínas (g)", f"=SUMIFS(Comidas!E:E,Comidas!A:A,\">=\"&(TODAY()-WEEKDAY(TODAY(),2)+1),Comidas!A:A,\"<=\"&TODAY())", "", ""],
-        ["Carbohidratos (g)", f"=SUMIF(Comidas!A:A,TODAY(),Comidas!F:F)", "", "",
-         "Carbohidratos (g)", f"=SUMIFS(Comidas!F:F,Comidas!A:A,\">=\"&(TODAY()-WEEKDAY(TODAY(),2)+1),Comidas!A:A,\"<=\"&TODAY())", "", ""],
-        ["Grasas (g)", f"=SUMIF(Comidas!A:A,TODAY(),Comidas!G:G)", "", "",
-         "Grasas (g)", f"=SUMIFS(Comidas!G:G,Comidas!A:A,\">=\"&(TODAY()-WEEKDAY(TODAY(),2)+1),Comidas!A:A,\"<=\"&TODAY())", "", ""],
-        ["Comidas registradas", f"=COUNTIF(Comidas!A:A,TODAY())", "", "",
-         "Días con registro", f"=SUMPRODUCT(1/COUNTIF(FILTER(Comidas!A2:A,Comidas!A2:A>=\"\"&(TODAY()-WEEKDAY(TODAY(),2)+1)),FILTER(Comidas!A2:A,Comidas!A2:A>=\"\"&(TODAY()-WEEKDAY(TODAY(),2)+1))))", "", ""],
+        ["Calorías",          hoy("D"), "", "", "Calorías",          semana("D"), "", ""],
+        ["Proteínas (g)",     hoy("E"), "", "", "Proteínas (g)",     semana("E"), "", ""],
+        ["Carbohidratos (g)", hoy("F"), "", "", "Carbohidratos (g)", semana("F"), "", ""],
+        ["Grasas (g)",        hoy("G"), "", "", "Grasas (g)",        semana("G"), "", ""],
+        ["Comidas registradas",
+         f"=COUNTIF(Comidas!A:A,{T})", "", "",
+         "Comidas esta semana",
+         f'=COUNTIFS(Comidas!A2:A,">="&{WS},Comidas!A2:A,"<="&{T},Comidas!A2:A,"<>")',
+         "", ""],
         ["", "", "", "", "", "", "", ""],
         # Sección MEDIAS DIARIAS (últimos 30 días)
         ["MEDIAS DIARIAS (últimos 30 días)", "", "", "", "", "", "", ""],
-        ["Calorías/día", f"=IFERROR(SUMIFS(Comidas!D:D,Comidas!A:A,\">=\"&(TODAY()-30))/SUMPRODUCT((COUNTIFS(Comidas!A:A,\">=\"&(TODAY()-30),Comidas!A:A,Comidas!A2:A1000)>0)*1),0)", "", "", "", "", "", ""],
-        ["Proteínas/día (g)", f"=IFERROR(SUMIFS(Comidas!E:E,Comidas!A:A,\">=\"&(TODAY()-30))/SUMPRODUCT((COUNTIFS(Comidas!A:A,\">=\"&(TODAY()-30),Comidas!A:A,Comidas!A2:A1000)>0)*1),0)", "", "", "", "", "", ""],
+        ["Calorías/día",    media30("D"), "", "", "", "", "", ""],
+        ["Proteínas/día (g)", media30("E"), "", "", "", "", "", ""],
         ["Total registros", f"=COUNTA(Comidas!A2:A)", "", "", "", "", "", ""],
-        ["Primer registro", f"=IFERROR(MIN(Comidas!A2:A),\"—\")", "", "", "", "", "", ""],
+        ["Primer registro",
+         f'=IFERROR(TEXT(MIN(IF(Comidas!A2:A<>"",Comidas!A2:A)),"YYYY-MM-DD"),"—")',
+         "", "", "", "", "", ""],
     ]
 
     service.spreadsheets().values().update(
@@ -391,13 +409,82 @@ def fix_existing_rows():
     print(f"[OK] Altura de {n} fila(s) de datos ajustada a 120px")
 
 
-if __name__ == "__main__":
-    data_gid = get_sheet_gid(DATA_SHEET)
-    if data_gid is None:
-        print(f"ERROR: hoja '{DATA_SHEET}' no encontrada")
-        raise SystemExit(1)
+def _delete_imgbb(img_id: str):
+    key = os.getenv("IMGBB_API_KEY", "")
+    if not (img_id and key):
+        return
+    req = urllib.request.Request(
+        f"https://api.imgbb.com/1/image/{img_id}?key={key}", method="DELETE"
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10):
+            pass
+    except Exception:
+        pass
 
-    setup_data_sheet(data_gid)
-    fix_existing_rows()
-    create_stats_sheet()
-    print("\nSetup completado.")
+
+def delete_test_rows(keyword: str):
+    """Elimina filas cuyo nombre de comida contenga keyword (case-insensitive)."""
+    result = service.spreadsheets().values().get(
+        spreadsheetId=SHEET_ID, range=f"{DATA_SHEET}!A:J"
+    ).execute()
+    rows = result.get("values", [])
+    if len(rows) <= 1:
+        print("[cleanup] Sin filas de datos")
+        return
+
+    gid = get_sheet_gid(DATA_SHEET)
+    kw = keyword.lower()
+    delete_requests, img_ids = [], []
+
+    for i in range(len(rows) - 1, 0, -1):
+        row = rows[i]
+        comida = row[2].lower() if len(row) > 2 else ""
+        if kw in comida:
+            delete_requests.append({
+                "deleteDimension": {
+                    "range": {
+                        "sheetId": gid,
+                        "dimension": "ROWS",
+                        "startIndex": i,
+                        "endIndex": i + 1,
+                    }
+                }
+            })
+            if len(row) > 9 and row[9]:
+                img_ids.append(row[9])
+
+    if delete_requests:
+        service.spreadsheets().batchUpdate(
+            spreadsheetId=SHEET_ID, body={"requests": delete_requests}
+        ).execute()
+        print(f"[OK] {len(delete_requests)} fila(s) eliminada(s) ('{keyword}')")
+        for img_id in img_ids:
+            _delete_imgbb(img_id)
+        if img_ids:
+            print(f"[OK] {len(img_ids)} imagen(es) eliminada(s) de ImgBB")
+    else:
+        print(f"[cleanup] No se encontraron filas con '{keyword}'")
+
+
+if __name__ == "__main__":
+    # Uso: python setup_food_sheet.py [--full] [--fix-resumen] [--cleanup KEYWORD]
+    args = sys.argv[1:]
+
+    if "--cleanup" in args:
+        idx = args.index("--cleanup")
+        keyword = args[idx + 1] if idx + 1 < len(args) else "pizza"
+        delete_test_rows(keyword)
+    elif "--fix-resumen" in args:
+        create_stats_sheet()
+        print("\nResumen actualizado.")
+    else:
+        # Setup completo (defecto)
+        data_gid = get_sheet_gid(DATA_SHEET)
+        if data_gid is None:
+            print(f"ERROR: hoja '{DATA_SHEET}' no encontrada")
+            raise SystemExit(1)
+        setup_data_sheet(data_gid)
+        fix_existing_rows()
+        create_stats_sheet()
+        print("\nSetup completado.")
