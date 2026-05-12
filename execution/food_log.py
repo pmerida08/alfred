@@ -62,7 +62,7 @@ def analyze_food(image_path: Path) -> dict:
     data_url = f"data:{media_type};base64,{image_data}"
 
     response = client.chat.completions.create(
-        model="google/gemini-2.0-flash-lite-001",
+        model="google/gemini-2.5-flash-preview",
         max_tokens=512,
         messages=[
             {
