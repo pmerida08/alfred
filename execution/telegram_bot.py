@@ -222,6 +222,47 @@ def main():
             if audio_path.exists():
                 audio_path.unlink()
 
+    async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not await is_authorized(update): return
+
+        # Descarga la foto en máxima resolución disponible
+        photo = update.message.photo[-1]
+        image_path = TMP_DIR / f"food_{update.message.message_id}.jpg"
+
+        stop_typing = asyncio.Event()
+        typing_task = asyncio.create_task(keep_typing(update.message.chat, stop_typing))
+
+        try:
+            file = await context.bot.get_file(photo.file_id)
+            await file.download_to_drive(image_path)
+
+            # Importar y ejecutar el pipeline de food_log
+            sys.path.insert(0, str(PROJECT_ROOT))
+            from execution.food_log import log_food
+            data = await asyncio.get_event_loop().run_in_executor(None, log_food, image_path)
+
+            response = (
+                f"Registrado en Google Sheets.\n\n"
+                f"{data.get('nombre', 'Comida')}\n"
+                f"Calorías: {data.get('calorias', '?')} kcal\n"
+                f"Proteínas: {data.get('proteinas_g', '?')} g\n"
+                f"Carbohidratos: {data.get('carbohidratos_g', '?')} g\n"
+                f"Grasas: {data.get('grasas_g', '?')} g"
+            )
+            if data.get("notas"):
+                response += f"\n\nNota: {data['notas']}"
+
+        except Exception as e:
+            response = f"Error al registrar la comida: {e}"
+            print(f"[food_log error] {e}")
+        finally:
+            stop_typing.set()
+            typing_task.cancel()
+            if image_path.exists():
+                image_path.unlink()
+
+        await update.message.reply_text(response)
+
     app = (
         ApplicationBuilder()
         .token(TELEGRAM_BOT_TOKEN)
@@ -236,6 +277,7 @@ def main():
     app.add_handler(CommandHandler("compact", cmd_compact))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     app.add_handler(MessageHandler(filters.VOICE, handle_voice))
+    app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
 
     print("Alfred — Telegram bot iniciado. Ctrl+C para detener.")
     app.run_polling(drop_pending_updates=True)
