@@ -98,7 +98,7 @@ def analyze_food(image_path: Path) -> dict:
 def upload_photo(image_path: Path) -> tuple[str, str]:
     """
     Sube la imagen a ImgBB.
-    Devuelve (img_id, view_url).
+    Devuelve (img_id, direct_url) — URL directa para usar en =IMAGE().
     """
     with open(image_path, "rb") as f:
         image_b64 = base64.standard_b64encode(f.read()).decode("utf-8")
@@ -115,8 +115,8 @@ def upload_photo(image_path: Path) -> tuple[str, str]:
         result = json.loads(resp.read().decode("utf-8"))
 
     img_id = result["data"]["id"]
-    view_url = result["data"]["url_viewer"]
-    return img_id, view_url
+    direct_url = result["data"]["url"]   # https://i.ibb.co/xxx/image.jpg
+    return img_id, direct_url
 
 
 def delete_imgbb_image(img_id: str):
@@ -169,7 +169,7 @@ def ensure_headers(sheets):
         ).execute()
 
 
-def append_row(sheets, data: dict, view_url: str, img_id: str):
+def append_row(sheets, data: dict, direct_url: str, img_id: str):
     now = datetime.now()
     row = [[
         now.strftime("%Y-%m-%d"),
@@ -180,15 +180,40 @@ def append_row(sheets, data: dict, view_url: str, img_id: str):
         data.get("carbohidratos_g", ""),
         data.get("grasas_g", ""),
         data.get("notas", ""),
-        view_url,
+        f'=IMAGE("{direct_url}")',   # previsualización directa en la celda
         img_id,
     ]]
-    sheets.spreadsheets().values().append(
+    result = sheets.spreadsheets().values().append(
         spreadsheetId=FOOD_LOG_SHEET_ID,
         range=f"{FOOD_LOG_SHEET_NAME}!A1",
-        valueInputOption="RAW",
+        valueInputOption="USER_ENTERED",
         body={"values": row},
+        includeValuesInResponse=True,
     ).execute()
+
+    # Ajustar altura de la nueva fila a 120px para que la imagen sea visible
+    updated_range = result.get("updates", {}).get("updatedRange", "")
+    if updated_range:
+        import re
+        match = re.search(r"(\d+)$", updated_range)
+        if match:
+            row_index = int(match.group(1)) - 1  # 0-indexed
+            sheet_gid = get_sheet_gid(sheets)
+            sheets.spreadsheets().batchUpdate(
+                spreadsheetId=FOOD_LOG_SHEET_ID,
+                body={"requests": [{
+                    "updateDimensionProperties": {
+                        "range": {
+                            "sheetId": sheet_gid,
+                            "dimension": "ROWS",
+                            "startIndex": row_index,
+                            "endIndex": row_index + 1,
+                        },
+                        "properties": {"pixelSize": 120},
+                        "fields": "pixelSize",
+                    }
+                }]},
+            ).execute()
 
 
 def cleanup_old_records(sheets):
