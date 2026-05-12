@@ -111,7 +111,7 @@ def upload_photo(image_path: Path) -> tuple[str, str]:
     }).encode("utf-8")
 
     req = urllib.request.Request("https://api.imgbb.com/1/upload", data=data, method="POST")
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with urllib.request.urlopen(req, timeout=60) as resp:
         result = json.loads(resp.read().decode("utf-8"))
 
     img_id = result["data"]["id"]
@@ -266,12 +266,19 @@ def cleanup_old_records(sheets):
 def log_food(image_path: Path) -> dict:
     """Pipeline completo: analizar → subir foto → registrar → limpiar."""
     data = analyze_food(image_path)
-    img_id, view_url = upload_photo(image_path)
+
+    # Subida de foto opcional: si falla, registrar igualmente sin foto
+    img_id, view_url = "", ""
+    try:
+        img_id, view_url = upload_photo(image_path)
+        data["foto_url"] = view_url
+    except Exception as e:
+        print(f"[food_log] Foto no subida ({e}), registrando sin imagen")
+
     sheets = get_sheets_service()
     ensure_headers(sheets)
     append_row(sheets, data, view_url, img_id)
     cleanup_old_records(sheets)
-    data["foto_url"] = view_url
     return data
 
 
