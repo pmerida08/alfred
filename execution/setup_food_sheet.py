@@ -114,6 +114,28 @@ def setup_data_sheet(gid: int):
                 "fields": "hiddenByUser",
             }
         },
+        # Columna A (Fecha): formato de fecha yyyy-mm-dd
+        {
+            "repeatCell": {
+                "range": {"sheetId": gid, "startRowIndex": 1, "endRowIndex": 1000,
+                          "startColumnIndex": 0, "endColumnIndex": 1},
+                "cell": {"userEnteredFormat": {
+                    "numberFormat": {"type": "DATE", "pattern": "yyyy-mm-dd"}
+                }},
+                "fields": "userEnteredFormat.numberFormat",
+            }
+        },
+        # Columna B (Hora): formato de hora hh:mm
+        {
+            "repeatCell": {
+                "range": {"sheetId": gid, "startRowIndex": 1, "endRowIndex": 1000,
+                          "startColumnIndex": 1, "endColumnIndex": 2},
+                "cell": {"userEnteredFormat": {
+                    "numberFormat": {"type": "TIME", "pattern": "hh:mm"}
+                }},
+                "fields": "userEnteredFormat.numberFormat",
+            }
+        },
         # Filas de datos: formato base (texto centrado, fuente consistente)
         {
             "repeatCell": {
@@ -219,20 +241,19 @@ def create_stats_sheet():
     else:
         print(f"[OK] Hoja 'Resumen' ya existe (gid={gid})")
 
-    # Locale español: separador de args = ";" (no ","), año en formato = "AAAA" (no "YYYY").
-    # Las fechas se guardan como texto "YYYY-MM-DD" → comparaciones texto-vs-texto.
-    T   = 'TEXTO(HOY();"AAAA-MM-DD")'
-    WS  = 'TEXTO(HOY()-DIASEM(HOY();2)+1;"AAAA-MM-DD")'  # lunes de esta semana
-    M30 = 'TEXTO(HOY()-30;"AAAA-MM-DD")'
+    # Las fechas se guardan como números de serie de fecha (USER_ENTERED interpreta
+    # "YYYY-MM-DD" como fecha real en cualquier locale). Comparar con HOY() directo.
+    # Locale español: separador de args = ";"
+    WS  = 'HOY()-DIASEM(HOY();2)+1'  # número de serie del lunes de esta semana
 
     def hoy(col):
-        return f'=SUMAR.SI(Comidas!A:A;{T};Comidas!{col}:{col})'
+        return f'=SUMAR.SI(Comidas!A:A;HOY();Comidas!{col}:{col})'
 
     def semana(col):
-        return f'=SUMAR.SI.CONJUNTO(Comidas!{col}:{col};Comidas!A:A;">="&{WS};Comidas!A:A;"<="&{T})'
+        return f'=SUMAR.SI.CONJUNTO(Comidas!{col}:{col};Comidas!A:A;">="&{WS};Comidas!A:A;"<="&HOY())'
 
     def media30(col):
-        return f'=SI.ERROR(REDONDEAR(SUMAR.SI.CONJUNTO(Comidas!{col}:{col};Comidas!A:A;">="&{M30})/30;1);0)'
+        return f'=SI.ERROR(REDONDEAR(SUMAR.SI.CONJUNTO(Comidas!{col}:{col};Comidas!A:A;">="&(HOY()-30))/30;1);0)'
 
     # Contenido de la hoja de resumen
     values = [
@@ -243,9 +264,9 @@ def create_stats_sheet():
         ["Carbohidratos (g)", hoy("F"), "", "", "Carbohidratos (g)", semana("F"), "", ""],
         ["Grasas (g)",        hoy("G"), "", "", "Grasas (g)",        semana("G"), "", ""],
         ["Comidas registradas",
-         f"=CONTAR.SI(Comidas!A:A;{T})", "", "",
+         "=CONTAR.SI(Comidas!A:A;HOY())", "", "",
          "Comidas esta semana",
-         f'=CONTAR.SI.CONJUNTO(Comidas!A2:A;">="&{WS};Comidas!A2:A;"<="&{T};Comidas!A2:A;"<>")',
+         f'=CONTAR.SI.CONJUNTO(Comidas!A2:A;">="&{WS};Comidas!A2:A;"<="&HOY();Comidas!A2:A;"<>")',
          "", ""],
         ["", "", "", "", "", "", "", ""],
         # Sección MEDIAS DIARIAS (últimos 30 días)
@@ -253,9 +274,9 @@ def create_stats_sheet():
         ["Calorías/día",      media30("D"), "", "", "", "", "", ""],
         ["Proteínas/día (g)", media30("E"), "", "", "", "", "", ""],
         ["Total registros",   "=CONTARA(Comidas!A2:A)", "", "", "", "", "", ""],
-        # ORDENAR+FILTRAR ordena fechas YYYY-MM-DD lexicográficamente (= cronológicamente)
+        # MIN sobre números de serie devuelve la fecha más antigua; TEXTO la formatea
         ["Primer registro",
-         '=SI.ERROR(INDICE(ORDENAR(FILTRAR(Comidas!A2:A;Comidas!A2:A<>"");1;1);1);"—")',
+         '=SI.ERROR(TEXTO(MIN(Comidas!A2:A);"DD/MM/AAAA");"—")',
          "", "", "", "", "", ""],
     ]
 
