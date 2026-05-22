@@ -34,3 +34,6 @@ desktop.ini
 # Syncthing
 .stfolder/
 .stignore
+
+# Local Netlify folder
+.netlify
