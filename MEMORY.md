@@ -24,10 +24,10 @@ Alfred lo lee al inicio de cada sesión junto con `memory/user.md`.
 
 ## Ecosistema de herramientas
 
-- Email: Gmail (pablomerida03@gmail.com) — conector MCP
+- Email: Gmail — conector MCP
 - Calendario: Google Calendar — conector MCP
-- Notas personales: Obsidian — vault en `D:\Obsidian\Mi Bóveda\`, acceso directo a archivos
-- Documentación y tareas: Notion — conector MCP, base de datos "Mis Tareas" (ID: d1668a67-3e64-46ee-a29e-6d98869f8a86)
+- Notas personales: Obsidian — acceso directo a archivos
+- Documentación y tareas: Notion — conector MCP, base de datos "Mis Tareas"
 
 ---
 

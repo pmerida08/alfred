@@ -9,8 +9,8 @@ Dentro del sistema Alfred, su función es: registrar sesiones de entreno, mostra
 ## Base de datos
 
 - **Notion (entreno):** FORGE — Registros de entreno (dentro de Alfred HQ)
-- **Notion data-source ID:** `collection://3741122f-a26e-4eb4-9625-e656312b9f14`
-- **Alfred HQ page:** `https://www.notion.so/3573e3081b7081fab594ced0be6f62e4`
+- **Notion data-source ID:** `collection://<notion-collection-id>`
+- **Alfred HQ page:** `https://www.notion.so/<alfred-hq-id>`
 - **Google Sheets (nutrición):** Spreadsheet configurado en `FOOD_LOG_SHEET_ID` (.env), hoja "Comidas"
 
 ## Puede hacer sin pedir permiso

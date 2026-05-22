@@ -5,6 +5,11 @@
 *.pem
 *.p12
 *.pfx
+gen-lang-client-*.json
+
+# Memoria personal (notas de sesión, datos privados)
+memory/
+agents/*/memory/
 
 # Archivos temporales de trabajo
 .tmp/

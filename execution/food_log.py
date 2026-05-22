@@ -1,7 +1,7 @@
 """
 FORGE — Food Logger
-Analiza una foto de comida con visión (OpenRouter), sube la imagen a ImgBB
-y registra los macros en Google Sheets. Limpia registros e imágenes >90 días.
+Analiza una foto de comida con visión (Claude Code CLI, suscripción), sube la imagen
+a ImgBB y registra los macros en Google Sheets. Limpia registros e imágenes >90 días.
 
 Uso: python execution/food_log.py <ruta_imagen>
 """
@@ -9,19 +9,18 @@ Uso: python execution/food_log.py <ruta_imagen>
 import base64
 import json
 import os
+import subprocess
 import sys
 import urllib.request
 import urllib.parse
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
-from openai import OpenAI
 from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).parent.parent
 load_dotenv(PROJECT_ROOT / ".env", override=True)
 
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 IMGBB_API_KEY = os.getenv("IMGBB_API_KEY")
 GOOGLE_SHEETS_CREDENTIALS_PATH = os.getenv("GOOGLE_SHEETS_CREDENTIALS_PATH")
 FOOD_LOG_SHEET_ID = os.getenv("FOOD_LOG_SHEET_ID")
@@ -49,46 +48,31 @@ COL_IMG_ID = 9    # ID de imagen en ImgBB (para borrado)
 
 
 def analyze_food(image_path: Path) -> dict:
-    """Identifica la comida en la imagen y estima sus macros vía OpenRouter."""
-    client = OpenAI(
-        api_key=OPENROUTER_API_KEY,
-        base_url="https://openrouter.ai/api/v1",
+    """Identifica la comida en la imagen vía Claude Code CLI (suscripción, sin API key)."""
+    prompt = (
+        f"Lee la imagen en esta ruta exacta: {image_path.absolute()}\n\n"
+        "Analiza la comida que aparece y devuelve un JSON con:\n"
+        "- nombre: nombre del plato o comida\n"
+        "- calorias: estimación de calorías totales (número entero)\n"
+        "- proteinas_g: gramos de proteína (número entero)\n"
+        "- carbohidratos_g: gramos de carbohidratos (número entero)\n"
+        "- grasas_g: gramos de grasa (número entero)\n"
+        "- notas: string corto si algo es incierto, vacío si la estimación es fiable\n\n"
+        "Haz tu mejor estimación basándote en porciones típicas.\n"
+        "Devuelve SOLO el JSON, sin texto adicional ni bloques de código."
     )
 
-    with open(image_path, "rb") as f:
-        image_data = base64.standard_b64encode(f.read()).decode("utf-8")
-
-    media_type = MEDIA_TYPE_MAP.get(image_path.suffix.lower(), "image/jpeg")
-    data_url = f"data:{media_type};base64,{image_data}"
-
-    response = client.chat.completions.create(
-        model="google/gemini-2.5-flash-preview",
-        max_tokens=512,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {"type": "image_url", "image_url": {"url": data_url}},
-                    {
-                        "type": "text",
-                        "text": (
-                            "Analiza esta foto de comida y devuelve un JSON con:\n"
-                            "- nombre: nombre del plato o comida\n"
-                            "- calorias: estimación de calorías totales (número entero)\n"
-                            "- proteinas_g: gramos de proteína (número entero)\n"
-                            "- carbohidratos_g: gramos de carbohidratos (número entero)\n"
-                            "- grasas_g: gramos de grasa (número entero)\n"
-                            "- notas: string corto si algo es incierto, vacío si la estimación es fiable\n\n"
-                            "Haz tu mejor estimación basándote en porciones típicas.\n"
-                            "Devuelve SOLO el JSON, sin texto adicional ni bloques de código."
-                        ),
-                    },
-                ],
-            }
-        ],
+    result = subprocess.run(
+        ["claude", "-p", prompt, "--allowedTools", "Read"],
+        capture_output=True,
+        text=True,
+        timeout=60,
     )
 
-    raw = response.choices[0].message.content.strip()
+    if result.returncode != 0:
+        raise RuntimeError(f"claude CLI error: {result.stderr.strip()}")
+
+    raw = result.stdout.strip()
     if raw.startswith("```"):
         raw = raw.split("\n", 1)[1].rsplit("```", 1)[0].strip()
 

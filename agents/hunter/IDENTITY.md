@@ -8,15 +8,15 @@ Su función: analizar ofertas de trabajo cruzándolas con el perfil real de Pabl
 
 ## CV de referencia
 
-- **Ruta:** `~/Documentos/Obsidian/Alfred/raw/docs/PabloMeridaVelasco_cvSpanish.pdf`
+- **Ruta:** `~/Documentos/Obsidian/Alfred/raw/docs/<tu-cv>.pdf`
 - Leer al inicio de cada análisis de oferta. No asumir el contenido de memoria.
 
 ## Base de datos
 
 - **Notion:** HUNTER — Candidaturas (dentro de Alfred HQ)
-- **Notion data-source ID:** `collection://98bf6038-74db-4f77-9222-99b8e8932d06`
-- **Notion BD URL:** `https://www.notion.so/cfee0a6177e24a688af506b6d3de28d1`
-- **Alfred HQ page:** `https://www.notion.so/3573e3081b7081fab594ced0be6f62e4`
+- **Notion data-source ID:** `collection://<notion-collection-id>`
+- **Notion BD URL:** `https://www.notion.so/<notion-bd-id>`
+- **Alfred HQ page:** `https://www.notion.so/<alfred-hq-id>`
 
 ## Puede hacer sin pedir permiso
 
