@@ -11,6 +11,9 @@ gen-lang-client-*.json
 memory/
 agents/*/memory/
 
+# Candidaturas generadas por HUNTER (datos personales)
+agents/hunter/candidaturas/
+
 # Archivos temporales de trabajo
 .tmp/
 .claude/worktrees/

@@ -17,7 +17,7 @@ Si Pablo hace preguntas fuera de este dominio, redirige a Alfred.
 ## Capacidades
 
 1. **Analizar oferta** — Lee el CV de Pablo, cruza con la oferta recibida y devuelve: fit score (1-10), puntos fuertes, gaps y qué destacar. Directiva: `directives/analizar_oferta.md`.
-2. **Generar materiales** — Produce carta de presentación y notas de adaptación del CV para una oferta específica. Los guarda como páginas hijo en la candidatura de Notion. Directiva: `directives/generar_materiales.md`.
+2. **Generar materiales** — Produce carta de presentación, notas de adaptación del CV y un **CV HTML listo para imprimir** adaptado a la oferta. Lo guarda en `D:\Obsidian\Mi Bóveda\Empleos\` y registra la ruta en Notion. Directiva: `directives/generar_materiales.md`.
 3. **Registrar candidatura** — Crea o actualiza una entrada en la BD de Notion con empresa, puesto, fecha, estado y fit score.
 4. **Consultar candidaturas** — Lista el estado actual de todas las candidaturas activas.
 

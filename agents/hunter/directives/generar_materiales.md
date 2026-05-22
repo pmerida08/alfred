@@ -11,7 +11,9 @@ Esta directiva solo se ejecuta después de haber completado `analizar_oferta.md`
 ## Inputs
 
 - Análisis de la oferta (resultado de `analizar_oferta.md`)
-- CV de Pablo: `~/Documentos/Obsidian/Alfred/raw/docs/PabloMeridaVelasco_cvSpanish.pdf`
+- CV de Pablo: `D:\Obsidian\Mi Bóveda\raw\docs\Pablo Mérida Velasco — CV.pdf`
+- Template HTML: `D:\Programas\Alfred\agents\hunter\templates\cv_template.html`
+- Foto CV: `D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg` (ya referenciada en el template)
 - Idioma objetivo: mismo que la oferta, salvo indicación de Pablo
 
 ## Proceso
@@ -40,13 +42,58 @@ Un listado breve de qué ajustar en el CV para esta oferta:
 
 Formato: lista con viñetas, máximo 6 puntos.
 
-### 3. Guardar en Notion
+### 3. CV HTML adaptado
+
+Partiendo del template `D:\Programas\Alfred\agents\hunter\templates\cv_template.html`, generar un CV HTML personalizado para la oferta.
+
+**Qué adaptar en el template:**
+
+| Zona | Qué cambiar |
+|------|-------------|
+| `.subtitulo` | Ajustar el título si el puesto target tiene una denominación más precisa |
+| Párrafo PERFIL | Reescribir orientado a los requisitos clave de la oferta (misma extensión) |
+| HABILIDADES | Reordenar skills: las más relevantes para la oferta, primero dentro de su columna |
+| EXPERIENCIA bullets | Poner en primer lugar los bullets que más encajan con la oferta |
+| PROYECTOS | Reordenar los 4 proyectos: el más relevante arriba-izquierda, el segundo arriba-derecha |
+
+**Reglas de producción:**
+- No inventar skills ni experiencias no presentes en el CV original.
+- No eliminar secciones ni reducir número de proyectos — solo reordenar.
+- El resultado debe caber en una sola página A4 sin scroll.
+
+**Reglas técnicas obligatorias (aprendidas en producción):**
+
+1. **Foto siempre en base64.** Las rutas relativas no funcionan desde todas las ubicaciones. Usar PowerShell para incrustar la foto directamente en el HTML:
+   ```powershell
+   $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes("D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg"))
+   ```
+   Luego reemplazar `PHOTO_BASE64` del template con el valor obtenido.
+
+2. **Bullets CSS: usar escape Unicode, nunca entidades HTML.** En la propiedad CSS `content:`, las entidades HTML (`&#8226;`) se renderizan como texto literal. Usar siempre `content: "\2022"`.
+
+3. **Layout flex obligatorio.** El body y `.contenido` ya tienen `display: flex; flex-direction: column` en el template. No eliminar — es lo que distribuye las secciones para llenar la página completa sin espacios en blanco.
+
+4. **Escritura del archivo: usar `[System.IO.File]::WriteAllText` con UTF-8 explícito** para preservar acentos y caracteres especiales. No usar `Out-File` por defecto (genera UTF-16).
+
+5. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
+   - GitHub → `https://github.com/pmerida08`
+   - Portfolio → `https://pmerida-porfolio.netlify.app`
+   - LinkedIn → `https://linkedin.com/in/pablo-merida-velasco`
+
+**Guardar en dos rutas:**
+1. `D:\Obsidian\Mi Bóveda\Empleos\CV-{Empresa}-{Puesto}.html` — para abrir en navegador e imprimir
+2. `D:\Programas\Alfred\agents\hunter\candidaturas\CV-{Empresa}-{Puesto}.html` — copia local en el proyecto
+
+(sanitizar nombre: sin espacios, sin caracteres especiales, usar guiones; mismo nombre en ambas rutas)
+
+### 4. Guardar en Notion
 
 1. Buscar la candidatura correspondiente en la BD de Notion.
    - Si no existe, crearla primero con los datos básicos (empresa, puesto, fecha, estado: "Analizada", fit score).
-2. Crear dos páginas hijo dentro de la candidatura:
+2. Crear tres páginas hijo dentro de la candidatura:
    - **"Carta de presentación"** con el texto generado
    - **"Notas CV"** con la lista de adaptaciones
+   - **"CV HTML"** con la ruta local del archivo generado: `D:\Obsidian\Mi Bóveda\Empleos\CV-{Empresa}-{Puesto}.html`
 3. Actualizar el campo estado a "Materiales listos" si existía como "Analizada".
 
 ## Edge cases
@@ -54,3 +101,4 @@ Formato: lista con viñetas, máximo 6 puntos.
 - **Fit score < 4:** avisar a Pablo antes de generar. Proceder solo si confirma.
 - **Empresa sin nombre claro:** usar "su empresa" en la carta, marcar para revisión.
 - **CV sin proyectos directamente relevantes:** usar la experiencia más transferible y explicitarlo en las notas CV.
+- **CV HTML no cabe en una página:** reducir márgenes o tamaño de fuente en 0.3pt; nunca eliminar contenido.

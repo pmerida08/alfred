@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pablo Mérida Velasco — CV</title>
+  <style>
+    @page { size: A4; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 10pt;
+      line-height: 1.45;
+      color: #1a1a1a;
+      background: white;
+      width: 210mm;
+      height: 297mm;
+      overflow: hidden;
+      padding: 13mm 15mm 10mm 15mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 7px;
+      flex-shrink: 0;
+    }
+    .header-left h1 { font-size: 23pt; font-weight: 800; letter-spacing: -0.3px; color: #111; }
+    .header-left .subtitulo { font-size: 10.5pt; color: #444; margin-top: 2px; font-weight: 400; }
+    .contacto { margin-top: 5px; font-size: 9pt; color: #333; display: flex; flex-wrap: wrap; gap: 0 14px; }
+    .contacto a { color: #333; text-decoration: none; }
+    .foto { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; flex-shrink: 0; margin-left: 12px; }
+
+    hr.divisor { border: none; border-top: 1.8px solid #1a1a1a; margin: 7px 0 0; flex-shrink: 0; }
+
+    /* ── CONTENIDO: flex column que llena el espacio restante y distribuye secciones ── */
+    .contenido {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 9px;
+    }
+
+    /* ── TÍTULOS DE SECCIÓN ── */
+    .titulo-seccion {
+      font-size: 8.5pt;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: #111;
+      border-bottom: 0.8px solid #ccc;
+      padding-bottom: 2px;
+      margin-bottom: 5px;
+    }
+
+    /* ── PERFIL ── */
+    .perfil p { font-size: 10pt; line-height: 1.5; }
+
+    /* ── HABILIDADES ── */
+    .habilidades-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 18px; }
+    .skill-cat { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #555; margin-bottom: 2px; }
+    .skill-items { font-size: 9.5pt; line-height: 1.7; }
+
+    /* ── EXPERIENCIA ── */
+    .job-cabecera { display: flex; justify-content: space-between; align-items: baseline; }
+    .job-titulo { font-weight: 700; font-size: 10.5pt; }
+    .job-fecha { font-size: 9pt; color: #555; white-space: nowrap; }
+    .job-empresa { font-style: italic; color: #555; font-size: 9.5pt; margin-bottom: 3px; }
+    .job-bullets { list-style: none; }
+    .job-bullets li { padding-left: 10px; position: relative; margin-bottom: 2px; font-size: 9.5pt; }
+    .job-bullets li::before { content: "\2022"; position: absolute; left: 0; }
+
+    /* ── PROYECTOS ── */
+    .proyectos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 20px; }
+    .proyecto-nombre { font-weight: 700; font-size: 10pt; }
+    .proyecto-desc { font-size: 9.2pt; line-height: 1.45; color: #333; margin-top: 1px; }
+
+    /* ── FILA INFERIOR (Educación + Idiomas) ── */
+    .fila-inferior { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+    .edu-entrada { margin-bottom: 5px; }
+    .edu-titulo { font-weight: 700; font-size: 10pt; }
+    .edu-centro { font-style: italic; color: #555; font-size: 9.2pt; }
+    .edu-fecha { font-size: 9pt; color: #555; }
+    .certs-lista { list-style: none; }
+    .certs-lista li { padding-left: 10px; position: relative; font-size: 9.5pt; margin-bottom: 3px; }
+    .certs-lista li::before { content: "\2022"; position: absolute; left: 0; }
+    .certs-lista li strong { font-weight: 600; }
+
+    /* ── WATERMARK ── */
+    .watermark {
+      flex-shrink: 0;
+      text-align: center;
+      padding-top: 5px;
+      font-size: 7pt;
+      letter-spacing: 0.8px;
+      color: #bbb;
+      border-top: 0.5px solid #e8e8e8;
+      margin-top: 4px;
+    }
+    .watermark span { font-weight: 600; color: #aaa; }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════ HEADER ══════════ -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Pablo Mérida Velasco</h1>
+      <!-- ADAPTAR: subtítulo según el puesto objetivo -->
+      <div class="subtitulo">IA Automation Specialist · Low-code &amp; AI Workflows</div>
+      <div class="contacto">
+        <span>📞 664 549 627</span>
+        <span>✉ pablomerida03@gmail.com</span>
+        <span>📍 Montilla, Córdoba</span>
+        <a href="https://github.com/pmerida08" target="_blank">🔗 github.com/pmerida08</a>
+        <a href="https://pmerida-porfolio.netlify.app" target="_blank">🌐 pmerida-porfolio.netlify.app</a>
+        <a href="https://linkedin.com/in/pablo-merida-velasco" target="_blank">💼 linkedin.com/in/pablo-merida-velasco</a>
+      </div>
+    </div>
+    <!--
+      FOTO: incrustar siempre como base64 para que funcione desde cualquier ruta.
+      PowerShell para obtener el base64:
+        $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes("D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg"))
+      Luego reemplazar el src con: data:image/jpeg;base64,{$b64}
+    -->
+    <img class="foto" src="data:image/jpeg;base64,PHOTO_BASE64" alt="Pablo Mérida">
+  </div>
+
+  <hr class="divisor">
+
+  <!-- ══════════ CONTENIDO ══════════ -->
+  <div class="contenido">
+
+    <!-- PERFIL -->
+    <div class="perfil">
+      <div class="titulo-seccion">Perfil</div>
+      <p>
+        <!-- ADAPTAR: reescribir orientado a los requisitos clave de la oferta (3-4 líneas). -->
+        Especialista en automatización de procesos con IA, con experiencia práctica construyendo flujos en n8n,
+        integrando modelos como Claude y GPT, y conectando sistemas a través de APIs en entornos reales.
+        Formación técnica full-stack y Máster en IA Generativa en curso. Orientado a convertir cuellos de botella
+        operativos en soluciones automatizadas y escalables — perfil autónomo, enfocado en construir, probar y mejorar
+        desde el primer día.
+      </p>
+    </div>
+
+    <!-- HABILIDADES -->
+    <div>
+      <div class="titulo-seccion">Habilidades</div>
+      <div class="habilidades-grid">
+        <!-- ADAPTAR: reordenar skills; las más relevantes para la oferta, primero dentro de su columna -->
+        <div>
+          <div class="skill-cat">Automatización &amp; IA</div>
+          <div class="skill-items">n8n &nbsp; Make &nbsp; Claude API &nbsp; OpenAI API<br>LLM Prompting &nbsp; RAG</div>
+        </div>
+        <div>
+          <div class="skill-cat">Lenguajes &amp; Frameworks</div>
+          <div class="skill-items">Python &nbsp; TypeScript &nbsp; JavaScript &nbsp; PHP<br>React &nbsp; Laravel</div>
+        </div>
+        <div>
+          <div class="skill-cat">Datos &amp; Cloud</div>
+          <div class="skill-items">SQL &nbsp; MySQL &nbsp; Supabase &nbsp; PostgreSQL<br>AWS &nbsp; Linux &nbsp; Git &nbsp; REST APIs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCIA -->
+    <div>
+      <div class="titulo-seccion">Experiencia</div>
+      <div class="job-cabecera">
+        <span class="job-titulo">Programador Web</span>
+        <span class="job-fecha">Mar 2025 – Jun 2025</span>
+      </div>
+      <div class="job-empresa">Agencia de Digitalización Andaluza</div>
+      <!-- ADAPTAR: poner primero los bullets más relevantes para la oferta -->
+      <ul class="job-bullets">
+        <li>Desarrollo y mantenimiento de sistema de gestión de impresoras con Laravel, JavaScript y SQL.</li>
+        <li>Paneles en tiempo real con datos actualizados diariamente mediante automatización de ingesta y reporte.</li>
+        <li>Flujos de sincronización automática entre sistemas internos.</li>
+        <li>Lideré la migración a máquinas virtuales Linux en Proxmox, reduciendo el tiempo de despliegue en 4 días.</li>
+      </ul>
+    </div>
+
+    <!-- PROYECTOS -->
+    <div>
+      <div class="titulo-seccion">Proyectos Destacados</div>
+      <!-- ADAPTAR: reordenar los 4 proyectos por relevancia; el más importante arriba-izquierda -->
+      <div class="proyectos-grid">
+        <div>
+          <div class="proyecto-nombre">Sistema de Automatización con IA (Alfred)</div>
+          <div class="proyecto-desc">Arquitectura multi-agente con Claude API, n8n, Google Sheets, Notion y Telegram. Agentes especializados por dominio, memoria persistente y procesamiento autónomo. Diseñado para escalar sin intervención manual.</div>
+        </div>
+        <div>
+          <div class="proyecto-nombre">Estudiante Élite</div>
+          <div class="proyecto-desc">Sistema de tutoría con IA para estudiantes de derecho. Workflows en n8n con RAG, memoria de sesión y transcripción de audio (Whisper). Stack: React 19 + TypeScript, Supabase, Netlify CI/CD.</div>
+        </div>
+        <div>
+          <div class="proyecto-nombre">MyHandStats</div>
+          <div class="proyecto-desc">App web full-stack para análisis de estadísticas de balonmano en tiempo real. FastAPI + PostgreSQL (Supabase) + React, con despliegue en Netlify e integración continua.</div>
+        </div>
+        <div>
+          <div class="proyecto-nombre">Generador de Recetas con IA</div>
+          <div class="proyecto-desc">Herramienta en PHP y JavaScript que integra un modelo de IA para generar recetas, planificar comidas semanales y crear listas de la compra automáticamente.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCACIÓN + IDIOMAS -->
+    <div class="fila-inferior">
+      <div>
+        <div class="titulo-seccion">Educación</div>
+        <div class="edu-entrada">
+          <div class="edu-titulo">Máster en IA Generativa e Innovación</div>
+          <div class="edu-centro">Evolve Academy</div>
+          <div class="edu-fecha">2025 – Actualidad</div>
+        </div>
+        <div class="edu-entrada">
+          <div class="edu-titulo">CFGS Desarrollo de Aplicaciones Web</div>
+          <div class="edu-centro">IES Gran Capitán</div>
+          <div class="edu-fecha">2021 – 2025</div>
+        </div>
+      </div>
+      <div>
+        <div class="titulo-seccion">Idiomas &amp; Certificaciones</div>
+        <ul class="certs-lista">
+          <li><strong>Español</strong> — Nativo</li>
+          <li><strong>Inglés</strong> — Intermedio alto · B2 Cambridge (2025)</li>
+          <li>AWS Academy: Introducción a la Nube (2021-2022)</li>
+          <li>Permiso de conducir — Clase B</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /contenido -->
+
+  <div class="watermark">Candidatura preparada con <span>Alfred</span> &middot; Agente de Inteligencia Artificial Personal</div>
+
+</body>
+</html>
