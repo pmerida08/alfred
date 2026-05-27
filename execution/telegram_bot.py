@@ -28,38 +28,28 @@ WHISPER_MODEL = "small"  # opciones: tiny, base, small, medium, large
 
 def strip_markdown(text: str) -> str:
     """Convierte Markdown a texto plano legible para Telegram sin parse_mode."""
-    # Bloques de código (``` ... ```)
     text = re.sub(r"```[a-zA-Z]*\n?", "", text)
     text = re.sub(r"```", "", text)
-    # Código inline
     text = re.sub(r"`([^`]+)`", r"\1", text)
-    # Encabezados (# ## ###)
     text = re.sub(r"^#{1,6}\s+", "", text, flags=re.MULTILINE)
-    # Negrita e itálica (**text**, __text__, *text*, _text_)
     text = re.sub(r"\*\*(.+?)\*\*", r"\1", text)
     text = re.sub(r"__(.+?)__", r"\1", text)
     text = re.sub(r"\*(.+?)\*", r"\1", text)
     text = re.sub(r"_(.+?)_", r"\1", text)
-    # Tachado (~~text~~)
     text = re.sub(r"~~(.+?)~~", r"\1", text)
-    # Líneas de tabla: reemplazar separadores y pipes
     lines = text.splitlines()
     clean_lines = []
     for line in lines:
         stripped = line.strip()
-        # Fila separadora de tabla (|---|---|)
         if re.match(r"^\|?[\s\-:]+(\|[\s\-:]+)+\|?$", stripped):
             continue
-        # Fila de datos de tabla
         if "|" in stripped:
             cells = [c.strip() for c in stripped.strip("|").split("|")]
             clean_lines.append("  ".join(cells))
         else:
             clean_lines.append(line)
     text = "\n".join(clean_lines)
-    # Links [texto](url) → texto
     text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
-    # Limpiar líneas en blanco múltiples
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
 
@@ -84,34 +74,56 @@ def transcribe(whisper_model, audio_path: Path) -> str:
 async def ask_alfred(message: str, session_id: str | None = None) -> tuple[str, str]:
     """
     Llama a Claude Code CLI con el mensaje. Devuelve (respuesta, session_id).
-    session_id permite retomar la conversación en el próximo mensaje.
+    Si session_id ya no existe en Claude (sesión expirada), reintenta sin --resume.
     """
     import platform
     if platform.system() == "Windows":
         claude_bin = r"C:\Users\pablo\.local\bin\claude.exe"
     else:
         claude_bin = "/home/pablo/.nvm/versions/node/v20.20.2/bin/claude"
-    cmd = [claude_bin, "-p", message, "--output-format", "json", "--dangerously-skip-permissions"]
-    if session_id:
-        cmd += ["--resume", session_id]
 
-    proc = await asyncio.create_subprocess_exec(
-        *cmd,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        cwd=str(PROJECT_ROOT),
-    )
-    stdout, stderr = await proc.communicate()
+    async def _call(sid: str | None) -> tuple[str, str]:
+        cmd = [claude_bin, "-p", message, "--output-format", "json", "--dangerously-skip-permissions"]
+        if sid:
+            cmd += ["--resume", sid]
 
-    raw = stdout.decode("utf-8").strip()
-    if not raw:
-        raise RuntimeError(stderr.decode("utf-8") or "Sin respuesta del CLI")
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            cwd=str(PROJECT_ROOT),
+        )
+        stdout, stderr = await proc.communicate()
 
-    data = json.loads(raw)
-    if data.get("is_error"):
-        raise RuntimeError(data.get("result", "Error desconocido"))
+        raw = stdout.decode("utf-8").strip()
+        if not raw:
+            err = stderr.decode("utf-8").strip()
+            print(f"[alfred] CLI falló — returncode={proc.returncode}, stderr={err!r}", file=sys.stderr)
+            raise RuntimeError(err or f"Sin respuesta del CLI (exit {proc.returncode})")
 
-    return data["result"], data["session_id"]
+        data = json.loads(raw)
+        if data.get("is_error"):
+            raise RuntimeError(data.get("result", "Error desconocido"))
+
+        return data["result"], data["session_id"]
+
+    try:
+        return await _call(session_id)
+    except Exception as e:
+        # Si la sesión de Claude expiró, reintentar sin --resume
+        if session_id and ("session" in str(e).lower() or "not found" in str(e).lower()):
+            print(f"[alfred] Sesión {session_id} expirada, iniciando nueva.", file=sys.stderr)
+            return await _call(None)
+        raise
+
+
+def _format_dt(iso: str) -> str:
+    """Formatea timestamp ISO a 'DD/MM/YY HH:MM'."""
+    try:
+        dt = __import__("datetime").datetime.fromisoformat(iso)
+        return dt.strftime("%d/%m/%y %H:%M")
+    except Exception:
+        return iso[:16]
 
 
 def main():
@@ -126,14 +138,16 @@ def main():
         print("ERROR: python-telegram-bot no instalado. Ejecutar: pip install python-telegram-bot", file=sys.stderr)
         sys.exit(1)
 
+    sys.path.insert(0, str(PROJECT_ROOT))
+    from execution import conversation_store as store
+    store.init_db()
+
     TMP_DIR.mkdir(exist_ok=True)
     whisper_model = load_whisper_model()
-    chat_sessions: dict[int, str] = {}  # chat_id → session_id de Claude Code
 
     async def is_authorized(update: Update) -> bool:
         user_id = update.effective_user.id if update.effective_user else None
         if ALLOWED_USER_ID is None:
-            # Sin restricción configurada: logear el ID para facilitar la configuración
             print(f"[AVISO] TELEGRAM_ALLOWED_USER_ID no configurado. Mensaje de user_id={user_id}")
             return True
         if user_id != ALLOWED_USER_ID:
@@ -149,59 +163,122 @@ def main():
 
     async def reply_to(update: Update, user_text: str):
         chat_id = update.effective_chat.id
-        session_id = chat_sessions.get(chat_id)
+        conv = store.get_or_create_active_conversation(chat_id)
+
+        store.save_message(conv.id, "user", user_text, update.message.message_id)
 
         stop_typing = asyncio.Event()
         typing_task = asyncio.create_task(keep_typing(update.message.chat, stop_typing))
 
         try:
-            response, new_session_id = await ask_alfred(user_text, session_id)
-            chat_sessions[chat_id] = new_session_id
+            response, new_session_id = await ask_alfred(user_text, conv.claude_session_id)
+            store.update_claude_session(conv.id, new_session_id)
         except Exception as e:
             response = f"Error: {e}"
+            new_session_id = None
         finally:
             stop_typing.set()
             typing_task.cancel()
 
-        # Telegram limita mensajes a 4096 caracteres
+        store.save_message(conv.id, "assistant", response)
+
         response = strip_markdown(response)
         for i in range(0, max(len(response), 1), 4096):
             await update.message.reply_text(response[i:i + 4096])
 
     async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
-        chat_sessions.pop(update.effective_chat.id, None)
+        chat_id = update.effective_chat.id
+        conv = store.new_conversation(chat_id)
+        print(f"[alfred] /start — nueva conversación {conv.id}")
         await update.message.reply_text("Alfred operativo.")
 
     async def cmd_reset(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
-        chat_sessions.pop(update.effective_chat.id, None)
+        chat_id = update.effective_chat.id
+        conv = store.new_conversation(chat_id)
+        print(f"[alfred] /reset — nueva conversación {conv.id}")
         await update.message.reply_text("Conversación reiniciada.")
 
     async def cmd_new(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
-        chat_sessions.pop(update.effective_chat.id, None)
-        await update.message.reply_text("Sesión nueva. Contexto borrado.")
+        chat_id = update.effective_chat.id
+        conv = store.new_conversation(chat_id)
+        print(f"[alfred] /new — nueva conversación {conv.id}")
+        await update.message.reply_text(f"Sesión nueva [{conv.id}]. Contexto borrado.")
 
     async def cmd_compact(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
         chat_id = update.effective_chat.id
-        session_id = chat_sessions.get(chat_id)
-        if not session_id:
+        conv = store.get_active_conversation(chat_id)
+        if not conv or not conv.claude_session_id:
             await update.message.reply_text("No hay sesión activa. Escribe algo primero.")
             return
 
         stop_typing = asyncio.Event()
         typing_task = asyncio.create_task(keep_typing(update.message.chat, stop_typing))
         try:
-            _, new_session_id = await ask_alfred("/compact", session_id)
-            chat_sessions[chat_id] = new_session_id
+            _, new_session_id = await ask_alfred("/compact", conv.claude_session_id)
+            store.update_claude_session(conv.id, new_session_id)
             await update.message.reply_text("Sesión compactada. El contexto se ha resumido.")
         except Exception as e:
             await update.message.reply_text(f"Error al compactar: {e}")
         finally:
             stop_typing.set()
             typing_task.cancel()
+
+    async def cmd_history(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Lista las últimas conversaciones con su ID y fecha."""
+        if not await is_authorized(update): return
+        chat_id = update.effective_chat.id
+
+        # Nº opcional como argumento: /history 5
+        limit = 5
+        if context.args:
+            try:
+                limit = max(1, min(int(context.args[0]), 20))
+            except ValueError:
+                pass
+
+        convs = store.get_recent_conversations(chat_id, limit=limit)
+        if not convs:
+            await update.message.reply_text("Sin historial todavía.")
+            return
+
+        active = store.get_active_conversation(chat_id)
+        lines = [f"Ultimas {len(convs)} conversaciones:\n"]
+        for c in convs:
+            marker = " <activa>" if active and c.id == active.id else ""
+            msgs = store.get_conversation_messages(c.id)
+            n = len(msgs)
+            lines.append(f"[{c.id}] {_format_dt(c.started_at)}  ({n} mensajes){marker}")
+        await update.message.reply_text("\n".join(lines))
+
+    async def cmd_recall(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Busca en el historial. Uso: /recall <texto>"""
+        if not await is_authorized(update): return
+        if not context.args:
+            await update.message.reply_text("Uso: /recall <texto a buscar>")
+            return
+
+        chat_id = update.effective_chat.id
+        query = " ".join(context.args)
+        results = store.search_messages(chat_id, query, limit=5)
+
+        if not results:
+            await update.message.reply_text(f'Sin resultados para "{query}".')
+            return
+
+        lines = [f'Encontrado "{query}" en {len(results)} mensaje(s):\n']
+        for msg, conv_started in results:
+            role_label = "Tu" if msg.role == "user" else "Alfred"
+            snippet = msg.content[:200].replace("\n", " ")
+            if len(msg.content) > 200:
+                snippet += "..."
+            lines.append(
+                f"[{msg.conversation_id}] {_format_dt(msg.sent_at)} — {role_label}:\n{snippet}\n"
+            )
+        await update.message.reply_text("\n".join(lines))
 
     async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
@@ -225,7 +302,6 @@ def main():
     async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
 
-        # Descarga la foto en máxima resolución disponible
         photo = update.message.photo[-1]
         image_path = TMP_DIR / f"food_{update.message.message_id}.jpg"
 
@@ -236,7 +312,6 @@ def main():
             file = await context.bot.get_file(photo.file_id)
             await file.download_to_drive(image_path)
 
-            # Importar y ejecutar el pipeline de food_log
             sys.path.insert(0, str(PROJECT_ROOT))
             from execution.food_log import log_food
             data = await asyncio.get_event_loop().run_in_executor(None, log_food, image_path)
@@ -244,13 +319,13 @@ def main():
             response = (
                 f"Registrado en Google Sheets.\n\n"
                 f"{data.get('nombre', 'Comida')}\n"
-                f"Calorías: {data.get('calorias', '?')} kcal\n"
-                f"Proteínas: {data.get('proteinas_g', '?')} g\n"
+                f"Calorias: {data.get('calorias', '?')} kcal\n"
+                f"Proteinas: {data.get('proteinas_g', '?')} g\n"
                 f"Carbohidratos: {data.get('carbohidratos_g', '?')} g\n"
                 f"Grasas: {data.get('grasas_g', '?')} g"
             )
             if data.get("notas"):
-                response += f"\n\nNota: {data['notas']}"
+                response += f"\nNota: {data['notas']}"
 
         except Exception as e:
             response = f"Error al registrar la comida: {e}"
@@ -271,10 +346,12 @@ def main():
         .connect_timeout(30)
         .build()
     )
-    app.add_handler(CommandHandler("start", cmd_start))
-    app.add_handler(CommandHandler("reset", cmd_reset))
-    app.add_handler(CommandHandler("new", cmd_new))
+    app.add_handler(CommandHandler("start",   cmd_start))
+    app.add_handler(CommandHandler("reset",   cmd_reset))
+    app.add_handler(CommandHandler("new",     cmd_new))
     app.add_handler(CommandHandler("compact", cmd_compact))
+    app.add_handler(CommandHandler("history", cmd_history))
+    app.add_handler(CommandHandler("recall",  cmd_recall))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     app.add_handler(MessageHandler(filters.VOICE, handle_voice))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
