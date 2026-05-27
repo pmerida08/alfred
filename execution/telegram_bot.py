@@ -105,7 +105,9 @@ async def ask_alfred(message: str, session_id: str | None = None) -> tuple[str, 
 
     raw = stdout.decode("utf-8").strip()
     if not raw:
-        raise RuntimeError(stderr.decode("utf-8") or "Sin respuesta del CLI")
+        err = stderr.decode("utf-8").strip()
+        print(f"[alfred] CLI falló — returncode={proc.returncode}, stderr={err!r}", file=sys.stderr)
+        raise RuntimeError(err or f"Sin respuesta del CLI (exit {proc.returncode})")
 
     data = json.loads(raw)
     if data.get("is_error"):
