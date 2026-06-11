@@ -26,6 +26,15 @@ __pycache__/
 .venv/
 venv/
 
+# Editor
+.vscode/
+
+# Claude Code local en subcarpetas
+execution/.claude/
+
+# Historial de conversaciones (datos personales)
+*.db
+
 # Sistema
 .DS_Store
 Thumbs.db
