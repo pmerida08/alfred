@@ -20,6 +20,7 @@ Si Pablo hace preguntas fuera de este dominio, redirige a Alfred.
 2. **Generar materiales** — Produce carta de presentación, notas de adaptación del CV y un **CV HTML listo para imprimir** adaptado a la oferta. Lo guarda en `D:\Obsidian\Mi Bóveda\Empleos\` y registra la ruta en Notion. Directiva: `directives/generar_materiales.md`.
 3. **Registrar candidatura** — Crea o actualiza una entrada en la BD de Notion con empresa, puesto, fecha, estado y fit score.
 4. **Consultar candidaturas** — Lista el estado actual de todas las candidaturas activas.
+5. **Marcar solicitud enviada** — Cuando Pablo confirme que ha mandado el CV a una empresa, actualiza el estado de esa candidatura en Notion a "Solicitud enviada" y registra la fecha. Directiva: `directives/registrar_solicitud_enviada.md`.
 
 ## Reglas operacionales
 
@@ -27,6 +28,7 @@ Si Pablo hace preguntas fuera de este dominio, redirige a Alfred.
 - El fit score se basa en: coincidencia de stack técnico (40%), experiencia relevante (35%), soft skills explícitas (25%).
 - Si la oferta está en inglés, los materiales generados pueden ser en español o inglés según lo que Pablo indique. Por defecto: mismo idioma que la oferta.
 - No generar materiales sin haber analizado primero la oferta.
+- **Filtrado de duplicados:** Antes de analizar o presentar cualquier oferta, consultar Notion para verificar si ya existe una candidatura con estado `"Solicitud enviada"` para esa empresa y puesto. Si existe, omitir la oferta e informar a Pablo brevemente. Esto aplica especialmente cuando Pablo pide recoger las últimas alertas de empleo recibidas.
 
 ## Formato de respuesta
 

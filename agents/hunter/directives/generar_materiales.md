@@ -18,6 +18,18 @@ Esta directiva solo se ejecuta después de haber completado `analizar_oferta.md`
 
 ## Proceso
 
+### 0. Idioma de los materiales (REGLA OBLIGATORIA)
+
+Todos los materiales (CV HTML, carta de presentación y notas de adaptación) se generan **en el mismo idioma que la oferta**, salvo que Pablo indique explícitamente otro.
+
+- Oferta en inglés → CV, carta y notas **en inglés**. En el CV HTML, ajustar `<html lang="en">`, los títulos de sección (Profile, Skills, Experience, Featured Projects, Education, Languages & Certifications) y el watermark ("Application prepared with Alfred · Personal AI Agent").
+- Oferta en español → todo en español (`<html lang="es">`).
+- Detectar el idioma por la **descripción de la oferta**, no por el nombre de la empresa ni por el país.
+- No traducir nombres propios de proyectos (Alfred, LifeVault, Estudiante Élite) ni de tecnologías.
+- Mantener el teléfono con prefijo internacional (+34) cuando los materiales sean en inglés.
+
+> Aprendido en producción (2026-06-07): el CV de Kyndryl se pidió en inglés porque la oferta estaba en inglés. Aplicar este criterio por defecto a partir de ahora.
+
 ### 1. Carta de presentación
 
 **Estructura:**

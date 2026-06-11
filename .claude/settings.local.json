@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "mcp__651cf300-3969-445f-8086-ff4816cf2b6b__search_threads",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "mcp__eea1299e-3126-42cc-866c-b65ddd58a49a__notion-search"
     ]
   }
 }

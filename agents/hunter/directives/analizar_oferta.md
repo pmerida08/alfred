@@ -11,6 +11,13 @@ Evaluar el encaje entre el perfil de Pablo y una oferta de trabajo concreta, pro
 
 ## Proceso
 
+### 0. Verificar si ya se candidató
+
+Antes de cualquier análisis, consultar la BD de Notion buscando una candidatura con empresa y puesto coincidentes cuyo estado sea `"Solicitud enviada"`.
+
+- Si existe → **no analizar**. Responder: `"Ya enviaste candidatura a [Empresa] para [Puesto] el [fecha]. La omito."` y detener el proceso.
+- Si no existe → continuar con el análisis.
+
 ### 1. Leer el CV
 
 Antes de cualquier análisis, leer el CV completo. No usar memoria de sesiones anteriores.
