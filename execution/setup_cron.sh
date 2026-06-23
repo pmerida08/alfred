@@ -19,10 +19,11 @@ fi
 CRONTAB_NEW="$CRONTAB_CURRENT
 
 $MARKER
-0 7  * * * $HEARTBEAT email    >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
-0 8  * * * $HEARTBEAT agenda   >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
-0 9  * * * $HEARTBEAT token    >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
-0 23 * * * $HEARTBEAT dreaming >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
+0 7  * * * $HEARTBEAT email          >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
+0 8  * * * $HEARTBEAT agenda         >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
+0 9  * * * $HEARTBEAT token          >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
+0 12 * * 0 $HEARTBEAT buscar_trabajo >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
+0 23 * * * $HEARTBEAT dreaming       >> $ALFRED_DIR/.tmp/heartbeat.log 2>&1
 "
 
 echo "$CRONTAB_NEW" | crontab -

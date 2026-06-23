@@ -47,6 +47,12 @@ case "$TASK" in
     # depende del CLI para el aviso).
     "$ALFRED_PY" "$ALFRED_DIR/execution/check_token_expiry.py" >> "$LOG_FILE" 2>&1
     ;;
+  buscar_trabajo)
+    # Búsqueda de empleo semanal (domingo 12:00). El script invoca el CLI para
+    # correr la directiva buscar_ofertas y PUSHEA a Telegram el texto (cartas +
+    # links) y los ficheros del outbox (CV + cartas) por la API HTTP directa.
+    "$ALFRED_PY" "$ALFRED_DIR/execution/hunter_weekly.py" >> "$LOG_FILE" 2>&1
+    ;;
   email|agenda)
     # Tareas que requieren Claude CLI
     if ! command -v claude &> /dev/null; then
