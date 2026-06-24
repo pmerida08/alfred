@@ -107,6 +107,28 @@ def flush_outbox() -> int:
     return len(files)
 
 
+def _is_quota_error(text: str) -> bool:
+    """True si el error del CLI es por límite de uso de Claude, no un fallo real."""
+    t = (text or "").lower()
+    return any(k in t for k in (
+        "session limit", "usage limit", "rate limit", "hit your limit",
+        "out of credit", "límite de uso", "resets",
+    ))
+
+
+def report_failure(detail: str) -> None:
+    """Avisa de un fallo distinguiendo 'sin cuota de Claude' de un error de verdad."""
+    detail = (detail or "").strip()
+    if _is_quota_error(detail):
+        send_message(
+            "🟡 Alfred: no he podido buscar empleo porque Claude está sin cuota de uso "
+            "ahora mismo. No es un fallo del sistema; reintenta con /buscar_trabajo "
+            f"cuando se resetee.\n\n{detail[:300]}"
+        )
+    else:
+        send_message(f"🔴 Alfred: la búsqueda de empleo falló.\n\n{detail[:500]}")
+
+
 def main() -> None:
     if not Path(CLAUDE_BIN).exists() and not shutil.which(CLAUDE_BIN):
         send_message(f"⚠️ Alfred: no encuentro el CLI de Claude ({CLAUDE_BIN}) para la búsqueda de empleo del domingo.")
@@ -124,9 +146,9 @@ def main() -> None:
 
     raw = proc.stdout.strip()
     if not raw:
-        err = proc.stderr.strip()[:300]
-        send_message(f"🔴 Alfred: la búsqueda de empleo no devolvió nada (exit {proc.returncode}).\n\n{err}")
-        print(f"[hunter-weekly] stdout vacío, stderr={err!r}", file=sys.stderr)
+        err = proc.stderr.strip()
+        report_failure(f"(exit {proc.returncode}) {err}")
+        print(f"[hunter-weekly] stdout vacío, stderr={err[:300]!r}", file=sys.stderr)
         return
 
     try:
@@ -140,7 +162,7 @@ def main() -> None:
 
     result = (data.get("result") or "").strip()
     if data.get("is_error") or not result:
-        send_message(f"🔴 Alfred: la búsqueda de empleo del domingo falló.\n\n{result[:500]}")
+        report_failure(result)
         print(f"[hunter-weekly] is_error/result vacío: {result[:200]!r}", file=sys.stderr)
         return
 
