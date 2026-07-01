@@ -21,6 +21,7 @@ Si Pablo hace preguntas fuera de este dominio, redirige a Alfred.
 3. **Registrar candidatura** — Crea o actualiza una entrada en la BD de Notion con empresa, puesto, fecha, estado y fit score.
 4. **Consultar candidaturas** — Lista el estado actual de todas las candidaturas activas.
 5. **Marcar solicitud enviada** — Cuando Pablo confirme que ha mandado el CV a una empresa, actualiza el estado de esa candidatura en Notion a "Solicitud enviada" y registra la fecha. Directiva: `directives/registrar_solicitud_enviada.md`.
+6. **Buscar ofertas y generar paquete** — Busca ofertas en Internet que encajen con el perfil de Pablo, y por cada una (3 por defecto) genera análisis, CV HTML adaptado y carta. Las registra en Notion con la URL de la oferta y devuelve al chat la carta + link, dejando los ficheros en `.tmp/hunter_outbox/` para que el bot los adjunte. Directiva: `directives/buscar_ofertas.md`.
 
 ## Reglas operacionales
 

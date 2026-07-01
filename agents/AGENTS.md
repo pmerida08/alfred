@@ -18,3 +18,4 @@ Agentes especializados disponibles para Alfred. Cada agente vive en su propia ca
 | ADA — Desarrollo de aplicaciones web y móvil | [agents/ada/](ada/CLAUDE.md) |
 | BASILIO — Archivero de documentos | [agents/basilio/](basilio/CLAUDE.md) |
 | HUNTER — Búsqueda de empleo | [agents/hunter/](hunter/CLAUDE.md) |
+| HERALDO — Contenido y redes sociales | [agents/heraldo/](heraldo/CLAUDE.md) |
