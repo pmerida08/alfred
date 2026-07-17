@@ -68,6 +68,8 @@ Partiendo del template `D:\Programas\Alfred\agents\hunter\templates\cv_template.
 | EXPERIENCIA bullets | Poner en primer lugar los bullets que más encajan con la oferta |
 | PROYECTOS | Reordenar los 4 proyectos: el más relevante arriba-izquierda, el segundo arriba-derecha |
 
+**Proyectos por defecto (los más representativos):** LifeVault, Alfred y Estudiante Élite son, por indicación de Pablo, los tres proyectos más representativos de su perfil. Priorizarlos siempre que aparezcan en el CV base, salvo que un proyecto distinto encaje de forma mucho más directa con el stack o el puesto de la oferta — en ese caso, explicitarlo en las notas de adaptación.
+
 **Reglas de producción:**
 - No inventar skills ni experiencias no presentes en el CV original.
 - No eliminar secciones ni reducir número de proyectos — solo reordenar.
@@ -89,7 +91,7 @@ Partiendo del template `D:\Programas\Alfred\agents\hunter\templates\cv_template.
 
 5. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
    - GitHub → `https://github.com/pmerida08`
-   - Portfolio → `https://pmerida-porfolio.netlify.app`
+   - Portfolio → `https://pmerida-portfolio.netlify.app`
    - LinkedIn → `https://linkedin.com/in/pablo-merida-velasco`
 
 **Guardar en dos rutas:**
