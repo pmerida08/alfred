@@ -12,14 +12,14 @@ Integrar una nueva fuente en el wiki de forma que el conocimiento quede estructu
 
 ## Vault
 
-`~/Documentos/Obsidian/Alfred/`
+`D:\Obsidian\Mi Bóveda\`
 
 ---
 
 ## Flujo completo
 
 ### 1. Leer el SCHEMA
-Antes de empezar: `~/Documentos/Obsidian/Alfred/SCHEMA.md`
+Antes de empezar: `D:\Obsidian\Mi Bóveda\SCHEMA.md`
 
 ### 2. Leer la fuente
 - Si está en `raw/`: leer el archivo directamente
@@ -97,6 +97,21 @@ Añadir la nueva nota en la sección correcta:
 ```
 
 ---
+
+## Convención especial: Proyectos/
+
+Cada proyecto de Pablo (LifeVault, ZepNote, Tikkofy, Notin, Portfolio, etc.) tiene su propia carpeta en `Proyectos/<Nombre>/`, con la misma estructura para todos:
+
+```
+Proyectos/<Nombre>/
+├── README.md   ← estado, objetivo, stack, decisiones abiertas (equivalente a la nota única antigua)
+├── log.md      ← histórico append-only propio del proyecto (mismo formato que el log.md raíz)
+└── Notas/      ← apuntes específicos del proyecto que no caben en el README
+```
+
+Al hablar de un proyecto: leer `README.md` (+ `log.md` si se necesita histórico) antes de responder, y actualizar `README.md` cuando cambie el estado. Registrar cambios relevantes en el `log.md` del propio proyecto, no solo en el `log.md` raíz.
+
+**Excepción: Alfred.** La memoria operativa de Alfred (sesiones, preferencias, arquitectura) vive en el repo (`memory/`, `MEMORY.md`), no en esta carpeta — evita depender del filesystem del vault en cada turno. Puede seguir existiendo una nota ligera `Proyectos/Alfred.md` para que otros proyectos lo enlacen, pero no se convierte en carpeta ni se le duplica memoria.
 
 ## Edge cases
 

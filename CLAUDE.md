@@ -121,7 +121,9 @@ Si no hay nada para ese momento, responde: "OK".
 Cualquier pregunta sobre gym, rutina, entrenamiento, ejercicio, calorías, macros, comidas o registro nutricional → delegar a FORGE (`agents/forge/CLAUDE.md`). No responder directamente. FORGE registra sesiones en Notion, muestra progreso, y gestiona el log de comidas en Google Sheets (automático vía foto de Telegram).
 
 ### Obsidian — Wiki LLM
-La bóveda está en `~/Documentos/Obsidian/Alfred/`. Sigue el patrón LLM Wiki.
+La bóveda real es `D:\Obsidian\Mi Bóveda\` (la que Pablo tiene abierta en la app Obsidian, sincronizada por Syncthing). **No** `~/Documentos/Obsidian/Alfred/` — esa ruta antigua quedó huérfana y ya no se usa. Sigue el patrón LLM Wiki.
+
+> ⚠️ Esta ruta solo existe en el PC Windows de Pablo. El servidor Linux (donde corre el HEARTBEAT vía Telegram 24/7) todavía no tiene esta carpeta sincronizada — si una tarea corre ahí y necesita el vault, avisar a Pablo en vez de crear una bóveda nueva en otra ruta.
 
 - Leer siempre `SCHEMA.md` antes de cualquier operación en el vault
 - **INGEST** (añadir fuente): directiva `directives/obsidian_ingest.md`
@@ -129,9 +131,11 @@ La bóveda está en `~/Documentos/Obsidian/Alfred/`. Sigue el patrón LLM Wiki.
 - **LINT** (mantenimiento): directiva `directives/obsidian_lint.md`
 - Archivos clave: `index.md` (catálogo), `log.md` (historial append-only)
 - `raw/` son fuentes inmutables — Alfred nunca las modifica
+- **Cada proyecto activo vive en `Proyectos/<Nombre>/`** con la misma estructura: `README.md` (estado/objetivo/stack) + `log.md` (histórico propio) + `Notas/` (apuntes específicos). Excepción: Alfred — su propia memoria vive en este repo (`memory/`, `MEMORY.md`), no en Obsidian, para no depender del filesystem del vault en cada turno.
+- Al hablar de un proyecto (LifeVault, ZepNote, Tikkofy, Notin, Portfolio, etc.), leer y actualizar su carpeta en `Proyectos/` — no dejar ese conocimiento solo en la memoria interna de Alfred.
 
 ### Documentos
-Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `~/Documentos/Obsidian/Alfred/raw`.
+Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
 
 ### Búsqueda de empleo
 Cualquier pregunta sobre ofertas de trabajo, búsqueda de empleo ("búscame curro", "tráeme ofertas"), análisis de candidaturas, cartas de presentación, adaptación del CV o seguimiento de procesos de selección → delegar a HUNTER (`agents/hunter/CLAUDE.md`). No responder directamente. HUNTER lee el CV de Pablo, analiza el encaje con la oferta y genera los materiales en Notion. También puede **buscar ofertas en Internet** que encajen con el perfil y, por cada una, adaptar el CV HTML y escribir la carta, registrarlas en Notion y devolver al chat la carta + el link de la oferta (skill `hunter-buscar-ofertas`, directiva `directives/buscar_ofertas.md`). En Telegram los ficheros generados (CV + carta) se adjuntan automáticamente vía `.tmp/hunter_outbox/`.
