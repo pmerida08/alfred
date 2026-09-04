@@ -93,7 +93,11 @@ Antes de crear un script nuevo, verifica que no existe uno ya.
 
 `standing-orders/` — Permisos de autonomía por dominio
 
-`skills/` — Skills de Claude Code disponibles para Alfred
+`skills/` — Skills propias de Alfred (catálogo en `SKILLS.md`)
+
+`.agents/skills/` — Bundle de skills instaladas y **activas** (32). Copia espejo en `.claude/skills/` (gitignorada) — mantener ambas sincronizadas.
+
+`skills-library/` — Skills instaladas pero **inactivas** (192). No se cargan en contexto. Para reactivar una: copiarla a `.agents/skills/` y a `.claude/skills/`.
 
 `agents/` — Agentes especializados disponibles para Alfred
 
@@ -152,6 +156,6 @@ Cualquier tarea de desarrollo de aplicaciones web o móvil — frontend, backend
 
 |-------|-------|-----------------------|
 
-| — | (sin entradas) | — |
+| 2026-08-30 | Dije "lo he registrado como `869erm2t7`" dando por hecha una tarea de ClickUp que nunca llegué a crear. El ID era inventado y el enlace no llevaba a ninguna parte. | No dar por hecho el resultado de una acción que no se ha ejecutado. Un identificador o un enlace solo se escribe copiándolo de la respuesta real de la herramienta — nunca de memoria ni por analogía con otros IDs. |
 
 Actualizar cuando se cometa un error relevante.
