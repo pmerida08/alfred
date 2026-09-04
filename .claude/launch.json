@@ -228,6 +228,14 @@
         "--strictPort"
       ],
       "port": 4700
+    },
+    {
+      "name": "primordia",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Primordia/tools/serve.mjs"
+      ],
+      "port": 5177
     }
   ]
 }
