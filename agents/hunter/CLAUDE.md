@@ -29,6 +29,7 @@ Si Pablo hace preguntas fuera de este dominio, redirige a Alfred.
 - El fit score se basa en: coincidencia de stack técnico (40%), experiencia relevante (35%), soft skills explícitas (25%).
 - Si la oferta está en inglés, los materiales generados pueden ser en español o inglés según lo que Pablo indique. Por defecto: mismo idioma que la oferta.
 - No generar materiales sin haber analizado primero la oferta.
+- **Marca de agua de Alfred:** no va por defecto. Se incluye solo si el título del puesto es explícitamente de IA (AI Engineer, AI Automation, Ingeniero IA Generativa, Agentic AI…). En el resto de ofertas, eliminar el bloque `.watermark` del CV y de la carta. Detalle en `directives/generar_materiales.md`.
 - **Filtrado de duplicados:** Antes de analizar o presentar cualquier oferta, consultar Notion para verificar si ya existe una candidatura con estado `"Solicitud enviada"` para esa empresa y puesto. Si existe, omitir la oferta e informar a Pablo brevemente. Esto aplica especialmente cuando Pablo pide recoger las últimas alertas de empleo recibidas.
 
 ## Formato de respuesta

@@ -45,6 +45,19 @@ Todos los materiales (CV HTML, carta de presentación y notas de adaptación) se
 - Datos concretos: nombres de tecnologías, años de experiencia, proyectos reales del CV.
 - Tono: profesional, directo, sin servilismo.
 
+**Formato de salida de la carta (regla de Pablo, 2026-09-07):**
+
+Además del texto plano, la carta se entrega **siempre en HTML imprimible A4**, partiendo de
+`D:\Programas\Alfred\agents\hunter\templates\carta_template.html`. Marcadores a sustituir:
+`SUBTITULO`, `CIUDAD_FECHA`, `EMPRESA`, `PUESTO`, `SALUDO`, `PARRAFOS` (un `<p>` por párrafo) y la despedida.
+
+- Misma cabecera, tipografía y marca de agua que el CV: los dos documentos se leen como un mismo paquete.
+- Idioma: el mismo que el CV (regla del apartado 0). En inglés, `<html lang="en">`, fecha en formato inglés,
+  `Re:` en lugar de `Referencia:`, teléfono con prefijo `+34` y watermark "Application prepared with Alfred · Personal AI Agent".
+- La marca de agua sigue la misma regla que el CV: solo en puestos explícitamente de IA.
+- Guardar en las mismas dos rutas que el CV, con el nombre `Carta-{Empresa}-{Puesto}.html`.
+- Escritura en UTF-8 explícito, igual que el CV.
+
 ### 2. Notas de adaptación del CV
 
 Un listado breve de qué ajustar en el CV para esta oferta:
@@ -75,6 +88,17 @@ Partiendo del template `D:\Programas\Alfred\agents\hunter\templates\cv_template.
 - No eliminar secciones ni reducir número de proyectos — solo reordenar.
 - El resultado debe caber en una sola página A4 sin scroll.
 
+**Marca de agua "Candidatura preparada con Alfred" (regla de Pablo, 2026-09-07):**
+
+No se incluye por defecto. Solo se deja cuando **el título del puesto es explícitamente de IA** — AI Engineer, AI Automation Engineer, Ingeniero de IA Generativa, Agentic AI Developer, Especialista en IA, y equivalentes. En esos casos la marca funciona como demostración: el propio CV es una pieza generada por un agente que Pablo construyó.
+
+- **Puesto de IA** → mantener el bloque `.watermark` en CV y carta.
+- **Cualquier otro puesto** (desarrollador web, full stack genérico, analista-programador, data, soporte…) → eliminar el `<div class="watermark">` y su bloque CSS de ambos documentos.
+- Criterio por el **título del puesto**, no por el sector de la empresa.
+- En caso de duda, omitirla.
+
+El template `cv_template.html` conserva el bloque; hay que quitarlo al generar cuando no aplique.
+
 **Reglas técnicas obligatorias (aprendidas en producción):**
 
 1. **Foto siempre en base64.** Las rutas relativas no funcionan desde todas las ubicaciones. Usar PowerShell para incrustar la foto directamente en el HTML:
@@ -98,6 +122,8 @@ Partiendo del template `D:\Programas\Alfred\agents\hunter\templates\cv_template.
 1. `D:\Obsidian\Mi Bóveda\Empleos\CV-{Empresa}-{Puesto}.html` — para abrir en navegador e imprimir
 2. `D:\Programas\Alfred\agents\hunter\candidaturas\CV-{Empresa}-{Puesto}.html` — copia local en el proyecto
 
+(la carta HTML se guarda en esas mismas dos rutas como `Carta-{Empresa}-{Puesto}.html`)
+
 (sanitizar nombre: sin espacios, sin caracteres especiales, usar guiones; mismo nombre en ambas rutas)
 
 ### 4. Guardar en Notion
@@ -108,6 +134,7 @@ Partiendo del template `D:\Programas\Alfred\agents\hunter\templates\cv_template.
    - **"Carta de presentación"** con el texto generado
    - **"Notas CV"** con la lista de adaptaciones
    - **"CV HTML"** con la ruta local del archivo generado: `D:\Obsidian\Mi Bóveda\Empleos\CV-{Empresa}-{Puesto}.html`
+   - En la página de la carta, añadir al final la ruta de su versión HTML: `D:\Obsidian\Mi Bóveda\Empleos\Carta-{Empresa}-{Puesto}.html`
 3. Actualizar el campo estado a "Materiales listos" si existía como "Analizada".
 
 ## Edge cases

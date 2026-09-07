@@ -58,7 +58,8 @@ Ejecutar en orden, reutilizando las directivas existentes:
 3. **Registrar en Notion** — crear/actualizar la candidatura: empresa, puesto, fecha, fit score, **URL de la oferta**, estado `"Materiales listos"`. Crear las páginas hijo (Carta de presentación, Notas CV, CV HTML con su ruta).
 4. **Copiar al outbox** — dejar en `D:\Programas\Alfred\.tmp\hunter_outbox\` los ficheros enviables de esta oferta:
    - El CV: `CV-{Empresa}-{Puesto}.html`
-   - La carta: `Carta-{Empresa}-{Puesto}.txt` (texto plano de la carta)
+   - La carta en texto plano: `Carta-{Empresa}-{Puesto}.txt` (para copiar y pegar en formularios)
+   - La carta en HTML imprimible: `Carta-{Empresa}-{Puesto}.html`
 
    Sanitizar nombres igual que en `generar_materiales.md` (sin espacios ni caracteres especiales, guiones).
 
@@ -74,7 +75,7 @@ Oferta: <URL de la oferta>
 CARTA DE PRESENTACIÓN
 <texto completo de la carta, listo para copiar y pegar>
 
-CV: adjunto (CV-Empresa-Puesto.html)
+CV y carta: adjuntos (CV-Empresa-Puesto.html · Carta-Empresa-Puesto.html)
 Registrado en Notion ✓
 ```
 
