@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Pablo Mérida Velasco — EMPRESA</title>
+<style>
+    @page { size: A4; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: #1a1a1a;
+      background: white;
+      width: 210mm;
+      height: 297mm;
+      overflow: hidden;
+      padding: 16mm 18mm 11mm 18mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header { flex-shrink: 0; }
+    .header h1 { font-size: 20pt; font-weight: 800; letter-spacing: -0.3px; color: #111; }
+    .header .subtitulo { font-size: 10pt; color: #444; margin-top: 2px; }
+    .contacto { margin-top: 5px; font-size: 9pt; color: #333; display: flex; flex-wrap: wrap; gap: 0 14px; }
+    .contacto a { color: #333; text-decoration: none; }
+
+    hr.divisor { border: none; border-top: 1.8px solid #1a1a1a; margin: 8px 0 0; flex-shrink: 0; }
+
+    .cuerpo { flex: 1; display: flex; flex-direction: column; padding-top: 14px; }
+
+    .meta { font-size: 9.5pt; color: #555; margin-bottom: 12px; }
+    .destinatario { margin-bottom: 14px; }
+    .destinatario .empresa { font-weight: 700; font-size: 11pt; }
+    .destinatario .puesto { font-size: 9.5pt; color: #555; }
+
+    .carta p { margin-bottom: 10px; text-align: justify; }
+    .carta p.saludo { margin-bottom: 12px; text-align: left; }
+    .firma { margin-top: 4px; font-size: 10pt; line-height: 1.5; }
+    .firma .nombre { font-weight: 700; }
+    .firma .datos { font-size: 9pt; color: #555; }
+
+    .watermark {
+      flex-shrink: 0;
+      text-align: center;
+      padding-top: 6px;
+      font-size: 7pt;
+      letter-spacing: 0.8px;
+      color: #bbb;
+      border-top: 0.5px solid #e8e8e8;
+      margin-top: 6px;
+    }
+    .watermark span { font-weight: 600; color: #aaa; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Pablo Mérida Velasco</h1>
+    <div class="subtitulo">SUBTITULO</div>
+    <div class="contacto">
+      <span>📞 664 549 627</span>
+      <span>✉ pablomerida03@gmail.com</span>
+      <span>📍 Montilla, Córdoba</span>
+      <a href="https://github.com/pmerida08" target="_blank">🔗 github.com/pmerida08</a>
+      <a href="https://pmerida-portfolio.netlify.app" target="_blank">🌐 pmerida-portfolio.netlify.app</a>
+      <a href="https://linkedin.com/in/pablo-merida-velasco" target="_blank">💼 linkedin.com/in/pablo-merida-velasco</a>
+    </div>
+  </div>
+
+  <hr class="divisor">
+
+  <div class="cuerpo">
+    <div class="meta">CIUDAD_FECHA</div>
+    <div class="destinatario">
+      <div class="empresa">EMPRESA</div>
+      <div class="puesto">Referencia: PUESTO</div>
+    </div>
+    <div class="carta">
+      <p class="saludo">SALUDO</p>
+      <!-- Un <p> por párrafo del cuerpo (justificado por CSS) -->
+      PARRAFOS
+      <div class="firma">DESPEDIDA<br><span class="nombre">Pablo Mérida Velasco</span><br><span class="datos">664 549 627 · pablomerida03@gmail.com · github.com/pmerida08</span></div>
+    </div>
+  </div>
+
+  <div class="watermark">Candidatura preparada con <span>Alfred</span> &middot; Agente de Inteligencia Artificial Personal</div>
+
+</body>
+</html>

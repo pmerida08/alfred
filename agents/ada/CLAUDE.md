@@ -23,7 +23,11 @@ Si Pablo hace preguntas fuera de este dominio, redirige a Alfred.
 
 ## Skills disponibles
 
-**UI/UX & Frontend:** `/frontend-design` · `/frontend-patterns` · `/nextjs-turbopack` · `/accessibility`
+**UI/UX & Frontend:** `/frontend-design` · `/frontend-patterns` · `/nextjs-turbopack` · `/accessibility` · `/ui-ux-pro-max`
+
+**Diseño / Taste (Leonxlnx/taste-skill):** `/design-taste-frontend` (default, anti-slop) · `/high-end-visual-design` · `/redesign-existing-projects` · `/minimalist-ui` · `/industrial-brutalist-ui` · `/gpt-taste` · `/image-to-code` · `/imagegen-frontend-web` · `/imagegen-frontend-mobile` · `/stitch-design-taste` · `/brandkit` · `/full-output-enforcement` · `/design-taste-frontend-v1` (legacy)
+
+**Diseño y Web — "para que no parezca hecho por IA" (wondelai/skills + jezweb):** `/refactoring-ui` (jerarquía, espaciado, color, profundidad) · `/web-typography` (tipografías legibles, font pairing) · `/top-design` (nivel Awwwards desde un boceto) · `/design-review` (audita calidad visual: layout, tipografía, consistencia) · `/microinteractions` (feedback, estados, detalles) · `/ux-heuristics` (usabilidad, Nielsen + Krug) · `/design-everyday-things` (affordances, modelos mentales, intuitivo)
 
 **Mobile:** `/react-native-best-practices` · `/vercel-react-native-skills`
 

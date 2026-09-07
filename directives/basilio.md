@@ -6,8 +6,8 @@ BASILIO es el agente de documentos de Pablo. Sabe leer, extraer y responder con 
 
 ## Fuente de documentos
 
-Carpeta de documentos (PDF, DOCX): `~/Documentos/Obsidian/Alfred/raw/docs`
-Carpeta de notas (MD): `~/Documentos/Obsidian/Alfred/raw`
+Carpeta de documentos (PDF, DOCX): `D:\Obsidian\Mi Bóveda\raw\docs`
+Carpeta de notas (MD): `D:\Obsidian\Mi Bóveda\raw`
 
 Formatos válidos: `.md`, `.pdf`, `.docx`
 
@@ -32,9 +32,9 @@ Pablo dirá algo como:
 ## Listar documentos disponibles
 
 Cuando Pablo pida ver qué documentos hay, usar `Glob` con los patrones:
-- `~/Documentos/Obsidian/Alfred/raw/*.md` — notas
-- `~/Documentos/Obsidian/Alfred/raw/docs/*.pdf` — PDFs
-- `~/Documentos/Obsidian/Alfred/raw/docs/*.docx` — documentos Word
+- `D:\Obsidian\Mi Bóveda\raw\*.md` — notas
+- `D:\Obsidian\Mi Bóveda\raw\docs\*.pdf` — PDFs
+- `D:\Obsidian\Mi Bóveda\raw\docs\*.docx` — documentos Word
 
 Mostrar el resultado como lista simple con nombre y formato. Sin rutas completas si no son necesarias.
 

@@ -21,16 +21,37 @@ echo "[$TIMESTAMP] Iniciando HEARTBEAT: $TASK" >> "$LOG_FILE"
 
 cd "$ALFRED_DIR"
 
-# Cargar variables de entorno
+# Cargar variables de entorno.
+# Ignora líneas de comentario, líneas vacías y comentarios inline (" #...").
+# No-fatal: un .env con formato raro no debe abortar el HEARTBEAT (set -e).
 if [ -f "$ALFRED_DIR/.env" ]; then
-  export $(grep -v '^#' "$ALFRED_DIR/.env" | xargs)
+  export $(grep -v '^#' "$ALFRED_DIR/.env" | grep -v '^$' | sed 's/[[:space:]]#.*//' | xargs) 2>/dev/null || true
 fi
+
+# Python del virtualenv de Alfred (fallback al python3 del sistema).
+# Se usa el binario directo en vez de 'source activate' para no depender de
+# rutas relativas frágiles.
+ALFRED_PY="python3"
+for cand in "$HOME/alfred-venv/bin/python3" "$ALFRED_DIR/../alfred-venv/bin/python3"; do
+  if [ -x "$cand" ]; then ALFRED_PY="$cand"; break; fi
+done
 
 case "$TASK" in
   dreaming)
     # Dreaming usa script Python directo (sin necesidad de Claude CLI)
-    source "$ALFRED_DIR/../alfred-venv/bin/activate" 2>/dev/null || true
-    python3 "$ALFRED_DIR/execution/memory_dreaming.py" >> "$LOG_FILE" 2>&1
+    "$ALFRED_PY" "$ALFRED_DIR/execution/memory_dreaming.py" >> "$LOG_FILE" 2>&1
+    ;;
+  token)
+    # Sonda de salud de la auth de Claude Code. El script invoca el CLI y, si la
+    # autenticación falla (401), avisa por Telegram con la API HTTP directa (no
+    # depende del CLI para el aviso).
+    "$ALFRED_PY" "$ALFRED_DIR/execution/check_token_expiry.py" >> "$LOG_FILE" 2>&1
+    ;;
+  buscar_trabajo)
+    # Búsqueda de empleo semanal (domingo 12:00). El script invoca el CLI para
+    # correr la directiva buscar_ofertas y PUSHEA a Telegram el texto (cartas +
+    # links) y los ficheros del outbox (CV + cartas) por la API HTTP directa.
+    "$ALFRED_PY" "$ALFRED_DIR/execution/hunter_weekly.py" >> "$LOG_FILE" 2>&1
     ;;
   email|agenda)
     # Tareas que requieren Claude CLI

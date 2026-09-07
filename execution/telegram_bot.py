@@ -22,6 +22,9 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 _allowed_raw = os.getenv("TELEGRAM_ALLOWED_USER_ID", "").strip()
 ALLOWED_USER_ID: int | None = int(_allowed_raw) if _allowed_raw else None
 TMP_DIR = PROJECT_ROOT / ".tmp"
+# Buzón de salida de HUNTER: los ficheros que deje aquí (CV, cartas) se
+# adjuntan al chat tras la respuesta de texto y luego se borran.
+HUNTER_OUTBOX = TMP_DIR / "hunter_outbox"
 
 WHISPER_MODEL = "small"  # opciones: tiny, base, small, medium, large
 
@@ -117,6 +120,28 @@ async def ask_alfred(message: str, session_id: str | None = None) -> tuple[str, 
         raise
 
 
+async def send_outbox_files(update) -> None:
+    """Envía como documentos los ficheros que HUNTER haya dejado en el outbox y los borra.
+
+    Decoupla el bot de la skill: cualquier respuesta puede traer adjuntos sin que
+    el bot tenga que parsear el texto. Solo actúa si hay ficheros pendientes.
+    """
+    if not HUNTER_OUTBOX.exists():
+        return
+    files = sorted(p for p in HUNTER_OUTBOX.iterdir() if p.is_file())
+    for f in files:
+        try:
+            with f.open("rb") as fh:
+                await update.message.reply_document(document=fh, filename=f.name)
+        except Exception as e:
+            print(f"[outbox] error enviando {f.name}: {e}", file=sys.stderr)
+        finally:
+            try:
+                f.unlink()
+            except Exception:
+                pass
+
+
 def _format_dt(iso: str) -> str:
     """Formatea timestamp ISO a 'DD/MM/YY HH:MM'."""
     try:
@@ -185,6 +210,8 @@ def main():
         response = strip_markdown(response)
         for i in range(0, max(len(response), 1), 4096):
             await update.message.reply_text(response[i:i + 4096])
+
+        await send_outbox_files(update)
 
     async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
@@ -280,6 +307,19 @@ def main():
             )
         await update.message.reply_text("\n".join(lines))
 
+    async def cmd_buscar_trabajo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Lanza la búsqueda de empleo de HUNTER. Uso: /buscar_trabajo [filtros]"""
+        if not await is_authorized(update): return
+        print("[alfred] /buscar_trabajo")
+        prompt = (
+            "Busca ofertas de empleo que encajen con mi perfil y genérame el paquete "
+            "de candidatura por cada una (delega en HUNTER, directiva buscar_ofertas)."
+        )
+        extra = " ".join(context.args).strip() if context.args else ""
+        if extra:
+            prompt += f" Criterios: {extra}."
+        await reply_to(update, prompt)
+
     async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
         await reply_to(update, update.message.text)
@@ -352,6 +392,7 @@ def main():
     app.add_handler(CommandHandler("compact", cmd_compact))
     app.add_handler(CommandHandler("history", cmd_history))
     app.add_handler(CommandHandler("recall",  cmd_recall))
+    app.add_handler(CommandHandler("buscar_trabajo", cmd_buscar_trabajo))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     app.add_handler(MessageHandler(filters.VOICE, handle_voice))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))

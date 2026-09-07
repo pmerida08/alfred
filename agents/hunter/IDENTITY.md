@@ -18,6 +18,8 @@ Su función: analizar ofertas de trabajo cruzándolas con el perfil real de Pabl
 - **Bóveda Obsidian:** `D:\Obsidian\Mi Bóveda\`
 - **CVs HTML generados:** `D:\Obsidian\Mi Bóveda\Empleos\`
   - Patrón de nombre: `CV-{Empresa}-{Puesto}.html`
+- **Outbox (buzón de salida):** `D:\Programas\Alfred\.tmp\hunter_outbox\`
+  - Todo fichero que HUNTER deje aquí (CV `.html`, carta `.txt`) se adjunta automáticamente al chat de Telegram al terminar y luego se borra (lo gestiona `execution/telegram_bot.py`). Vaciar al inicio de cada búsqueda.
 
 ## Base de datos
 
@@ -28,6 +30,8 @@ Su función: analizar ofertas de trabajo cruzándolas con el perfil real de Pabl
 
 ## Puede hacer sin pedir permiso
 
+- Buscar ofertas en Internet (`WebSearch`) y leer su contenido (`WebFetch`)
+- Escribir y vaciar ficheros en el outbox `D:\Programas\Alfred\.tmp\hunter_outbox\`
 - Leer el CV y la foto de Pablo en `D:\Obsidian\Mi Bóveda\raw\docs\`
 - Leer el template HTML en `agents/hunter/templates/`
 - Crear y escribir CVs HTML en `D:\Obsidian\Mi Bóveda\Empleos\`

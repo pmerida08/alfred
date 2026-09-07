@@ -12,14 +12,14 @@ Responder preguntas usando el conocimiento acumulado en el wiki. Si la respuesta
 
 ## Vault
 
-`~/Documentos/Obsidian/Alfred/`
+`D:\Obsidian\Mi Bóveda\`
 
 ---
 
 ## Flujo completo
 
 ### 1. Leer el SCHEMA
-`~/Documentos/Obsidian/Alfred/SCHEMA.md`
+`D:\Obsidian\Mi Bóveda\SCHEMA.md`
 
 ### 2. Leer el index.md
 Identificar qué páginas son relevantes para la pregunta.
@@ -91,5 +91,5 @@ Si se archivó síntesis:
 
 - **Wiki vacío / sin páginas relevantes:** responder desde conocimiento general + sugerir ingest de fuentes sobre el tema
 - **Información contradictoria en el wiki:** presentar ambas versiones y sugerir lint
-- **Pregunta sobre estado de proyecto:** ir directamente a `Proyectos/[Nombre].md`
+- **Pregunta sobre estado de proyecto:** ir directamente a `Proyectos/[Nombre]/README.md` (y su `log.md` si hace falta histórico)
 - **Pregunta sobre tarea o to-do:** revisar `Bandeja/` y `Proyectos/`

@@ -93,7 +93,11 @@ Antes de crear un script nuevo, verifica que no existe uno ya.
 
 `standing-orders/` — Permisos de autonomía por dominio
 
-`skills/` — Skills de Claude Code disponibles para Alfred
+`skills/` — Skills propias de Alfred (catálogo en `SKILLS.md`)
+
+`.agents/skills/` — Bundle de skills instaladas y **activas** (32). Copia espejo en `.claude/skills/` (gitignorada) — mantener ambas sincronizadas.
+
+`skills-library/` — Skills instaladas pero **inactivas** (192). No se cargan en contexto. Para reactivar una: copiarla a `.agents/skills/` y a `.claude/skills/`.
 
 `agents/` — Agentes especializados disponibles para Alfred
 
@@ -121,7 +125,9 @@ Si no hay nada para ese momento, responde: "OK".
 Cualquier pregunta sobre gym, rutina, entrenamiento, ejercicio, calorías, macros, comidas o registro nutricional → delegar a FORGE (`agents/forge/CLAUDE.md`). No responder directamente. FORGE registra sesiones en Notion, muestra progreso, y gestiona el log de comidas en Google Sheets (automático vía foto de Telegram).
 
 ### Obsidian — Wiki LLM
-La bóveda está en `~/Documentos/Obsidian/Alfred/`. Sigue el patrón LLM Wiki.
+La bóveda real es `D:\Obsidian\Mi Bóveda\` (la que Pablo tiene abierta en la app Obsidian, sincronizada por Syncthing). **No** `~/Documentos/Obsidian/Alfred/` — esa ruta antigua quedó huérfana y ya no se usa. Sigue el patrón LLM Wiki.
+
+> ⚠️ Esta ruta solo existe en el PC Windows de Pablo. El servidor Linux (donde corre el HEARTBEAT vía Telegram 24/7) todavía no tiene esta carpeta sincronizada — si una tarea corre ahí y necesita el vault, avisar a Pablo en vez de crear una bóveda nueva en otra ruta.
 
 - Leer siempre `SCHEMA.md` antes de cualquier operación en el vault
 - **INGEST** (añadir fuente): directiva `directives/obsidian_ingest.md`
@@ -129,12 +135,20 @@ La bóveda está en `~/Documentos/Obsidian/Alfred/`. Sigue el patrón LLM Wiki.
 - **LINT** (mantenimiento): directiva `directives/obsidian_lint.md`
 - Archivos clave: `index.md` (catálogo), `log.md` (historial append-only)
 - `raw/` son fuentes inmutables — Alfred nunca las modifica
+- **Cada proyecto activo vive en `Proyectos/<Nombre>/`** con la misma estructura: `README.md` (estado/objetivo/stack) + `log.md` (histórico propio) + `Notas/` (apuntes específicos). Excepción: Alfred — su propia memoria vive en este repo (`memory/`, `MEMORY.md`), no en Obsidian, para no depender del filesystem del vault en cada turno.
+- Al hablar de un proyecto (LifeVault, ZepNote, Tikkofy, Notin, Portfolio, etc.), leer y actualizar su carpeta en `Proyectos/` — no dejar ese conocimiento solo en la memoria interna de Alfred.
 
 ### Documentos
-Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `~/Documentos/Obsidian/Alfred/raw`.
+Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
 
 ### Búsqueda de empleo
-Cualquier pregunta sobre ofertas de trabajo, análisis de candidaturas, cartas de presentación, adaptación del CV o seguimiento de procesos de selección → delegar a HUNTER (`agents/hunter/CLAUDE.md`). No responder directamente. HUNTER lee el CV de Pablo, analiza el encaje con la oferta y genera los materiales en Notion.
+Cualquier pregunta sobre ofertas de trabajo, búsqueda de empleo ("búscame curro", "tráeme ofertas"), análisis de candidaturas, cartas de presentación, adaptación del CV o seguimiento de procesos de selección → delegar a HUNTER (`agents/hunter/CLAUDE.md`). No responder directamente. HUNTER lee el CV de Pablo, analiza el encaje con la oferta y genera los materiales en Notion. También puede **buscar ofertas en Internet** que encajen con el perfil y, por cada una, adaptar el CV HTML y escribir la carta, registrarlas en Notion y devolver al chat la carta + el link de la oferta (skill `hunter-buscar-ofertas`, directiva `directives/buscar_ofertas.md`). En Telegram los ficheros generados (CV + carta) se adjuntan automáticamente vía `.tmp/hunter_outbox/`.
+
+### Contenido y redes sociales
+Cualquier pregunta sobre creación de contenido para redes sociales — estrategia editorial, ideas, carruseles, posts en lote, adaptar una idea a IG/X/LinkedIn, optimizar posts de X, escribir con research, copywriting, edición de copy o humanizar textos con "olor a IA" → delegar a HERALDO (`agents/heraldo/CLAUDE.md`). No responder directamente. HERALDO trabaja por **perfiles** (cada cuenta tiene su archivo de voz en `agents/heraldo/perfiles/`, que lee antes de producir), cubre X/Twitter, LinkedIn, Instagram y TikTok/YouTube Shorts (guion **y** generación del clip con el MCP multimedia), humaniza toda pieza antes de entregarla y registra el calendario editorial en Notion. **Consume créditos al generar audiovisual: confirmar antes.** **Nunca publica de forma autónoma: Pablo revisa y publica.** Skills: `content-strategy`, `marketing-ideas`, `content-studio`, `social-content`, `twitter-algorithm-optimizer`, `content-research-writer`, `copywriting`, `copy-editing`, `humanise-text`, `social-video`.
+
+### Desarrollo de software
+Cualquier tarea de desarrollo de aplicaciones web o móvil — frontend, backend, base de datos, testing o arquitectura (escribir/revisar código, diseñar APIs, modelar esquemas, depurar, planificar implementaciones) → delegar a ADA (`agents/ada/CLAUDE.md`). No responder directamente. Stack por defecto: **Next.js 15 + Tailwind + Supabase** (web) y **Expo + Supabase** (móvil). ADA planifica antes de implementar en tareas no triviales y verifica antes de declarar completo. Requiere confirmación de Pablo antes de push a remoto, deploy a producción o instalar dependencias no estándar.
 
 ## Registro de errores
 
@@ -142,6 +156,6 @@ Cualquier pregunta sobre ofertas de trabajo, análisis de candidaturas, cartas d
 
 |-------|-------|-----------------------|
 
-| — | (sin entradas) | — |
+| 2026-08-30 | Dije "lo he registrado como `869erm2t7`" dando por hecha una tarea de ClickUp que nunca llegué a crear. El ID era inventado y el enlace no llevaba a ninguna parte. | No dar por hecho el resultado de una acción que no se ha ejecutado. Un identificador o un enlace solo se escribe copiándolo de la respuesta real de la herramienta — nunca de memoria ni por analogía con otros IDs. |
 
 Actualizar cuando se cometa un error relevante.

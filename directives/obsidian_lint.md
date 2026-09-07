@@ -12,18 +12,18 @@ Mantener el wiki sano: detectar inconsistencias, páginas huérfanas, informaci�
 
 ## Vault
 
-`~/Documentos/Obsidian/Alfred/`
+`D:\Obsidian\Mi Bóveda\`
 
 ---
 
 ## Flujo completo
 
 ### 1. Leer el SCHEMA y el index.md
-`~/Documentos/Obsidian/Alfred/SCHEMA.md` + `~/Documentos/Obsidian/Alfred/index.md`
+`D:\Obsidian\Mi Bóveda\SCHEMA.md` + `D:\Obsidian\Mi Bóveda\index.md`
 
 ### 2. Escanear el wiki
 
-Recorrer todas las carpetas del wiki con Glob: `~/Documentos/Obsidian/Alfred/**\*.md`
+Recorrer todas las carpetas del wiki con Glob: `D:\Obsidian\Mi Bóveda\**\*.md`
 Excluir: `raw/`, `SCHEMA.md`, `index.md`, `log.md`
 
 ### 3. Checks a ejecutar

@@ -1,0 +1,241 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "zepnote-landing",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4599",
+        "--directory",
+        "D:/Proyectos/ZepNote/apps/landing"
+      ],
+      "port": 4599
+    },
+    {
+      "name": "lifevault-tfm",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4601",
+        "--directory",
+        "D:/Programas/LifeVaultMobile/presentacion-tfm"
+      ],
+      "port": 4601
+    },
+    {
+      "name": "tikkofy-web",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Tikkofy/web/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Tikkofy/web",
+        "-p",
+        "4610"
+      ],
+      "port": 4610
+    },
+    {
+      "name": "portfolio-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Programas/portfolio/node_modules/vite/bin/vite.js",
+        "D:/Programas/portfolio",
+        "--port",
+        "4620",
+        "--host"
+      ],
+      "port": 4620
+    },
+    {
+      "name": "hunter-cv-preview",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4630",
+        "--directory",
+        "D:/Programas/Alfred/.tmp/hunter_outbox"
+      ],
+      "port": 4630
+    },
+    {
+      "name": "terradance-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4641",
+        "--directory",
+        "D:/Programas/TerraDance"
+      ],
+      "port": 4641
+    },
+    {
+      "name": "logos-png-convert",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4650",
+        "--directory",
+        "D:/Programas/Alfred/.tmp/logos_svg"
+      ],
+      "port": 4650
+    },
+    {
+      "name": "waypoint-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/waypoint/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/waypoint",
+        "-p",
+        "4660"
+      ],
+      "port": 4660
+    },
+    {
+      "name": "notin-web",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Notin/apps/web/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Notin/apps/web",
+        "--turbopack",
+        "-p",
+        "3000"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "notin-web-f4",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Notin/apps/web/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Notin/apps/web",
+        "--turbopack",
+        "-p",
+        "3010"
+      ],
+      "port": 3010
+    },
+    {
+      "name": "notin-web-f5",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Notin/apps/web/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Notin/apps/web",
+        "--turbopack",
+        "-p",
+        "3020"
+      ],
+      "port": 3020
+    },
+    {
+      "name": "notin-web-f6",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Notin/apps/web/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Notin/apps/web",
+        "--turbopack",
+        "-p",
+        "3030"
+      ],
+      "port": 3030
+    },
+    {
+      "name": "notin-web-f7",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Notin/apps/web/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Notin/apps/web",
+        "--turbopack",
+        "-p",
+        "3040"
+      ],
+      "port": 3040
+    },
+    {
+      "name": "cavum-desktop-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "process.chdir('D:/Proyectos/Cavum/apps/desktop'); import(require('url').pathToFileURL('D:/Proyectos/Cavum/node_modules/electron-vite/bin/electron-vite.js').href)"
+      ],
+      "port": 4670
+    },
+    {
+      "name": "cavum-ayuda",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4680",
+        "--directory",
+        "D:/Proyectos/Cavum/apps/web/dist"
+      ],
+      "port": 4680
+    },
+    {
+      "name": "cavum-galeria",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "process.chdir('D:/Proyectos/Cavum/apps/desktop'); process.argv=[process.argv[0],'vite','--config','vite.gallery.config.ts']; import(require('url').pathToFileURL('D:/Proyectos/Cavum/node_modules/vite/bin/vite.js').href)"
+      ],
+      "port": 4671,
+      "url": "http://localhost:4671"
+    },
+    {
+      "name": "cavum-ayuda-oscuro",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4681",
+        "--directory",
+        "D:/Proyectos/Cavum/.tmp/web-oscuro"
+      ],
+      "port": 4681
+    },
+    {
+      "name": "cavum-ayuda-claro",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4682",
+        "--directory",
+        "D:/Proyectos/Cavum/.tmp/web-claro"
+      ],
+      "port": 4682
+    },
+    {
+      "name": "croupier-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Croupier/node_modules/vite/bin/vite.js",
+        "D:/Proyectos/Croupier",
+        "--port",
+        "4700",
+        "--strictPort"
+      ],
+      "port": 4700
+    },
+    {
+      "name": "primordia",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Primordia/tools/serve.mjs"
+      ],
+      "port": 5177
+    }
+  ]
+}

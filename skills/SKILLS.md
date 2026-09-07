@@ -19,3 +19,14 @@ Skills disponibles para Alfred. Cada skill tiene su propio archivo en esta carpe
 | Crear agente especializado nuevo | [crear-agente.md](crear-agente.md) |
 | Subir cambios a Alfred (GitHub) | [deploy-alfred.md](deploy-alfred.md) |
 | BASILIO — Archivero de documentos | [basilio.md](basilio.md) |
+| HUNTER — Buscar ofertas y generar candidaturas | [hunter-buscar-ofertas.md](hunter-buscar-ofertas.md) |
+| HERALDO — Estrategia de contenido | [content-strategy.md](content-strategy.md) |
+| HERALDO — Ideas de marketing | [marketing-ideas.md](marketing-ideas.md) |
+| HERALDO — Carruseles y posts en lote | [content-studio.md](content-studio.md) |
+| HERALDO — Una idea, nativa en cada red | [social-content.md](social-content.md) |
+| HERALDO — Optimizar post de X | [twitter-algorithm-optimizer.md](twitter-algorithm-optimizer.md) |
+| HERALDO — Escribir con research y citas | [content-research-writer.md](content-research-writer.md) |
+| HERALDO — Copy que vende | [copywriting.md](copywriting.md) |
+| HERALDO — Pulir texto escrito | [copy-editing.md](copy-editing.md) |
+| HERALDO — Quitar el olor a IA | [humanise-text.md](humanise-text.md) |
+| HERALDO — Generar vídeo/imagen de la pieza | [social-video.md](social-video.md) |
