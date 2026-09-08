@@ -236,6 +236,18 @@
         "D:/Proyectos/Primordia/tools/serve.mjs"
       ],
       "port": 5177
+    },
+    {
+      "name": "aplico-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Aplico/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Aplico",
+        "-p",
+        "4720"
+      ],
+      "port": 4720
     }
   ]
 }

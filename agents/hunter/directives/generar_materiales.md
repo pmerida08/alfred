@@ -123,6 +123,23 @@ El template `cv_template.html` conserva el bloque; hay que quitarlo al generar c
      desde Jun 2025 (fin del último empleo) hasta hoy.
    - El máster de Evolve está **completado** (jul 2026). Nunca escribir "en curso" ni "Actualidad".
 
+6. **Nunca `letter-spacing` por encima de 0.5px en los títulos de sección.**
+   Verificado midiendo el PDF real con el evaluador de Aplico (sep 2026):
+
+   | letter-spacing | Cómo lo lee el ATS |
+   |---|---|
+   | 1.6px | `E X P E R I E N C I A` — sección irreconocible |
+   | 0.6px | `IA & AUTOMATIZACIÓN` — correcto |
+   | 0.5px | `EXPERIENCIA` — correcto, y conserva el aire visual |
+
+   Es más grave de lo que parece: si el parser no reconoce el encabezado, no
+   identifica la sección de experiencia laboral, y sin sección no cuenta ningún
+   empleo. Es la vía por la que un CV correcto acaba reportando **cero años de
+   experiencia** — que es justo lo que devolvió el ATS de TopCV.
+
+   Corregido a 0.5px en la plantilla y en los 78 CVs generados el 2026-09-08.
+   Medido: el CV genérico pasó de 37/100 a 63/100 solo con este cambio.
+
 
 6. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
    - GitHub → `https://github.com/pmerida08`
