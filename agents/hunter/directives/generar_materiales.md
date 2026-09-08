@@ -140,6 +140,28 @@ El template `cv_template.html` conserva el bloque; hay que quitarlo al generar c
    Corregido a 0.5px en la plantilla y en los 78 CVs generados el 2026-09-08.
    Medido: el CV genérico pasó de 37/100 a 63/100 solo con este cambio.
 
+7. **UNA SOLA COLUMNA. Nunca `display: grid` con varias columnas para el contenido.**
+   Un ATS lee línea a línea de izquierda a derecha: en rejilla, el texto de las
+   columnas se entrelaza. Casos reales medidos en el CV de Pablo:
+
+   - `"IA & AUTOMATIZACIÓNLENGUAJES & FRAMEWORKSDATOS & CLOUD"` (habilidades en 3 columnas)
+   - `"Alfred — Sistema multi-agente IALifeVault — SaaS con IA"` (proyectos en 2 columnas)
+   - `"EDUCACIÓNIDIOMAS & CERTIFICACIONES"` (fila inferior en 2 columnas)
+
+   Formato correcto de cada sección:
+   - **Habilidades:** una línea por categoría — `<p><span class="skill-cat">Cat:</span> A · B · C</p>`
+   - **Proyectos:** apilados en `.proyectos-lista`, cada uno en su `.proyecto`
+   - **Educación:** una línea por entrada, `título — centro | fechas`
+
+   Convertido en la plantilla y en los 77 CVs el 2026-09-08. El CV genérico pasó
+   de 63/100 a **89/100** y sigue cabiendo en una página. Al desaparecer las
+   columnas también desapareció un falso hueco temporal de 27 meses: las fechas
+   de formación por fin se leían.
+
+8. **`min-height: 297mm`, nunca `height` + `overflow: hidden`.**
+   Con `overflow: hidden`, si el contenido crece se corta en silencio y nadie se
+   entera. Es preferible una segunda página visible a perder texto sin aviso.
+
 
 6. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
    - GitHub → `https://github.com/pmerida08`
