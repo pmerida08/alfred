@@ -66,11 +66,14 @@
     .skill-cat { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #555; margin-bottom: 2px; }
     .skill-items { font-size: 9.5pt; line-height: 1.7; }
 
-    /* ── EXPERIENCIA ── */
-    .job-cabecera { display: flex; justify-content: space-between; align-items: baseline; }
-    .job-titulo { font-weight: 700; font-size: 10.5pt; }
-    .job-fecha { font-size: 9pt; color: #555; white-space: nowrap; }
-    .job-empresa { font-style: italic; color: #555; font-size: 9.5pt; margin-bottom: 3px; }
+    /* ── EXPERIENCIA ──
+       Puesto, empresa y fechas van en UNA sola línea de texto continuo.
+       No usar columnas ni flex con space-between: los ATS no asocian una fecha
+       que vive en un contenedor separado y devuelven "0 años de experiencia". */
+    .job-cabecera { font-size: 10.5pt; margin-bottom: 3px; }
+    .job-titulo { font-weight: 700; }
+    .job-empresa { font-style: italic; color: #444; }
+    .job-fecha { font-size: 9.5pt; color: #555; }
     .job-bullets { list-style: none; }
     .job-bullets li { padding-left: 10px; position: relative; margin-bottom: 2px; font-size: 9.5pt; }
     .job-bullets li::before { content: "\2022"; position: absolute; left: 0; }
@@ -78,6 +81,9 @@
     /* ── PROYECTOS ── */
     .proyectos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 20px; }
     .proyecto-nombre { font-weight: 700; font-size: 10pt; }
+    /* La fecha va DENTRO de .proyecto-nombre, en la misma línea de texto:
+       es lo que cubre el hueco entre Jun 2025 y hoy en la lectura del ATS. */
+    .proyecto-fecha { font-weight: 400; font-size: 9pt; color: #555; }
     .proyecto-desc { font-size: 9.2pt; line-height: 1.45; color: #333; margin-top: 1px; }
 
     /* ── FILA INFERIOR (Educación + Idiomas) ── */
@@ -124,9 +130,19 @@
     </div>
     <!--
       FOTO: incrustar siempre como base64 para que funcione desde cualquier ruta.
+
+      USAR SIEMPRE la versión optimizada (300x300, ~10 KB):
+        agents\hunter\templates\fotoCv-web.jpg
+
+      NO usar el original de la bóveda (1195x896, 525 KB): en base64 infla el CV
+      hasta ~836 KB, por encima del 98% de los CVs, y algunos portales lo rechazan.
+
       PowerShell para obtener el base64:
-        $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes("D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg"))
+        $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes("D:\Programas\Alfred\agents\hunter\templates\fotoCv-web.jpg"))
       Luego reemplazar el src con: data:image/jpeg;base64,{$b64}
+
+      Para regenerar la versión optimizada desde el original:
+        python -c "from PIL import Image, ImageOps; im=ImageOps.exif_transpose(Image.open(r'D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg')).convert('RGB'); ImageOps.fit(im,(300,300),Image.LANCZOS,centering=(0.5,0.4)).save(r'D:\Programas\Alfred\agents\hunter\templates\fotoCv-web.jpg','JPEG',quality=82,optimize=True)"
     -->
     <img class="foto" src="data:image/jpeg;base64,PHOTO_BASE64" alt="Pablo Mérida">
   </div>
@@ -172,11 +188,7 @@
     <!-- EXPERIENCIA -->
     <div>
       <div class="titulo-seccion">Experiencia</div>
-      <div class="job-cabecera">
-        <span class="job-titulo">Programador Web</span>
-        <span class="job-fecha">Mar 2025 – Jun 2025</span>
-      </div>
-      <div class="job-empresa">Agencia de Digitalización Andaluza</div>
+      <div class="job-cabecera"><span class="job-titulo">Programador Web</span> — <span class="job-empresa">Agencia de Digitalización Andaluza</span> <span class="job-fecha">| Mar 2025 – Jun 2025</span></div>
       <!-- ADAPTAR: poner primero los bullets más relevantes para la oferta -->
       <ul class="job-bullets">
         <li>Desarrollo y mantenimiento de sistema de gestión de impresoras con Laravel, JavaScript y SQL.</li>
@@ -188,23 +200,25 @@
 
     <!-- PROYECTOS -->
     <div>
-      <div class="titulo-seccion">Proyectos Destacados</div>
-      <!-- ADAPTAR: reordenar los 4 proyectos por relevancia; el más importante arriba-izquierda -->
+      <div class="titulo-seccion">Proyectos Propios · 2025 – Actualidad</div>
+      <!-- ADAPTAR: reordenar los 4 proyectos por relevancia; el más importante arriba-izquierda.
+           CADA proyecto lleva fecha: sin ellas el ATS ve un hueco desde Jun 2025 (fin del
+           último empleo) hasta hoy. Mantener la fecha dentro de .proyecto-nombre. -->
       <div class="proyectos-grid">
         <div>
-          <div class="proyecto-nombre">Sistema de Automatización con IA (Alfred)</div>
+          <div class="proyecto-nombre">Sistema de Automatización con IA (Alfred) <span class="proyecto-fecha">· May 2026 – Actualidad</span></div>
           <div class="proyecto-desc">Arquitectura multi-agente con Claude API, n8n, Google Sheets, Notion y Telegram. Agentes especializados por dominio, memoria persistente y procesamiento autónomo. Diseñado para escalar sin intervención manual.</div>
         </div>
         <div>
-          <div class="proyecto-nombre">Estudiante Élite</div>
+          <div class="proyecto-nombre">Estudiante Élite <span class="proyecto-fecha">· Ene 2026 – Feb 2026</span></div>
           <div class="proyecto-desc">Sistema de tutoría con IA para estudiantes de derecho. Workflows en n8n con RAG, memoria de sesión y transcripción de audio (Whisper). Stack: React 19 + TypeScript, Supabase, Netlify CI/CD.</div>
         </div>
         <div>
-          <div class="proyecto-nombre">MyHandStats</div>
+          <div class="proyecto-nombre">MyHandStats <span class="proyecto-fecha">· Mar 2025 – Jun 2025</span></div>
           <div class="proyecto-desc">App web full-stack para análisis de estadísticas de balonmano en tiempo real. FastAPI + PostgreSQL (Supabase) + React, con despliegue en Netlify e integración continua.</div>
         </div>
         <div>
-          <div class="proyecto-nombre">Generador de Recetas con IA</div>
+          <div class="proyecto-nombre">Generador de Recetas con IA <span class="proyecto-fecha">· Mar 2025 – Ago 2025</span></div>
           <div class="proyecto-desc">Herramienta en PHP y JavaScript que integra un modelo de IA para generar recetas, planificar comidas semanales y crear listas de la compra automáticamente.</div>
         </div>
       </div>
@@ -217,7 +231,7 @@
         <div class="edu-entrada">
           <div class="edu-titulo">Máster en IA Generativa e Innovación</div>
           <div class="edu-centro">Evolve Academy</div>
-          <div class="edu-fecha">2025 – 2026</div>
+          <div class="edu-fecha">2025 – 2026 · Completado</div>
         </div>
         <div class="edu-entrada">
           <div class="edu-titulo">CFGS Desarrollo de Aplicaciones Web</div>

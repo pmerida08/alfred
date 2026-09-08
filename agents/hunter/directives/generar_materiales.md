@@ -13,7 +13,8 @@ Esta directiva solo se ejecuta después de haber completado `analizar_oferta.md`
 - Análisis de la oferta (resultado de `analizar_oferta.md`)
 - CV de Pablo: `D:\Obsidian\Mi Bóveda\raw\docs\Pablo Mérida Velasco — CV.pdf`
 - Template HTML: `D:\Programas\Alfred\agents\hunter\templates\cv_template.html`
-- Foto CV: `D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg` (ya referenciada en el template)
+- Foto CV: `agents/hunter/templates/fotoCv-web.jpg` — versión optimizada (300x300, ~10 KB).
+  NO usar el original `D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg` (525 KB): en base64 infla el CV a ~836 KB.
 - Idioma objetivo: mismo que la oferta, salvo indicación de Pablo
 
 ## Proceso
@@ -101,11 +102,12 @@ El template `cv_template.html` conserva el bloque; hay que quitarlo al generar c
 
 **Reglas técnicas obligatorias (aprendidas en producción):**
 
-1. **Foto siempre en base64.** Las rutas relativas no funcionan desde todas las ubicaciones. Usar PowerShell para incrustar la foto directamente en el HTML:
+1. **Foto siempre en base64, y siempre la optimizada.** Las rutas relativas no funcionan desde todas las ubicaciones. Usar PowerShell para incrustar la foto directamente en el HTML:
    ```powershell
-   $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes("D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg"))
+   $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes("D:\Programas\Alfred\agents\hunter\templates\fotoCv-web.jpg"))
    ```
    Luego reemplazar `PHOTO_BASE64` del template con el valor obtenido.
+   El CV final debe pesar ~25 KB. Si supera los 100 KB, se ha usado la foto original por error.
 
 2. **Bullets CSS: usar escape Unicode, nunca entidades HTML.** En la propiedad CSS `content:`, las entidades HTML (`&#8226;`) se renderizan como texto literal. Usar siempre `content: "\2022"`.
 
@@ -113,7 +115,16 @@ El template `cv_template.html` conserva el bloque; hay que quitarlo al generar c
 
 4. **Escritura del archivo: usar `[System.IO.File]::WriteAllText` con UTF-8 explícito** para preservar acentos y caracteres especiales. No usar `Out-File` por defecto (genera UTF-16).
 
-5. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
+5. **Fechas legibles por ATS.** Reglas salidas del informe de TopCV (sep 2026), cuyo ATS
+   leyó "0 años de experiencia" sobre un CV correcto:
+   - Puesto, empresa y fechas van en UNA línea de texto continua dentro de `.job-cabecera`.
+     Nunca en contenedores separados con `flex: space-between` — el parser no los asocia.
+   - Todo proyecto lleva fecha inline en `.proyecto-nombre`: sin ellas el ATS ve un hueco
+     desde Jun 2025 (fin del último empleo) hasta hoy.
+   - El máster de Evolve está **completado** (jul 2026). Nunca escribir "en curso" ni "Actualidad".
+
+
+6. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
    - GitHub → `https://github.com/pmerida08`
    - Portfolio → `https://pmerida-portfolio.netlify.app`
    - LinkedIn → `https://linkedin.com/in/pablo-merida-velasco`
