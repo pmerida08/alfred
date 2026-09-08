@@ -32,7 +32,10 @@
     }
     .header-left h1 { font-size: 23pt; font-weight: 800; letter-spacing: -0.3px; color: #111; }
     .header-left .subtitulo { font-size: 10.5pt; color: #444; margin-top: 2px; font-weight: 400; }
-    .contacto { margin-top: 5px; font-size: 9pt; color: #333; display: flex; flex-wrap: wrap; gap: 0 14px; }
+    .contacto { margin-top: 5px; font-size: 9pt; color: #333; display: flex; flex-wrap: wrap; gap: 0 8px; }
+    /* Separador tipográfico en lugar de iconos: los emoji se colaban en el texto
+       extraído pegados al dato ("📞 664 549 627") y el parser no lo reconocía. */
+    .contacto > *:not(:last-child)::after { content: "·"; color: #bbb; margin-left: 8px; }
     .contacto a { color: #333; text-decoration: none; }
     .foto { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; flex-shrink: 0; margin-left: 12px; }
 
@@ -124,12 +127,12 @@
       <!-- ADAPTAR: subtítulo según el puesto objetivo -->
       <div class="subtitulo">IA Automation Specialist · Low-code &amp; AI Workflows</div>
       <div class="contacto">
-        <span>📞 664 549 627</span>
-        <span>✉ pablomerida03@gmail.com</span>
-        <span>📍 Montilla, Córdoba</span>
-        <a href="https://github.com/pmerida08" target="_blank">🔗 github.com/pmerida08</a>
-        <a href="https://pmerida-portfolio.netlify.app" target="_blank">🌐 pmerida-portfolio.netlify.app</a>
-        <a href="https://linkedin.com/in/pablo-merida-velasco" target="_blank">💼 linkedin.com/in/pablo-merida-velasco</a>
+        <span>664 549 627</span>
+        <span>pablomerida03@gmail.com</span>
+        <span>Montilla, Córdoba</span>
+        <a href="https://github.com/pmerida08" target="_blank">github.com/pmerida08</a>
+        <a href="https://pmerida-portfolio.netlify.app" target="_blank">pmerida-portfolio.netlify.app</a>
+        <a href="https://linkedin.com/in/pablo-merida-velasco" target="_blank">linkedin.com/in/pablo-merida-velasco</a>
       </div>
     </div>
     <!--

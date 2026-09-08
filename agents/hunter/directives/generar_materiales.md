@@ -162,6 +162,20 @@ El template `cv_template.html` conserva el bloque; hay que quitarlo al generar c
    Con `overflow: hidden`, si el contenido crece se corta en silencio y nadie se
    entera. Es preferible una segunda página visible a perder texto sin aviso.
 
+9. **Sin emoji en el bloque de contacto.** Se colaban en el texto extraído pegados
+   al dato (`"📞 664 549 627"`) y el parser no reconocía el teléfono ni el correo.
+
+   Además pesan: **cada emoji añade unos 32 KB** al PDF, porque Chrome embebe una
+   fuente de emoji completa. Los seis iconos del contacto sumaban ~215 KB — más que
+   todo el resto del documento junto.
+
+   La separación visual la da un punto medio por CSS, que no interfiere:
+
+       .contacto > *:not(:last-child)::after { content: "·"; color: #bbb; margin-left: 8px; }
+
+   Quitados de la plantilla y de los 88 CVs el 2026-09-08. El CV genérico pasó de
+   89/100 a **97/100** y de 338 KB a 123 KB.
+
 
 6. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
    - GitHub → `https://github.com/pmerida08`
