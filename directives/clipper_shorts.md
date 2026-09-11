@@ -35,7 +35,8 @@ python src/alfred.py ver <job_id>         # rutas de peaks.md y transcript.md
 ```
 
 Nunca descargar el VOD entero. `scan` baja solo subtítulos (2 h = 5 s y 290 KB) y
-`peaks` solo el audio. El vídeo se descarga por tramos al cortar.
+`peaks` baja el audio más un proxy a 144p (2 h ≈ 46 MB, ~2 min en total) para
+detectar cambios de plano. El vídeo bueno se descarga por tramos al cortar.
 
 Si falla por restricción de edad, repetir con `--cookies chrome`.
 
@@ -62,11 +63,17 @@ opinión polémica argumentada > reacción con remate verbal > nostalgia
 lecturas de chat, momentos que solo tienen sentido viendo la pantalla, y todo lo
 que sea puramente reaccionar a contenido ajeno (hereda el Content ID del tercero).
 
+**Nunca cruzar un cambio de escena.** Un clip que salta de la cámara al juego (o
+entre dos zonas del juego) rompe la atención y parece mal editado. `peaks` ya
+detecta los cortes sobre el proxy y da a cada candidato su **rango limpio**:
+usar ese rango, no el tramo entero, y no estirarlo más allá de sus extremos.
+Los candidatos cuyo tramo limpio baja de 18 s se descartan solos.
+
 **Ojo con los picos:** la energía detecta volumen, no calidad. En gameplay la
 banda sonora dispara falsos positivos. Verificar siempre leyendo el texto.
 
 El corte empieza **1–2 s antes** de la primera palabra buena, no en el segundo
-exacto del pico.
+exacto del pico, siempre que quepa dentro del rango limpio.
 
 ### 3. Elegir el encuadre
 
@@ -137,6 +144,9 @@ El render tarda 1–3 min por clip, casi todo descarga del tramo.
   cada pocos meses y la versión vieja es casi siempre la causa.
 - **Los picos salen todos con `[música]`:** el VOD es gameplay puro. Buscar la
   charla inicial en el transcript o pedir otro VOD.
+- **Se descartan casi todos los candidatos:** el VOD tiene montaje muy picado.
+  Subir `--window` no ayuda; bajar el listón con `--sin-escenas` tampoco es la
+  solución, mejor ir a la charla inicial.
 - **Pablo pide un lote:** máximo 5 clips por VOD. Más satura y se repiten.
 
 ## Salidas
