@@ -178,9 +178,11 @@ El render tarda 1–3 min por clip, casi todo descarga del tramo.
 
 - **Sin subtítulos automáticos** (VODs de Twitch, canales pequeños): avisar a
   Pablo. Haría falta transcribir con faster-whisper, que no está instalado.
-- **Restricción de edad:** hace falta sesión de YouTube. **Chrome en Windows
-  no vale** (cifra las cookies, yt-dlp#10927). Usar el navegador donde esté
-  la sesión, o exportar un `cookies.txt` y pasar su ruta a `--cookies`.
+- **Restricción de edad: no se puede clipear.** Las cookies pasan el muro para
+  leer metadatos, pero con sesión iniciada YouTube exige un PO token para el
+  medio y devuelve 403. Avisar a Pablo y pedirle otro VOD; no perder tiempo
+  probando navegadores. (En Windows además Chrome, Brave y Edge cifran sus
+  cookies y solo Firefox es legible.)
 - **yt-dlp da 403 o "SABR streaming":** `yt-dlp -U`. YouTube rompe la descarga
   cada pocos meses y la versión vieja es casi siempre la causa.
 - **Los picos salen todos con `[música]`:** el VOD es gameplay puro. Buscar la
