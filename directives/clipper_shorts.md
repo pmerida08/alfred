@@ -53,12 +53,19 @@ nada bueno o si Pablo pide un tema concreto.
    cerrada gana siempre a una reacción que depende de lo que pasó antes.
 3. **Tiene remate.** Empieza, sube y cierra. Un tramo que se corta a media idea
    no retiene aunque el trozo sea gracioso.
-4. **Dura 20–45 s.** Menos cuesta cerrar el bucle; más se cae. Excepción:
-   un remate muy potente aguanta en 15–20 s si cierra en seco.
+4. **Dura 45–55 s.** Medido sobre 35 Shorts de los canales de clips que ya
+   funcionan: mediana 34 s y los tres mayores éxitos en 53–56 s; la franja
+   0–20 s es la que peor rinde. Suelo 25 s, techo 65 s. Datos en
+   `D:\Proyectos\Clipper\docs\DURACION.md`.
 
-**Tipos que funcionan, por orden:** anécdota personal contada entera >
-opinión polémica argumentada > reacción con remate verbal > nostalgia
-(infancia, juegos viejos, "cuando éramos") > pique o chascarrillo con otro creador.
+**Tipos que funcionan, por orden:** los clips que revientan en esos canales son
+**opinión o revelación con postura**, no golpes de gracia sueltos — "desmiente
+cuánto le pagó X", "reacciona a los precios de Y", "critica duramente Z".
+Después: anécdota personal contada entera > nostalgia > pique con otro creador.
+
+**Estructura del clip:** gancho (qué se va a contar) → desarrollo con su opinión
+→ remate. **No cortar en cuanto llega el chiste:** lo que retiene es el camino
+hasta él, y por eso hacen falta 45–55 s y no 15.
 
 **Descartar sin dudar:** tramos con `[música]` dominante (es el juego, no él),
 lecturas de chat, momentos que solo tienen sentido viendo la pantalla, y todo lo
@@ -68,7 +75,14 @@ que sea puramente reaccionar a contenido ajeno (hereda el Content ID del tercero
 entre dos zonas del juego) rompe la atención y parece mal editado. `peaks` ya
 detecta los cortes sobre el proxy y da a cada candidato su **rango limpio**:
 usar ese rango, no el tramo entero, y no estirarlo más allá de sus extremos.
-Los candidatos cuyo tramo limpio baja de 15 s se descartan solos.
+Los candidatos cuyo tramo limpio baja de 25 s se descartan solos.
+
+En directos de **charla** hay que pasarle `--cam` a `peaks`: el streamer navega por
+webs y la pantalla compartida cambia cada pocos segundos. Mirando el frame entero
+salen ~146 cortes y no queda ni un tramo largo; mirando solo la caja de la facecam
+salen ~32, que son los cambios de plano de verdad. El detector es guía, no árbitro:
+cruzar un cambio de *contenido en pantalla* mientras él sigue hablando es normal y
+se ve bien; lo que no se cruza es un cambio de *plano*.
 
 **Ojo con los picos:** la energía detecta volumen, no calidad. En gameplay la
 banda sonora dispara falsos positivos. Verificar siempre leyendo el texto.
