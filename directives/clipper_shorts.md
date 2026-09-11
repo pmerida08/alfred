@@ -106,6 +106,17 @@ medirlo una vez sobre un frame y añadirlo.
 cuarto de hora, antes de empezar a jugar. Los VODs completos que los streamers
 suben a YouTube incluyen esa charla y traen subtítulos; los de Twitch no.
 
+### 3b. Animación
+
+`--anim mixto` va por defecto y no hay que tocarlo casi nunca: saca los cambios de
+plano de las pausas del habla y da un plano nuevo cada 3–6,5 s. Un clip de 50 s con
+plano fijo no aguanta.
+
+- `--fuerza` (por defecto 0,11) sube o baja cuánto cierra cada golpe. Más de 0,18
+  sobre una cara ya parece un fallo de reproducción.
+- `--anim suave` para material donde el zoom moleste (una pantalla con texto que
+  haya que leer). `--anim none` solo si Pablo lo pide.
+
 ### 4. Escribir los textos
 
 **Título:** máximo 60 caracteres. La afirmación fuerte del clip, tal cual. Sin
