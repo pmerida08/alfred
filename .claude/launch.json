@@ -248,6 +248,14 @@
         "4720"
       ],
       "port": 4720
+    },
+    {
+      "name": "clipper",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "D:/Proyectos/Clipper/src/server.py"
+      ],
+      "port": 8730
     }
   ]
 }
