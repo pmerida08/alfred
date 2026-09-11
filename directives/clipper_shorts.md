@@ -53,7 +53,8 @@ nada bueno o si Pablo pide un tema concreto.
    cerrada gana siempre a una reacción que depende de lo que pasó antes.
 3. **Tiene remate.** Empieza, sube y cierra. Un tramo que se corta a media idea
    no retiene aunque el trozo sea gracioso.
-4. **Dura 20–45 s.** Menos cuesta cerrar el bucle; más se cae.
+4. **Dura 20–45 s.** Menos cuesta cerrar el bucle; más se cae. Excepción:
+   un remate muy potente aguanta en 15–20 s si cierra en seco.
 
 **Tipos que funcionan, por orden:** anécdota personal contada entera >
 opinión polémica argumentada > reacción con remate verbal > nostalgia
@@ -67,7 +68,7 @@ que sea puramente reaccionar a contenido ajeno (hereda el Content ID del tercero
 entre dos zonas del juego) rompe la atención y parece mal editado. `peaks` ya
 detecta los cortes sobre el proxy y da a cada candidato su **rango limpio**:
 usar ese rango, no el tramo entero, y no estirarlo más allá de sus extremos.
-Los candidatos cuyo tramo limpio baja de 18 s se descartan solos.
+Los candidatos cuyo tramo limpio baja de 15 s se descartan solos.
 
 **Ojo con los picos:** la energía detecta volumen, no calidad. En gameplay la
 banda sonora dispara falsos positivos. Verificar siempre leyendo el texto.
