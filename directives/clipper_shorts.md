@@ -117,6 +117,19 @@ plano fijo no aguanta.
 - `--anim suave` para material donde el zoom moleste (una pantalla con texto que
   haya que leer). `--anim none` solo si Pablo lo pide.
 
+### 3c. Subtítulos, palabrotas y overlays
+
+**`--whisper` siempre que el clip tenga palabrotas.** Los auto-subs de YouTube
+las tapan con `[ __ ]` y no dejan la palabra: sin transcribir el audio no se
+puede poner `m*****`. Cuesta ~1 min por clip y además corrige los errores de los
+auto-subs.
+
+**Overlays** (`--overlay "8-13:chat,50-54:risa.png"`):
+
+- `chat` solo donde está reaccionando a alguien del chat. De adorno estorba, y
+  nunca sobre un plano `cam` a pantalla completa porque tapa la cara.
+- Las imágenes salen de `assets/`. 2–3 s en pantalla, no más.
+
 ### 4. Escribir los textos
 
 **Título:** máximo 60 caracteres. La afirmación fuerte del clip, tal cual. Sin
