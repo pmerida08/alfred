@@ -161,4 +161,6 @@ Cualquier tarea de desarrollo de aplicaciones web o móvil — frontend, backend
 
 | 2026-08-30 | Dije "lo he registrado como `869erm2t7`" dando por hecha una tarea de ClickUp que nunca llegué a crear. El ID era inventado y el enlace no llevaba a ninguna parte. | No dar por hecho el resultado de una acción que no se ha ejecutado. Un identificador o un enlace solo se escribe copiándolo de la respuesta real de la herramienta — nunca de memoria ni por analogía con otros IDs. |
 
+| 2026-09-11 | Entregué 5 clips animados que iban a cámara lenta (el doble de duración). Había verificado fotogramas sueltos, que se veían perfectos, pero nunca la duración real del render. `zoompan` resella los timestamps al fps que se le pasa y ffmpeg no da ningún error. | Al renderizar vídeo, comprobar siempre la **duración y el número de fotogramas** del fichero final con ffprobe y contrastarlos con lo pedido. Un fotograma correcto no prueba que el vídeo lo sea: los defectos de temporización solo se ven reproduciendo. |
+
 Actualizar cuando se cometa un error relevante.
