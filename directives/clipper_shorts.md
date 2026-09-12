@@ -1,7 +1,8 @@
-# Directiva: Clipper — VOD a Shorts
+# Directiva: Clipper — VOD a vídeo largo y a Shorts
 
-**Objetivo:** convertir un directo largo en shorts 9:16 listos para subir, con
-título y descripción, sin gastar un euro en APIs.
+**Objetivo:** convertir un directo largo en una recopilación horizontal de
+20–35 min —o en shorts 9:16— lista para subir, con título y descripción, sin
+gastar un euro en APIs.
 
 **Herramienta:** `D:\Proyectos\Clipper` (Python + yt-dlp + ffmpeg, cero deps pip).
 **Quién decide:** yo. El código solo hace lo determinista; elegir el momento y
@@ -10,6 +11,23 @@ escribir los textos es el trabajo que cobran Opus Clip y Klap, y es mi parte.
 > Antes de proponer nada sobre monetización, leer `D:\Proyectos\Clipper\docs\INVESTIGACION.md`.
 > Las recopilaciones sin transformar están desmonetizadas por la política de
 > contenido no auténtico. El camino elegido es el canal transformativo propio.
+
+## Qué formato — por defecto, horizontal
+
+Medidos los cinco canales de referencia de Pablo (373 vídeos, `docs/CANALES.md`):
+los cuatro que funcionan viven del **vídeo horizontal de 20–45 min**, y sus
+Shorts rinden 8–10× peor. Las vistas suben con la duración sin excepción
+(<10 min → 2.900 medianas; 20–30 min → 128.000; 45 min+ → 209.500).
+
+| | Compilación 16:9 | Short 9:16 |
+|---|---|---|
+| Cuándo | por defecto | cuando Pablo lo pida, o como derivado del largo |
+| Duración | 20–35 min | 45–55 s |
+| Coste de montaje | bajo: sin reframe, sin pip, sin zoom, sin subtítulos | alto |
+| Ruta | A | B |
+
+Si Pablo no dice formato, es una compilación. Los Shorts salen después, de los
+bloques que ya se eligieron.
 
 ## Inputs
 
@@ -39,6 +57,69 @@ Nunca descargar el VOD entero. `scan` baja solo subtítulos (2 h = 5 s y 290 KB)
 detectar cambios de plano. El vídeo bueno se descarga por tramos al cortar.
 
 Si falla por restricción de edad, repetir con `--cookies chrome`.
+
+## Ruta A — compilación horizontal
+
+### A1. Elegir los bloques
+
+Aquí **hay que leer el transcript entero**, no los picos. Los picos sirven para
+encontrar un chiste suelto; una compilación necesita un **argumento**, y eso solo
+se ve leyendo. En un VOD de 2 h son unas 500 líneas: se lee en trozos de 75.
+
+Lo que se busca es una tesis que el streamer desarrolle sin saberlo, y los
+bloques que la sostienen en orden. Ejemplo real (GTA 6, `presets/bloques/`):
+se abren las reservas → qué trae cada edición → *"si no pagáis, ni rizo ni
+greña"* → la Ultimate pieza a pieza → la comparación con Red Dead 2 → Oblivion y
+la armadura de caballo de 2006 → remate con Barbie.
+
+Reglas:
+
+- **18–25 bloques de 45–150 s** para llegar a 20–35 min.
+- **El orden es editorial, no cronológico.** Si el mejor remate pasó a mitad del
+  directo, va al final. El fichero de bloques manda.
+- **El primer bloque es el gancho**: lo que hace que alguien se quede, no el
+  principio cronológico. Fuera patrocinios y saludos.
+- Cada bloque lleva una **nota** que será su capítulo.
+- No hace falta que todos sean graciosos. Los que sostienen el argumento valen
+  aunque sean planos; lo que retiene es el camino, no el chiste.
+
+Guardar la selección en `D:\Proyectos\Clipper\presets\bloques\<video_id>.txt`
+(se versiona: es el único paso con criterio de todo el pipeline).
+
+### A2. Montar
+
+```bash
+cd /d/Proyectos/Clipper
+python src/clipper.py compilacion <video_id> \
+  --bloques presets/bloques/<video_id>.txt --name <slug>
+```
+
+El comando mueve cada corte a la pausa del habla más cercana, fusiona los bloques
+contiguos, descarga por tramos, normaliza y concatena. Verifica la duración con
+ffprobe tramo a tramo y al final; si no cuadra, aborta.
+
+No tocar `--sin-ajuste` salvo que Pablo lo pida: sin el ajuste, la mayoría de los
+cortes entran a mitad de frase.
+
+Los capítulos salen en `out/<slug>.capitulos.txt` con las marcas reales.
+
+### A3. Textos
+
+Plantilla medida sobre 285 títulos en `docs/CANALES.md` §6:
+
+- **Título:** nombre del streamer **siempre primero**, verbo en mayúsculas,
+  objeto, y `*Mejores Momentos*` si encaja. El gancho puede ser el remate del
+  vídeo, no el principio.
+- **Tags:** 15–20, saturando variantes del nombre + el tema.
+- **Descripción:** fecha del directo y una línea de qué pasa → capítulos → aviso
+  de canal no oficial con todas las redes del streamer → disclaimer de fair use.
+- **Categoría:** Gaming o Entertainment.
+
+Recordarle a Pablo que active el **doblaje multilingüe** al subir (YouTube
+Studio → Subtítulos → pistas de audio). Es gratis y es lo que separa a
+StarzyEdits —9,9 vistas por suscriptor— del resto.
+
+## Ruta B — Shorts 9:16
 
 ### 2. Elegir los momentos
 
@@ -152,7 +233,10 @@ python src/alfred.py plan <job_id> <ruta_plan.json>
 ```
 
 Campos por clip: `start`, `end`, `titulo` (obligatorios), y `descripcion`,
-`hook`, `frame`, `cam`, `sub_y`, `zoom`.
+`hook`, `frame`, `cam`, `sub_y`, `zoom`, `anim`, `fuerza`, `overlay`,
+`whisper` (con `modelo`). En la cola web el render solo pasa lo que venga en el
+plan: si el clip lleva palabrotas hay que poner `"whisper": true` ahí, no basta
+con acordarse al cortar a mano.
 
 Si no hay trabajo en la cola (Pablo dio una URL suelta), cortar directamente:
 
@@ -173,6 +257,9 @@ El render tarda 1–3 min por clip, casi todo descarga del tramo.
 > Los mp4 de más de 30 MB no llegan al móvil. Para previsualizar, generar una
 > versión ligera: `ffmpeg -i <clip> -vf scale=608:1080 -crf 30 -preset veryfast <preview>`
 > y avisar de que el original en calidad completa está en disco.
+>
+> Una compilación de 30 min pesa ~400 MB: **no mandarla nunca por chat**. Dar la
+> ruta, los capítulos y los textos.
 
 ## Edge cases
 
@@ -192,9 +279,15 @@ El render tarda 1–3 min por clip, casi todo descarga del tramo.
   solución, mejor ir a la charla inicial.
 - **Pablo pide un lote:** máximo 5 clips por VOD. Más satura y se repiten.
 
+- **Pablo pide una compilación y el VOD dura menos de 25 min:** no da para el
+  formato largo. Proponer juntar dos o tres directos del mismo tema, que es lo
+  que hace EditsRBN con sus series, o hacer Shorts.
+
 ## Salidas
 
-- `work/jobs/<job_id>/clips/*.mp4` (por la web) o `out/<slug>.mp4` (por chat)
-- Título y descripción por clip
+- Compilación: `out/<slug>.mp4` + `out/<slug>.capitulos.txt` +
+  selección en `presets/bloques/<video_id>.txt`
+- Shorts: `work/jobs/<job_id>/clips/*.mp4` (por la web) o `out/<slug>.mp4`
+- Título y descripción por pieza
 - Anotar en `memory/YYYY-MM-DD.md` qué VOD se procesó y qué momentos salieron,
   para no repetirlos en el siguiente lote.
