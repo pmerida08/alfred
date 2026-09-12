@@ -88,6 +88,22 @@ Guardar la selección en `D:\Proyectos\Clipper\presets\bloques\<video_id>.txt`
 
 ### A2. Montar
 
+Si el trabajo viene de la web, el plan va por `alfred.py` y el servidor monta solo:
+
+```bash
+python src/alfred.py plan <job_id> plan.json
+```
+
+con `plan.json` así (el orden de `bloques` es el del montaje):
+
+```json
+{"titulo": "...", "descripcion": "...", "tags": "...",
+ "edicion": "completa",
+ "bloques": [{"start": "3:58", "end": "6:06", "nota": "sale como capítulo"}]}
+```
+
+Si viene por chat, a mano:
+
 ```bash
 cd /d/Proyectos/Clipper
 python src/clipper.py compilacion <video_id> \
@@ -95,8 +111,14 @@ python src/clipper.py compilacion <video_id> \
 ```
 
 El comando mueve cada corte a la pausa del habla más cercana, fusiona los bloques
-contiguos, descarga por tramos, normaliza y concatena. Verifica la duración con
-ffprobe tramo a tramo y al final; si no cuadra, aborta.
+contiguos, descarga por tramos, edita, normaliza y concatena. Verifica la
+duración con ffprobe tramo a tramo y al final; si no cuadra, aborta.
+
+**La edición por defecto (`completa`) es la medida sobre los canales de
+referencia**: quita los silencios con margen 0,45 s (1 corte cada ~7 s, como
+EditsRBN), nivela a −14 LUFS y funde las costuras. No subirla ni bajarla sin
+motivo. `--cartelas` existe pero va apagado: ninguno de los cinco canales usa
+rótulos.
 
 No tocar `--sin-ajuste` salvo que Pablo lo pida: sin el ajuste, la mayoría de los
 cortes entran a mitad de frase.
