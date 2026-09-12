@@ -250,6 +250,14 @@
       "port": 4720
     },
     {
+      "name": "streakode-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Streakode/scripts/dev.mjs"
+      ],
+      "port": 4730
+    },
+    {
       "name": "clipper",
       "runtimeExecutable": "python",
       "runtimeArgs": [
