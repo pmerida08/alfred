@@ -111,6 +111,10 @@ Antes de crear un script nuevo, verifica que no existe uno ya.
 
 `.env` — API keys y tokens (NUNCA subir a git)
 
+## Arranque de sesión: ordenar la bandeja
+
+En el PC de Windows, un hook `SessionStart` (matcher `startup`, en `.claude/settings.local.json`; el archivo está en git, pero el comando comprueba `uname` y solo actúa en Windows, no en el servidor Linux) pide ordenar la bandeja de Gmail antes del primer mensaje → directiva `directives/ordenar_bandeja.md`. Solo etiqueta y archiva; nunca borra, envía ni marca como leído. Si el conector de Gmail no tiene permiso de escritura, avisar una vez y seguir.
+
 ## Agenda automática (HEARTBEAT)
 
 Las tareas periódicas están definidas en `HEARTBEAT.md`.
