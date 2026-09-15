@@ -111,6 +111,10 @@ Antes de crear un script nuevo, verifica que no existe uno ya.
 
 `.env` — API keys y tokens (NUNCA subir a git)
 
+## Arranque de sesión: ordenar la bandeja
+
+En el PC de Windows, un hook `SessionStart` (matcher `startup`, en `.claude/settings.local.json`; el archivo está en git, pero el comando comprueba `uname` y solo actúa en Windows, no en el servidor Linux) pide ordenar la bandeja de Gmail antes del primer mensaje → directiva `directives/ordenar_bandeja.md`. Solo etiqueta y archiva; nunca borra, envía ni marca como leído. Si el conector de Gmail no tiene permiso de escritura, avisar una vez y seguir.
+
 ## Agenda automática (HEARTBEAT)
 
 Las tareas periódicas están definidas en `HEARTBEAT.md`.
@@ -138,6 +142,9 @@ La bóveda real es `D:\Obsidian\Mi Bóveda\` (la que Pablo tiene abierta en la a
 - **Cada proyecto activo vive en `Proyectos/<Nombre>/`** con la misma estructura: `README.md` (estado/objetivo/stack) + `log.md` (histórico propio) + `Notas/` (apuntes específicos). Excepción: Alfred — su propia memoria vive en este repo (`memory/`, `MEMORY.md`), no en Obsidian, para no depender del filesystem del vault en cada turno.
 - Al hablar de un proyecto (LifeVault, ZepNote, Tikkofy, Notin, Portfolio, etc.), leer y actualizar su carpeta en `Proyectos/` — no dejar ese conocimiento solo en la memoria interna de Alfred.
 
+### Recopilaciones y clips de vídeo
+Cualquier petición de cortar un directo o VOD ("córtame esto", "saca los mejores momentos", un link de YouTube con intención de clipearlo) → skill `clipper`, directiva `directives/clipper_shorts.md`. **Por defecto es una recopilación horizontal de 20–35 min (`compilacion`), no un Short**: medidos los cinco canales de referencia de Pablo, los que funcionan viven del formato largo y sus Shorts rinden 8–10× peor (`D:\Proyectos\Clipper\docs\CANALES.md`). Los Shorts son el derivado. Elegir los bloques exige leer el transcript entero, no los picos: una compilación necesita un argumento. Herramienta local en `D:\Proyectos\Clipper` (Python + yt-dlp + ffmpeg, cero dependencias pip y cero APIs de pago). Analiza el VOD sin descargarlo (subtítulos + picos de energía del audio), Alfred elige los momentos y escribe título y descripción, y el render baja solo el tramo elegido. Hay interfaz web en `python src/server.py` → http://127.0.0.1:8730, con cola de trabajos en disco: Pablo pega el link, la web analiza y el trabajo espera a que Alfred decida desde el chat. **El criterio editorial es de Alfred, no del código** — es justo el paso por el que cobran Opus Clip y Klap. Antes de hablar de monetización, leer `D:\Proyectos\Clipper\docs\INVESTIGACION.md`: las recopilaciones sin transformar están desmonetizadas.
+
 ### Documentos
 Cualquier pregunta sobre documentos almacenados, extracción de información de archivos o consultas sobre contenido de PDFs, DOCXs o MDs → delegar a BASILIO (`agents/basilio/CLAUDE.md`). Carpeta base: `D:\Obsidian\Mi Bóveda\raw`.
 
@@ -157,5 +164,7 @@ Cualquier tarea de desarrollo de aplicaciones web o móvil — frontend, backend
 |-------|-------|-----------------------|
 
 | 2026-08-30 | Dije "lo he registrado como `869erm2t7`" dando por hecha una tarea de ClickUp que nunca llegué a crear. El ID era inventado y el enlace no llevaba a ninguna parte. | No dar por hecho el resultado de una acción que no se ha ejecutado. Un identificador o un enlace solo se escribe copiándolo de la respuesta real de la herramienta — nunca de memoria ni por analogía con otros IDs. |
+
+| 2026-09-11 | Entregué 5 clips animados que iban a cámara lenta (el doble de duración). Había verificado fotogramas sueltos, que se veían perfectos, pero nunca la duración real del render. `zoompan` resella los timestamps al fps que se le pasa y ffmpeg no da ningún error. | Al renderizar vídeo, comprobar siempre la **duración y el número de fotogramas** del fichero final con ffprobe y contrastarlos con lo pedido. Un fotograma correcto no prueba que el vídeo lo sea: los defectos de temporización solo se ven reproduciendo. |
 
 Actualizar cuando se cometa un error relevante.

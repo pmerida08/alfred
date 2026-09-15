@@ -123,6 +123,59 @@ El template `cv_template.html` conserva el bloque; hay que quitarlo al generar c
      desde Jun 2025 (fin del último empleo) hasta hoy.
    - El máster de Evolve está **completado** (jul 2026). Nunca escribir "en curso" ni "Actualidad".
 
+6. **Nunca `letter-spacing` por encima de 0.5px en los títulos de sección.**
+   Verificado midiendo el PDF real con el evaluador de Aplico (sep 2026):
+
+   | letter-spacing | Cómo lo lee el ATS |
+   |---|---|
+   | 1.6px | `E X P E R I E N C I A` — sección irreconocible |
+   | 0.6px | `IA & AUTOMATIZACIÓN` — correcto |
+   | 0.5px | `EXPERIENCIA` — correcto, y conserva el aire visual |
+
+   Es más grave de lo que parece: si el parser no reconoce el encabezado, no
+   identifica la sección de experiencia laboral, y sin sección no cuenta ningún
+   empleo. Es la vía por la que un CV correcto acaba reportando **cero años de
+   experiencia** — que es justo lo que devolvió el ATS de TopCV.
+
+   Corregido a 0.5px en la plantilla y en los 78 CVs generados el 2026-09-08.
+   Medido: el CV genérico pasó de 37/100 a 63/100 solo con este cambio.
+
+7. **UNA SOLA COLUMNA. Nunca `display: grid` con varias columnas para el contenido.**
+   Un ATS lee línea a línea de izquierda a derecha: en rejilla, el texto de las
+   columnas se entrelaza. Casos reales medidos en el CV de Pablo:
+
+   - `"IA & AUTOMATIZACIÓNLENGUAJES & FRAMEWORKSDATOS & CLOUD"` (habilidades en 3 columnas)
+   - `"Alfred — Sistema multi-agente IALifeVault — SaaS con IA"` (proyectos en 2 columnas)
+   - `"EDUCACIÓNIDIOMAS & CERTIFICACIONES"` (fila inferior en 2 columnas)
+
+   Formato correcto de cada sección:
+   - **Habilidades:** una línea por categoría — `<p><span class="skill-cat">Cat:</span> A · B · C</p>`
+   - **Proyectos:** apilados en `.proyectos-lista`, cada uno en su `.proyecto`
+   - **Educación:** una línea por entrada, `título — centro | fechas`
+
+   Convertido en la plantilla y en los 77 CVs el 2026-09-08. El CV genérico pasó
+   de 63/100 a **89/100** y sigue cabiendo en una página. Al desaparecer las
+   columnas también desapareció un falso hueco temporal de 27 meses: las fechas
+   de formación por fin se leían.
+
+8. **`min-height: 297mm`, nunca `height` + `overflow: hidden`.**
+   Con `overflow: hidden`, si el contenido crece se corta en silencio y nadie se
+   entera. Es preferible una segunda página visible a perder texto sin aviso.
+
+9. **Sin emoji en el bloque de contacto.** Se colaban en el texto extraído pegados
+   al dato (`"📞 664 549 627"`) y el parser no reconocía el teléfono ni el correo.
+
+   Además pesan: **cada emoji añade unos 32 KB** al PDF, porque Chrome embebe una
+   fuente de emoji completa. Los seis iconos del contacto sumaban ~215 KB — más que
+   todo el resto del documento junto.
+
+   La separación visual la da un punto medio por CSS, que no interfiere:
+
+       .contacto > *:not(:last-child)::after { content: "·"; color: #bbb; margin-left: 8px; }
+
+   Quitados de la plantilla y de los 88 CVs el 2026-09-08. El CV genérico pasó de
+   89/100 a **97/100** y de 338 KB a 123 KB.
+
 
 6. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
    - GitHub → `https://github.com/pmerida08`

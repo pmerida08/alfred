@@ -5,5 +5,20 @@
       "WebFetch(domain:github.com)",
       "mcp__eea1299e-3126-42cc-866c-b65ddd58a49a__notion-search"
     ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "case \"$(uname -s)\" in MINGW*|MSYS*|CYGWIN*) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"ARRANQUE DE SESION: antes de responder al primer mensaje de Pablo, ordena su bandeja de Gmail siguiendo directives/ordenar_bandeja.md (etiquetar y archivar, nunca borrar ni enviar). Resume el resultado en 1-2 lineas y luego atiende su peticion.\"}}' ;; *) echo '{}' ;; esac",
+            "statusMessage": "Preparando orden de bandeja..."
+          }
+        ]
+      }
+    ]
   }
 }

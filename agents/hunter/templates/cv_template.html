@@ -14,8 +14,9 @@
       color: #1a1a1a;
       background: white;
       width: 210mm;
-      height: 297mm;
-      overflow: hidden;
+      /* min-height y no height+overflow:hidden: si el contenido crece, es mejor
+         que salga una segunda página a que se corte en silencio. */
+      min-height: 297mm;
       padding: 13mm 15mm 10mm 15mm;
       display: flex;
       flex-direction: column;
@@ -31,7 +32,10 @@
     }
     .header-left h1 { font-size: 23pt; font-weight: 800; letter-spacing: -0.3px; color: #111; }
     .header-left .subtitulo { font-size: 10.5pt; color: #444; margin-top: 2px; font-weight: 400; }
-    .contacto { margin-top: 5px; font-size: 9pt; color: #333; display: flex; flex-wrap: wrap; gap: 0 14px; }
+    .contacto { margin-top: 5px; font-size: 9pt; color: #333; display: flex; flex-wrap: wrap; gap: 0 8px; }
+    /* Separador tipográfico en lugar de iconos: los emoji se colaban en el texto
+       extraído pegados al dato ("📞 664 549 627") y el parser no lo reconocía. */
+    .contacto > *:not(:last-child)::after { content: "·"; color: #bbb; margin-left: 8px; }
     .contacto a { color: #333; text-decoration: none; }
     .foto { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; flex-shrink: 0; margin-left: 12px; }
 
@@ -50,7 +54,7 @@
     .titulo-seccion {
       font-size: 8.5pt;
       font-weight: 700;
-      letter-spacing: 1.6px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
       color: #111;
       border-bottom: 0.8px solid #ccc;
@@ -61,10 +65,11 @@
     /* ── PERFIL ── */
     .perfil p { font-size: 10pt; line-height: 1.5; }
 
-    /* ── HABILIDADES ── */
-    .habilidades-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 18px; }
-    .skill-cat { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #555; margin-bottom: 2px; }
-    .skill-items { font-size: 9.5pt; line-height: 1.7; }
+    /* ── HABILIDADES: UNA SOLA COLUMNA ──
+       En rejilla de tres, el ATS leía los encabezados seguidos:
+       "IA & AUTOMATIZACIÓNLENGUAJES & FRAMEWORKSDATOS & CLOUD". */
+    .skills-lista p { font-size: 9.5pt; line-height: 1.55; margin-bottom: 1px; }
+    .skill-cat { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #555; }
 
     /* ── EXPERIENCIA ──
        Puesto, empresa y fechas van en UNA sola línea de texto continuo.
@@ -79,19 +84,21 @@
     .job-bullets li::before { content: "\2022"; position: absolute; left: 0; }
 
     /* ── PROYECTOS ── */
-    .proyectos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 20px; }
+    /* Apilados: en dos columnas el ATS fundía un proyecto con el siguiente. */
+    .proyecto { margin-bottom: 4px; }
     .proyecto-nombre { font-weight: 700; font-size: 10pt; }
     /* La fecha va DENTRO de .proyecto-nombre, en la misma línea de texto:
        es lo que cubre el hueco entre Jun 2025 y hoy en la lectura del ATS. */
     .proyecto-fecha { font-weight: 400; font-size: 9pt; color: #555; }
     .proyecto-desc { font-size: 9.2pt; line-height: 1.45; color: #333; margin-top: 1px; }
 
-    /* ── FILA INFERIOR (Educación + Idiomas) ── */
-    .fila-inferior { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
-    .edu-entrada { margin-bottom: 5px; }
-    .edu-titulo { font-weight: 700; font-size: 10pt; }
-    .edu-centro { font-style: italic; color: #555; font-size: 9.2pt; }
-    .edu-fecha { font-size: 9pt; color: #555; }
+    /* ── EDUCACIÓN E IDIOMAS: APILADOS ──
+       En dos columnas se leían fundidos: "EDUCACIÓNIDIOMAS & CERTIFICACIONES".
+       Cada entrada va en una línea de texto continua. */
+    .edu-entrada { margin-bottom: 2px; font-size: 9.5pt; }
+    .edu-titulo { font-weight: 700; }
+    .edu-centro { font-style: italic; color: #555; }
+    .edu-fecha { color: #555; }
     .certs-lista { list-style: none; }
     .certs-lista li { padding-left: 10px; position: relative; font-size: 9.5pt; margin-bottom: 3px; }
     .certs-lista li::before { content: "\2022"; position: absolute; left: 0; }
@@ -120,12 +127,12 @@
       <!-- ADAPTAR: subtítulo según el puesto objetivo -->
       <div class="subtitulo">IA Automation Specialist · Low-code &amp; AI Workflows</div>
       <div class="contacto">
-        <span>📞 664 549 627</span>
-        <span>✉ pablomerida03@gmail.com</span>
-        <span>📍 Montilla, Córdoba</span>
-        <a href="https://github.com/pmerida08" target="_blank">🔗 github.com/pmerida08</a>
-        <a href="https://pmerida-portfolio.netlify.app" target="_blank">🌐 pmerida-portfolio.netlify.app</a>
-        <a href="https://linkedin.com/in/pablo-merida-velasco" target="_blank">💼 linkedin.com/in/pablo-merida-velasco</a>
+        <span>664 549 627</span>
+        <span>pablomerida03@gmail.com</span>
+        <span>Montilla, Córdoba</span>
+        <a href="https://github.com/pmerida08" target="_blank">github.com/pmerida08</a>
+        <a href="https://pmerida-portfolio.netlify.app" target="_blank">pmerida-portfolio.netlify.app</a>
+        <a href="https://linkedin.com/in/pablo-merida-velasco" target="_blank">linkedin.com/in/pablo-merida-velasco</a>
       </div>
     </div>
     <!--
@@ -168,20 +175,10 @@
     <!-- HABILIDADES -->
     <div>
       <div class="titulo-seccion">Habilidades</div>
-      <div class="habilidades-grid">
-        <!-- ADAPTAR: reordenar skills; las más relevantes para la oferta, primero dentro de su columna -->
-        <div>
-          <div class="skill-cat">Automatización &amp; IA</div>
-          <div class="skill-items">n8n &nbsp; Make &nbsp; Claude API &nbsp; OpenAI API<br>LLM Prompting &nbsp; RAG</div>
-        </div>
-        <div>
-          <div class="skill-cat">Lenguajes &amp; Frameworks</div>
-          <div class="skill-items">Python &nbsp; TypeScript &nbsp; JavaScript &nbsp; PHP<br>React &nbsp; Laravel</div>
-        </div>
-        <div>
-          <div class="skill-cat">Datos &amp; Cloud</div>
-          <div class="skill-items">SQL &nbsp; MySQL &nbsp; Supabase &nbsp; PostgreSQL<br>AWS &nbsp; Linux &nbsp; Git &nbsp; REST APIs</div>
-        </div>
+      <div class="skills-lista">
+        <p><span class="skill-cat">Automatización &amp; IA:</span> n8n · Make · Claude API · OpenAI API · LLM Prompting · RAG</p>
+        <p><span class="skill-cat">Lenguajes &amp; Frameworks:</span> Python · TypeScript · JavaScript · PHP · React · Laravel</p>
+        <p><span class="skill-cat">Datos &amp; Cloud:</span> SQL · MySQL · Supabase · PostgreSQL · AWS · Linux · Git · REST APIs</p>
       </div>
     </div>
 
@@ -204,50 +201,46 @@
       <!-- ADAPTAR: reordenar los 4 proyectos por relevancia; el más importante arriba-izquierda.
            CADA proyecto lleva fecha: sin ellas el ATS ve un hueco desde Jun 2025 (fin del
            último empleo) hasta hoy. Mantener la fecha dentro de .proyecto-nombre. -->
-      <div class="proyectos-grid">
-        <div>
+      <div class="proyectos-lista">
+        <div class="proyecto">
           <div class="proyecto-nombre">Sistema de Automatización con IA (Alfred) <span class="proyecto-fecha">· May 2026 – Actualidad</span></div>
           <div class="proyecto-desc">Arquitectura multi-agente con Claude API, n8n, Google Sheets, Notion y Telegram. Agentes especializados por dominio, memoria persistente y procesamiento autónomo. Diseñado para escalar sin intervención manual.</div>
         </div>
-        <div>
+        <div class="proyecto">
           <div class="proyecto-nombre">Estudiante Élite <span class="proyecto-fecha">· Ene 2026 – Feb 2026</span></div>
           <div class="proyecto-desc">Sistema de tutoría con IA para estudiantes de derecho. Workflows en n8n con RAG, memoria de sesión y transcripción de audio (Whisper). Stack: React 19 + TypeScript, Supabase, Netlify CI/CD.</div>
         </div>
-        <div>
+        <div class="proyecto">
           <div class="proyecto-nombre">MyHandStats <span class="proyecto-fecha">· Mar 2025 – Jun 2025</span></div>
           <div class="proyecto-desc">App web full-stack para análisis de estadísticas de balonmano en tiempo real. FastAPI + PostgreSQL (Supabase) + React, con despliegue en Netlify e integración continua.</div>
         </div>
-        <div>
+        <div class="proyecto">
           <div class="proyecto-nombre">Generador de Recetas con IA <span class="proyecto-fecha">· Mar 2025 – Ago 2025</span></div>
           <div class="proyecto-desc">Herramienta en PHP y JavaScript que integra un modelo de IA para generar recetas, planificar comidas semanales y crear listas de la compra automáticamente.</div>
         </div>
+      
       </div>
     </div>
 
     <!-- EDUCACIÓN + IDIOMAS -->
-    <div class="fila-inferior">
-      <div>
-        <div class="titulo-seccion">Educación</div>
-        <div class="edu-entrada">
-          <div class="edu-titulo">Máster en IA Generativa e Innovación</div>
-          <div class="edu-centro">Evolve Academy</div>
-          <div class="edu-fecha">2025 – 2026 · Completado</div>
-        </div>
-        <div class="edu-entrada">
-          <div class="edu-titulo">CFGS Desarrollo de Aplicaciones Web</div>
-          <div class="edu-centro">IES Gran Capitán</div>
-          <div class="edu-fecha">2021 – 2025</div>
-        </div>
+<div>
+      <div class="titulo-seccion">Educación</div>
+      <div class="edu-entrada">
+      <span class="edu-titulo">Máster en IA Generativa e Innovación</span> — <span class="edu-centro">Evolve Academy</span> <span class="edu-fecha">| 2025 – 2026 · Completado</span>
       </div>
-      <div>
-        <div class="titulo-seccion">Idiomas &amp; Certificaciones</div>
-        <ul class="certs-lista">
-          <li><strong>Español</strong> — Nativo</li>
-          <li><strong>Inglés</strong> — Intermedio alto · B2 Cambridge (2025)</li>
-          <li>AWS Academy: Introducción a la Nube (2021-2022)</li>
-          <li>Permiso de conducir — Clase B</li>
-        </ul>
+      <div class="edu-entrada">
+      <span class="edu-titulo">CFGS Desarrollo de Aplicaciones Web</span> — <span class="edu-centro">IES Gran Capitán</span> <span class="edu-fecha">| 2021 – 2025</span>
       </div>
+    </div>
+
+    <div>
+      <div class="titulo-seccion">Idiomas &amp; Certificaciones</div>
+      <ul class="certs-lista">
+        <li><strong>Español</strong> — Nativo</li>
+        <li><strong>Inglés</strong> — Intermedio alto · B2 Cambridge (2025)</li>
+        <li>AWS Academy: Introducción a la Nube (2021-2022)</li>
+        <li>Permiso de conducir — Clase B</li>
+      </ul>
     </div>
 
   </div><!-- /contenido -->

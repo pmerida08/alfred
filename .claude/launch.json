@@ -236,6 +236,34 @@
         "D:/Proyectos/Primordia/tools/serve.mjs"
       ],
       "port": 5177
+    },
+    {
+      "name": "aplico-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Aplico/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Aplico",
+        "-p",
+        "4720"
+      ],
+      "port": 4720
+    },
+    {
+      "name": "streakode-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Streakode/scripts/dev.mjs"
+      ],
+      "port": 4730
+    },
+    {
+      "name": "clipper",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "D:/Proyectos/Clipper/src/server.py"
+      ],
+      "port": 8730
     }
   ]
 }

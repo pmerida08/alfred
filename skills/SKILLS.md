@@ -18,6 +18,7 @@ Skills disponibles para Alfred. Cada skill tiene su propio archivo en esta carpe
 | Google Workspace (Gmail, Calendar, Drive) | [google-workspace.md](google-workspace.md) |
 | Crear agente especializado nuevo | [crear-agente.md](crear-agente.md) |
 | Subir cambios a Alfred (GitHub) | [deploy-alfred.md](deploy-alfred.md) |
+| Clipper — VOD a Shorts 9:16 | [clipper.md](clipper.md) |
 | BASILIO — Archivero de documentos | [basilio.md](basilio.md) |
 | HUNTER — Buscar ofertas y generar candidaturas | [hunter-buscar-ofertas.md](hunter-buscar-ofertas.md) |
 | HERALDO — Estrategia de contenido | [content-strategy.md](content-strategy.md) |

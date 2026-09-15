@@ -17,11 +17,13 @@ Pablo dice que ha enviado el CV, mandado la solicitud, o similar expresión que 
 
 ### 2. Actualizar en Notion
 
-Modificar los campos:
-- **Estado** → `"Solicitud enviada"`
-- **Fecha de envío** → fecha de hoy
+BD: `HUNTER — Candidaturas` — `collection://98bf6038-74db-4f77-9222-99b8e8932d06`
 
-Si la candidatura no existe aún en Notion (Pablo la ha mandado sin pasar por HUNTER), crearla con los datos conocidos y estado `"Solicitud enviada"`.
+Modificar los campos (nombres exactos del esquema):
+- **Estado** → `"Enviada"`
+- **Fecha candidatura** → fecha de hoy
+
+Si la candidatura no existe aún en Notion (Pablo la ha mandado sin pasar por HUNTER), crearla con los datos conocidos y estado `"Enviada"`.
 
 ### 3. Confirmar a Pablo
 
@@ -31,14 +33,18 @@ Una sola línea: empresa, puesto y fecha de envío registrada.
 
 | Estado | Significado |
 |--------|-------------|
-| `Analizada` | Oferta analizada, sin materiales |
+| `No aceptan solicitudes` | La oferta ya no admite candidaturas |
 | `Materiales listos` | Carta y CV generados, pendiente de envío |
-| `Solicitud enviada` | Pablo ha enviado la candidatura |
+| `Enviada` | Pablo ha enviado la candidatura |
 | `En proceso` | Hay respuesta de la empresa (entrevista, prueba) |
-| `Descartada` | Sin respuesta o candidatura rechazada |
+| `Rechazada` | Candidatura rechazada o sin respuesta |
+| `Oferta recibida` | La empresa ha hecho una oferta |
+
+Estos son los únicos valores válidos del select `Estado`. Cualquier otro nombre hace fallar la escritura.
 
 ## Edge cases
 
 - **Empresa sin entrada en Notion:** crearla directamente con estado `"Solicitud enviada"`. Pedir a Pablo empresa, puesto y fecha si no los tiene.
 - **Varias ofertas de la misma empresa:** confirmar el puesto concreto antes de actualizar.
 - **Pablo dice "ya mandé las de ayer":** actualizar todas las que estén en `"Materiales listos"` del día anterior, previa confirmación de la lista.
+- **Notion rechaza la escritura ("workspace has used all of its free blocks"):** el plan gratuito está lleno. NO dar la candidatura por registrada. Anotar los datos en `agents/hunter/memory/YYYY-MM-DD.md` marcados como PENDIENTE DE REGISTRAR y avisar a Pablo de que debe liberar bloques o cambiar de plan.
