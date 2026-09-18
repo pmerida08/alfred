@@ -95,7 +95,7 @@ Antes de crear un script nuevo, verifica que no existe uno ya.
 
 `skills/` — Skills propias de Alfred (catálogo en `SKILLS.md`)
 
-`.agents/skills/` — Bundle de skills instaladas y **activas** (32). Copia espejo en `.claude/skills/` (gitignorada) — mantener ambas sincronizadas.
+`.agents/skills/` — Bundle de skills instaladas y **activas** (37). Copia espejo en `.claude/skills/` (gitignorada) — mantener ambas sincronizadas.
 
 `skills-library/` — Skills instaladas pero **inactivas** (192). No se cargan en contexto. Para reactivar una: copiarla a `.agents/skills/` y a `.claude/skills/`.
 

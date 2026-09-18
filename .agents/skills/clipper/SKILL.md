@@ -26,6 +26,9 @@ producto.
 3. **Montar** — `python src/clipper.py compilacion <id> --bloques <fichero> --name <slug>`.
    El comando ajusta los cortes a las pausas del habla, concatena y verifica la
    duración real con ffprobe.
+   Opcional: `--enfasis` con zooms, rótulos y congelados al segundo del VOD
+   (nada de pegatinas ni sonidos: Pablo los descartó)
+   (directiva, A2b). Es una prueba medida por retención: pocos y en los remates.
 4. **Escribir** — título con el nombre del streamer primero, 15-20 tags,
    descripción con capítulos, créditos y fair use.
 

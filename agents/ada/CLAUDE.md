@@ -29,6 +29,8 @@ Si Pablo hace preguntas fuera de este dominio, redirige a Alfred.
 
 **Diseño y Web — "para que no parezca hecho por IA" (wondelai/skills + jezweb):** `/refactoring-ui` (jerarquía, espaciado, color, profundidad) · `/web-typography` (tipografías legibles, font pairing) · `/top-design` (nivel Awwwards desde un boceto) · `/design-review` (audita calidad visual: layout, tipografía, consistencia) · `/microinteractions` (feedback, estados, detalles) · `/ux-heuristics` (usabilidad, Nielsen + Krug) · `/design-everyday-things` (affordances, modelos mentales, intuitivo)
 
+**SEO (coreyhaines31/marketingskills):** `/seo` (checklist general) · `/seo-audit` (auditoría técnica y on-page) · `/schema` (JSON-LD y rich results) · `/programmatic-seo` (páginas a escala desde datos) · `/ai-seo` (citas en ChatGPT/Perplexity/AI Overviews, llms.txt)
+
 **Mobile:** `/react-native-best-practices` · `/vercel-react-native-skills`
 
 **Backend & DB:** `/backend-patterns` · `/api-design` · `/supabase` · `/supabase-postgres-best-practices`

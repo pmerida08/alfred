@@ -125,6 +125,40 @@ cortes entran a mitad de frase.
 
 Los capítulos salen en `out/<slug>.capitulos.txt` con las marcas reales.
 
+### A2b. Capa de énfasis (opcional, en prueba)
+
+Zooms, rótulos y congelados, decididos por Alfred desde el transcript igual que
+los bloques. **Sin pegatinas ni efectos de sonido**: se probaron el 16/09 y
+Pablo los descartó. **Es una apuesta, no un requisito**: los canales de
+referencia no usan nada de esto. Se valida midiendo la retención en Studio
+contra el COD1 y el Lobezno, que salieron sin énfasis. Si no mejora, se quita.
+
+Una línea por efecto, con el **segundo del VOD** (el reloj del transcript). En el
+plan va como lista `"enfasis": [...]`; por chat, en un fichero y con
+`--enfasis presets/enfasis/<video_id>.txt`:
+
+```
+1:44:22.5  zoom 1.3 @0.46,0.42        # golpe de zoom a la cara
+1:52:10    texto "EL CHAT MIENTE"     # rótulo con rebote, abajo
+2:03:10    congelar "NO ES VERDAD"    # imagen congelada + rótulo
+2:11:30    censura dur=0.6            # silencia la voz, sin pitido
+2:12:00    temblor
+```
+
+Criterio:
+- **Poco y en los remates.** Uno cada 1-2 min como mucho; si todo es énfasis,
+  nada lo es. El zoom va en la frase que es la tesis o en la reacción, no en
+  cualquier grito.
+- El `@x,y` del zoom se elige mirando un fotograma del tramo: la cámara no
+  está en el mismo sitio en charla que en gameplay.
+- La censura cae ~0,15 s más tarde de lo escrito y los subtítulos automáticos
+  ya bailan: darle margen por delante y `dur` de sobra.
+- Los efectos no hacen el vídeo "transformativo" para YouTube
+  (`docs/INVESTIGACION.md`): no venderlo como solución a la monetización.
+- Antes del montaje completo, revisar con `--solo N` (solo ese tramo, en
+  `out/<slug>_tramos_N.mp4`): extraer fotogramas en los instantes de los
+  efectos y comprobar duración y fotogramas con ffprobe.
+
 ### A3. Textos
 
 Plantilla medida sobre 285 títulos en `docs/CANALES.md` §6:
