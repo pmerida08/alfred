@@ -258,6 +258,14 @@
       "port": 4730
     },
     {
+      "name": "timebox",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Timebox/tools/serve.mjs"
+      ],
+      "port": 4740
+    },
+    {
       "name": "clipper",
       "runtimeExecutable": "python",
       "runtimeArgs": [
