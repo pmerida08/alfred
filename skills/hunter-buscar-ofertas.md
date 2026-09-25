@@ -6,7 +6,7 @@
 Carga HUNTER (`agents/hunter/CLAUDE.md`) y ejecuta la directiva `agents/hunter/directives/buscar_ofertas.md`:
 
 1. Busca en Internet ofertas que encajen con el perfil real de Pablo (lee su CV primero).
-2. Filtra duplicados contra Notion (estado "Solicitud enviada").
+2. Filtra duplicados contra Notion (misma empresa y puesto ya registrados).
 3. Por cada oferta (3 por defecto): analiza el fit, adapta el CV HTML y escribe la carta de presentación.
 4. Registra cada candidatura en Notion (con la URL de la oferta) en estado "Materiales listos".
 5. Devuelve al chat la carta y el link de cada oferta, y deja los ficheros (CV HTML + carta) en `.tmp/hunter_outbox/`.

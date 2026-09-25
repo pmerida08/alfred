@@ -1,21 +1,13 @@
-# AGENTS
+# Agentes de Alfred
 
-Agentes especializados disponibles para Alfred. Cada agente vive en su propia carpeta.
+Cada agente tiene un único fichero de instrucciones, `agents/<id>/CLAUDE.md`, y su memoria en `agents/<id>/memory/`.
 
-## Meta-agentes (tipos built-in de Claude Code)
-
-| Agente | Carpeta |
+| Agente | Dominio |
 |--------|---------|
-| Explore — búsqueda rápida en codebase | [agents/explore/](explore/CLAUDE.md) |
-| General Purpose — investigación y tareas multi-paso | [agents/general-purpose/](general-purpose/CLAUDE.md) |
-| Plan — planificación de implementación | [agents/plan/](plan/CLAUDE.md) |
+| [FORGE](forge/CLAUDE.md) | Gimnasio y nutrición |
+| [ADA](ada/CLAUDE.md) | Desarrollo de aplicaciones web y móvil |
+| [BASILIO](basilio/CLAUDE.md) | Documentos guardados |
+| [HUNTER](hunter/CLAUDE.md) | Búsqueda de empleo |
+| [HERALDO](heraldo/CLAUDE.md) | Contenido y redes sociales |
 
-## Agentes especializados
-
-| Agente | Carpeta |
-|--------|---------|
-| FORGE — Entrenador personal | [agents/forge/](forge/CLAUDE.md) |
-| ADA — Desarrollo de aplicaciones web y móvil | [agents/ada/](ada/CLAUDE.md) |
-| BASILIO — Archivero de documentos | [agents/basilio/](basilio/CLAUDE.md) |
-| HUNTER — Búsqueda de empleo | [agents/hunter/](hunter/CLAUDE.md) |
-| HERALDO — Contenido y redes sociales | [agents/heraldo/](heraldo/CLAUDE.md) |
+Para crear uno nuevo: `skills/crear-agente.md`.

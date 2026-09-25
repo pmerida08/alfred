@@ -1,64 +1,27 @@
-# Directiva: FORGE — Registro de Comidas
+# Directiva: FORGE — registro de comidas
 
-## Propósito
+## Flujo (automático)
 
-Registrar automáticamente los macros de cada comida que Pablo fotografíe por Telegram.
-Los datos se almacenan en Google Sheets con ventana móvil de 90 días.
+1. Pablo manda una foto al bot de Telegram. **Toda foto se trata como comida**: el bot no distingue la intención.
+2. `telegram_bot.py` la descarga y llama a `log_food()` de `execution/food_log.py`.
+3. El script pide a Claude Code CLI (`claude -p`, con la suscripción, sin API key) el nombre del plato, las kcal y los gramos de proteína, carbohidratos y grasa.
+4. Sube la foto a ImgBB (`IMGBB_API_KEY`) y añade una fila al Sheet.
+5. En cada escritura borra las filas de más de 90 días y sus imágenes de ImgBB.
+6. El bot contesta con el resumen de macros, o con el error si algo falla.
 
-## Flujo automático (vía Telegram)
+## Sheet
 
-1. Pablo envía una foto de una comida al bot de Telegram.
-2. El bot descarga la imagen y llama a `execution/food_log.py`.
-3. El script analiza la imagen con Claude Vision (Haiku) y estima:
-   - Nombre del plato
-   - Calorías (kcal)
-   - Proteínas (g)
-   - Carbohidratos (g)
-   - Grasas (g)
-4. El resultado se escribe en Google Sheets (hoja "Comidas").
-5. Se eliminan automáticamente los registros con más de 90 días de antigüedad.
-6. El bot confirma el registro con un resumen de texto.
+Spreadsheet `FOOD_LOG_SHEET_ID`, hoja `FOOD_LOG_SHEET_NAME` ("Comidas"; si falta la variable, el script usa "Hoja 1"). Columnas:
 
-## Estructura del Google Sheet
+`Fecha | Hora | Comida | Calorías | Proteínas (g) | Carbohidratos (g) | Grasas (g) | Notas | Foto | Img ID`
 
-Hoja: `Comidas` dentro del spreadsheet de Alfred.
+La hoja "Resumen" se regenera con `python execution/setup_food_sheet.py --fix-resumen`. El Sheet está en locale español: al escribir fórmulas por API, separador `;` y funciones en español.
 
-| Fecha      | Hora  | Comida          | Calorías | Proteínas (g) | Carbohidratos (g) | Grasas (g) | Notas |
-|------------|-------|-----------------|----------|---------------|-------------------|------------|-------|
-| 2026-05-12 | 13:45 | Pollo con arroz | 620      | 48            | 65                | 12         |       |
+## Consultas
 
-## Variables de entorno necesarias (.env)
+"¿Cuántas calorías llevo hoy?", "proteína de esta semana", "qué comí ayer": leer la hoja y agregar por fecha.
 
-```
-GOOGLE_SHEETS_CREDENTIALS_PATH=/ruta/a/service_account.json
-FOOD_LOG_SHEET_ID=<id_del_spreadsheet>
-FOOD_LOG_SHEET_NAME=Comidas
-```
+## Edge cases
 
-## Setup de Google Sheets (primera vez)
-
-1. En Google Cloud Console: activar la API de Google Sheets.
-2. Crear una cuenta de servicio → descargar el JSON de credenciales.
-3. Crear un Google Spreadsheet en la carpeta "Alfred" de Google Drive.
-4. Compartir el spreadsheet con el email de la cuenta de servicio (editor).
-5. Copiar el ID del spreadsheet (parte de la URL) en `FOOD_LOG_SHEET_ID`.
-6. Poner la ruta al JSON en `GOOGLE_SHEETS_CREDENTIALS_PATH`.
-
-## Dependencias Python
-
-```
-pip install google-api-python-client google-auth anthropic python-dotenv
-```
-
-## Consultas manuales que puede manejar FORGE
-
-- "¿Cuántas calorías llevo hoy?" → leer Google Sheets, sumar filas del día
-- "¿Cuántas proteínas esta semana?" → agregar por semana
-- "Muéstrame lo que comí ayer" → filtrar por fecha
-
-Para consultas manuales FORGE lee el spreadsheet directamente usando el script o vía MCP de Google si está disponible.
-
-## Retención de datos
-
-La limpieza de 90 días se ejecuta automáticamente en cada escritura.
-No requiere tarea cron separada.
+- Foto ambigua (varios platos, borrosa): el script registra la mejor estimación y lo indica en Notas.
+- Faltan variables en `.env` (`GOOGLE_SHEETS_CREDENTIALS_PATH`, `FOOD_LOG_SHEET_ID`, `IMGBB_API_KEY`): el script falla y el bot devuelve el error; decírselo a Pablo con la variable que falta.

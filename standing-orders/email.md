@@ -1,32 +1,7 @@
-# Standing Orders — Email
+# Standing orders — correo (Gmail)
 
-Permisos permanentes de Alfred sobre el dominio de correo de Pablo.
+**Sin preguntar:** leer y buscar correo, resumirlo, etiquetar y archivar según `directives/ordenar_bandeja.md` (incluido crear las etiquetas de esa directiva si faltan) y crear borradores para que Pablo los revise.
 
-## Autorizado sin preguntar
+**Con confirmación:** enviar o responder cualquier correo, borrar o mandar a la papelera, marcar como spam, crear etiquetas que no estén en la directiva y reenviar.
 
-- Leer emails de la bandeja de entrada
-- Clasificar emails por categoría (trabajo, personal, newsletters, spam)
-- Generar resúmenes de emails no leídos
-- Marcar como leído después de resumir
-- Crear borradores de respuesta para revisión de Pablo
-- Mover emails a carpetas/etiquetas existentes
-- Archivar emails procesados
-
-## Requiere confirmación
-
-- Enviar cualquier email (incluyendo respuestas)
-- Eliminar emails permanentemente
-- Crear nuevas etiquetas o carpetas
-- Acceder a emails más antiguos de 30 días (salvo búsqueda explícita)
-
-## Herramientas autorizadas
-
-- MCP Gmail (conectado directamente en la sesión de Claude Code)
-  - `search_threads` — buscar y leer emails
-  - `get_thread` — leer un hilo completo
-  - `list_drafts` — ver borradores
-  - `create_draft` — crear borrador para revisión
-
-## Credenciales
-
-- Gestionadas por el conector MCP — sin configuración adicional necesaria.
+**Nunca:** marcar como leído (Pablo decide qué ha leído) ni archivar correos de personas conocidas o avisos de cobro.

@@ -1,50 +1,14 @@
-# Directiva: Registrar solicitud enviada
+# Directiva: registrar una solicitud enviada
 
-## Objetivo
+**Cuándo:** Pablo dice que ha mandado el CV o la solicitud a una oferta.
 
-Actualizar el estado de una candidatura en Notion cuando Pablo confirme que ha enviado el CV a una empresa, y proporcionar la lista actualizada de candidaturas pendientes de envío.
+## Pasos
 
-## Trigger
+1. Busca la candidatura en Notion por empresa y puesto. Si hay varias de la misma empresa, pregunta cuál.
+2. Actualiza `Estado` → `Enviada` y `Fecha candidatura` → hoy.
+3. Si no existe (la mandó sin pasar por HUNTER), créala con lo que sepas y `Estado = Enviada`; pregunta empresa, puesto o fecha solo si faltan.
+4. Confirma en una línea: empresa, puesto y fecha.
 
-Pablo dice que ha enviado el CV, mandado la solicitud, o similar expresión que confirme que ha candidatado a una oferta ya registrada.
+«Ya mandé las de ayer»: enseña las que están en `Materiales listos` con fecha de ayer y, cuando Pablo confirme la lista, márcalas todas.
 
-## Proceso
-
-### 1. Identificar la candidatura
-
-- Buscar en la BD de Notion la entrada correspondiente por empresa y/o puesto.
-- Si hay ambigüedad (varias entradas de la misma empresa), preguntar a Pablo cuál.
-
-### 2. Actualizar en Notion
-
-BD: `HUNTER — Candidaturas` — `collection://98bf6038-74db-4f77-9222-99b8e8932d06`
-
-Modificar los campos (nombres exactos del esquema):
-- **Estado** → `"Enviada"`
-- **Fecha candidatura** → fecha de hoy
-
-Si la candidatura no existe aún en Notion (Pablo la ha mandado sin pasar por HUNTER), crearla con los datos conocidos y estado `"Enviada"`.
-
-### 3. Confirmar a Pablo
-
-Una sola línea: empresa, puesto y fecha de envío registrada.
-
-## Estados del ciclo de candidatura
-
-| Estado | Significado |
-|--------|-------------|
-| `No aceptan solicitudes` | La oferta ya no admite candidaturas |
-| `Materiales listos` | Carta y CV generados, pendiente de envío |
-| `Enviada` | Pablo ha enviado la candidatura |
-| `En proceso` | Hay respuesta de la empresa (entrevista, prueba) |
-| `Rechazada` | Candidatura rechazada o sin respuesta |
-| `Oferta recibida` | La empresa ha hecho una oferta |
-
-Estos son los únicos valores válidos del select `Estado`. Cualquier otro nombre hace fallar la escritura.
-
-## Edge cases
-
-- **Empresa sin entrada en Notion:** crearla directamente con estado `"Solicitud enviada"`. Pedir a Pablo empresa, puesto y fecha si no los tiene.
-- **Varias ofertas de la misma empresa:** confirmar el puesto concreto antes de actualizar.
-- **Pablo dice "ya mandé las de ayer":** actualizar todas las que estén en `"Materiales listos"` del día anterior, previa confirmación de la lista.
-- **Notion rechaza la escritura ("workspace has used all of its free blocks"):** el plan gratuito está lleno. NO dar la candidatura por registrada. Anotar los datos en `agents/hunter/memory/YYYY-MM-DD.md` marcados como PENDIENTE DE REGISTRAR y avisar a Pablo de que debe liberar bloques o cambiar de plan.
+Si Notion rechaza la escritura, sigue la regla de `agents/hunter/CLAUDE.md` (apuntarla en `_pendientes_notion.md` y avisar).

@@ -1,209 +1,71 @@
-﻿# Directiva: Generar materiales de candidatura
+# Directiva: generar CV y carta para una oferta
 
-## Objetivo
+**Objetivo:** un CV HTML y una carta adaptados a una oferta ya analizada (`analizar_oferta.md`), que pasen un filtro ATS y que Pablo pueda enviar sin retocar.
 
-Producir una carta de presentación y notas de adaptación del CV para una oferta concreta, guardarlos en Notion como páginas hijo de la candidatura correspondiente.
+**Inputs:** el análisis de la oferta, el CV base, `templates/cv_template.html`, `templates/carta_template.html` y `templates/fotoCv-web.jpg`.
 
-## Prerequisito
+## Idioma
 
-Esta directiva solo se ejecuta después de haber completado `analizar_oferta.md`. No generar materiales sin análisis previo.
+Todo (CV, carta y notas) en el idioma de la **descripción de la oferta**, no del país ni de la empresa, salvo que Pablo pida otro.
 
-## Inputs
+En inglés: `<html lang="en">`; títulos de sección Profile, Skills, Experience, Featured Projects, Education, Languages & Certifications; teléfono con +34; fecha en formato inglés; `Re:` en la carta; marca de agua "Application prepared with Alfred · Personal AI Agent". Los nombres de proyectos y tecnologías no se traducen.
 
-- Análisis de la oferta (resultado de `analizar_oferta.md`)
-- CV de Pablo: `D:\Obsidian\Mi Bóveda\raw\docs\Pablo Mérida Velasco — CV.pdf`
-- Template HTML: `D:\Programas\Alfred\agents\hunter\templates\cv_template.html`
-- Foto CV: `agents/hunter/templates/fotoCv-web.jpg` — versión optimizada (300x300, ~10 KB).
-  NO usar el original `D:\Obsidian\Mi Bóveda\raw\docs\fotoCv.jpg` (525 KB): en base64 infla el CV a ~836 KB.
-- Idioma objetivo: mismo que la oferta, salvo indicación de Pablo
+## Carta
 
-## Proceso
+Cuatro párrafos, hasta 300 palabras:
 
-### 0. Idioma de los materiales (REGLA OBLIGATORIA)
+1. Por qué Pablo encaja, nombrando la empresa. Sin «Me dirijo a ustedes para…».
+2. Dos o tres proyectos o logros reales del CV que respondan a los requisitos de la oferta.
+3. Qué le atrae del puesto o de la empresa, sacado de la oferta, no inventado.
+4. Disponibilidad y cierre directo.
 
-Todos los materiales (CV HTML, carta de presentación y notas de adaptación) se generan **en el mismo idioma que la oferta**, salvo que Pablo indique explícitamente otro.
+Nada de frases hechas («perfil dinámico», «trabajo en equipo», «reto profesional»): tecnologías, proyectos y datos concretos. Tono profesional, sin servilismo.
 
-- Oferta en inglés → CV, carta y notas **en inglés**. En el CV HTML, ajustar `<html lang="en">`, los títulos de sección (Profile, Skills, Experience, Featured Projects, Education, Languages & Certifications) y el watermark ("Application prepared with Alfred · Personal AI Agent").
-- Oferta en español → todo en español (`<html lang="es">`).
-- Detectar el idioma por la **descripción de la oferta**, no por el nombre de la empresa ni por el país.
-- No traducir nombres propios de proyectos (Alfred, LifeVault, Estudiante Élite) ni de tecnologías.
-- Mantener el teléfono con prefijo internacional (+34) cuando los materiales sean en inglés.
+Se entrega en texto plano y en HTML A4 desde `carta_template.html`, sustituyendo `SUBTITULO`, `CIUDAD_FECHA`, `EMPRESA`, `PUESTO`, `SALUDO`, `PARRAFOS` (un `<p>` por párrafo) y `DESPEDIDA`. Lleva la misma cabecera y la misma regla de marca de agua que el CV, para que los dos se lean como un paquete.
 
-> Aprendido en producción (2026-06-07): el CV de Kyndryl se pidió en inglés porque la oferta estaba en inglés. Aplicar este criterio por defecto a partir de ahora.
+## CV
 
-### 1. Carta de presentación
+Parte de `cv_template.html` y adapta:
 
-**Estructura:**
+- `.subtitulo`: la denominación del puesto si hay una más precisa.
+- Perfil: reescrito hacia los requisitos clave, con la misma extensión.
+- Habilidades: dentro de cada categoría, primero las que pide la oferta.
+- Experiencia: primero los bullets que más encajan.
+- Proyectos: reordenados por relevancia, el más relevante primero.
 
-1. **Párrafo de apertura** (2-3 frases): por qué Pablo encaja con el puesto. Mencionar la empresa por nombre. Sin "Me dirijo a ustedes para...".
-2. **Párrafo de experiencia** (3-4 frases): 2-3 logros o proyectos concretos del CV que sean directamente relevantes a los requisitos de la oferta.
-3. **Párrafo de motivación** (2-3 frases): qué le atrae del puesto o la empresa específicamente (inferir del contexto de la oferta, no inventar).
-4. **Cierre** (1-2 frases): disponibilidad y llamada a la acción directa.
+No se inventan skills ni experiencias, no se quitan secciones ni proyectos (solo se reordenan) y tiene que caber en una página A4; si no cabe, baja márgenes o fuente 0,3 pt antes que quitar contenido.
 
-**Reglas:**
-- Longitud máxima: 300 palabras.
-- No usar frases hechas: "perfil dinámico", "trabajo en equipo", "reto profesional".
-- Datos concretos: nombres de tecnologías, años de experiencia, proyectos reales del CV.
-- Tono: profesional, directo, sin servilismo.
+**Marca de agua** «Candidatura preparada con Alfred»: solo cuando el **título del puesto** es explícitamente de IA (AI Engineer, AI Automation, Ingeniero de IA Generativa, Agentic AI, Especialista en IA…); ahí el propio CV demuestra que Pablo construye agentes. En cualquier otro puesto, o en caso de duda, quita el `<div class="watermark">` y su CSS del CV y de la carta.
 
-**Formato de salida de la carta (regla de Pablo, 2026-09-07):**
+### Reglas técnicas (cada una salió de un fallo real)
 
-Además del texto plano, la carta se entrega **siempre en HTML imprimible A4**, partiendo de
-`D:\Programas\Alfred\agents\hunter\templates\carta_template.html`. Marcadores a sustituir:
-`SUBTITULO`, `CIUDAD_FECHA`, `EMPRESA`, `PUESTO`, `SALUDO`, `PARRAFOS` (un `<p>` por párrafo) y la despedida.
+Medido con el evaluador de Aplico y el informe de TopCV (sep 2026): el CV genérico pasó de 37/100 a 97/100 aplicándolas.
 
-- Misma cabecera, tipografía y marca de agua que el CV: los dos documentos se leen como un mismo paquete.
-- Idioma: el mismo que el CV (regla del apartado 0). En inglés, `<html lang="en">`, fecha en formato inglés,
-  `Re:` en lugar de `Referencia:`, teléfono con prefijo `+34` y watermark "Application prepared with Alfred · Personal AI Agent".
-- La marca de agua sigue la misma regla que el CV: solo en puestos explícitamente de IA.
-- Guardar en las mismas dos rutas que el CV, con el nombre `Carta-{Empresa}-{Puesto}.html`.
-- Escritura en UTF-8 explícito, igual que el CV.
+1. **Foto en base64 y siempre la optimizada** (`fotoCv-web.jpg`, 300×300, ~10 KB), sustituyendo `PHOTO_BASE64`. La original de `raw/docs` pesa 525 KB e infla el CV. El HTML final ronda los 25 KB; por encima de 100 KB, se coló la original.
+2. **Una sola columna.** El ATS lee línea a línea y en rejilla entrelaza columnas («IA & AUTOMATIZACIÓNLENGUAJES & FRAMEWORKS»). Habilidades: una línea por categoría (`<p><span class="skill-cat">Cat:</span> A · B · C</p>`); proyectos apilados en `.proyectos-lista`; educación, una línea por entrada.
+3. **Puesto, empresa y fechas en una sola línea** de texto dentro de `.job-cabecera`, nunca en contenedores separados con `space-between`: el parser no los asocia y cuenta «0 años de experiencia».
+4. **Cada proyecto con su fecha** en `.proyecto-nombre`; sin ellas el ATS ve un hueco desde junio de 2025.
+5. **`letter-spacing` de los títulos de sección ≤ 0,5 px.** Con 1,6 px el ATS leía «E X P E R I E N C I A», no reconocía la sección y no contaba ningún empleo.
+6. **Sin emoji en el contacto:** el parser no reconocía el teléfono ni el email, y cada emoji añade ~32 KB al PDF. La separación la pone el `::after` con «·» de la plantilla.
+7. **Enlaces de contacto como `<a href>`:** GitHub `https://github.com/pmerida08`, portfolio `https://pmerida-portfolio.netlify.app`, LinkedIn `https://linkedin.com/in/pablo-merida-velasco`.
+8. **Bullets CSS con escape Unicode** (`content: "\2022"`); las entidades HTML salen como texto literal.
+9. **Se mantiene el layout flex** de `body` y `.contenido` (reparte las secciones en la página) y `min-height: 297mm`, nunca `height` + `overflow: hidden`, que corta texto sin avisar.
+10. **Escritura en UTF-8 explícito** (`[System.IO.File]::WriteAllText` o Python con `encoding="utf-8"`); `Out-File` genera UTF-16.
 
-### 2. Notas de adaptación del CV
+Para comprobar que cabe en una página, renderiza a PDF con Chrome headless.
 
-Un listado breve de qué ajustar en el CV para esta oferta:
-- Qué experiencias o proyectos mover al principio
-- Qué keywords de la oferta incorporar (si están respaldadas por experiencia real)
-- Qué secciones o items son menos relevantes para esta oferta
+## Dónde se guarda
 
-Formato: lista con viñetas, máximo 6 puntos.
+- `D:\Obsidian\Mi Bóveda\Empleos\CV-{Empresa}-{Puesto}.html` y `Carta-{Empresa}-{Puesto}.html`.
+- Copia con el mismo nombre en `agents/hunter/candidaturas/`.
+- Nombres sin espacios ni caracteres especiales, con guiones.
 
-### 3. CV HTML adaptado
+## Notion
 
-Partiendo del template `D:\Programas\Alfred\agents\hunter\templates\cv_template.html`, generar un CV HTML personalizado para la oferta.
-
-**Qué adaptar en el template:**
-
-| Zona | Qué cambiar |
-|------|-------------|
-| `.subtitulo` | Ajustar el título si el puesto target tiene una denominación más precisa |
-| Párrafo PERFIL | Reescribir orientado a los requisitos clave de la oferta (misma extensión) |
-| HABILIDADES | Reordenar skills: las más relevantes para la oferta, primero dentro de su columna |
-| EXPERIENCIA bullets | Poner en primer lugar los bullets que más encajan con la oferta |
-| PROYECTOS | Reordenar los 4 proyectos: el más relevante arriba-izquierda, el segundo arriba-derecha |
-
-**Proyectos por defecto (los más representativos):** LifeVault, Alfred y Estudiante Élite son, por indicación de Pablo, los tres proyectos más representativos de su perfil. Priorizarlos siempre que aparezcan en el CV base, salvo que un proyecto distinto encaje de forma mucho más directa con el stack o el puesto de la oferta — en ese caso, explicitarlo en las notas de adaptación.
-
-**Reglas de producción:**
-- No inventar skills ni experiencias no presentes en el CV original.
-- No eliminar secciones ni reducir número de proyectos — solo reordenar.
-- El resultado debe caber en una sola página A4 sin scroll.
-
-**Marca de agua "Candidatura preparada con Alfred" (regla de Pablo, 2026-09-07):**
-
-No se incluye por defecto. Solo se deja cuando **el título del puesto es explícitamente de IA** — AI Engineer, AI Automation Engineer, Ingeniero de IA Generativa, Agentic AI Developer, Especialista en IA, y equivalentes. En esos casos la marca funciona como demostración: el propio CV es una pieza generada por un agente que Pablo construyó.
-
-- **Puesto de IA** → mantener el bloque `.watermark` en CV y carta.
-- **Cualquier otro puesto** (desarrollador web, full stack genérico, analista-programador, data, soporte…) → eliminar el `<div class="watermark">` y su bloque CSS de ambos documentos.
-- Criterio por el **título del puesto**, no por el sector de la empresa.
-- En caso de duda, omitirla.
-
-El template `cv_template.html` conserva el bloque; hay que quitarlo al generar cuando no aplique.
-
-**Reglas técnicas obligatorias (aprendidas en producción):**
-
-1. **Foto siempre en base64, y siempre la optimizada.** Las rutas relativas no funcionan desde todas las ubicaciones. Usar PowerShell para incrustar la foto directamente en el HTML:
-   ```powershell
-   $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes("D:\Programas\Alfred\agents\hunter\templates\fotoCv-web.jpg"))
-   ```
-   Luego reemplazar `PHOTO_BASE64` del template con el valor obtenido.
-   El CV final debe pesar ~25 KB. Si supera los 100 KB, se ha usado la foto original por error.
-
-2. **Bullets CSS: usar escape Unicode, nunca entidades HTML.** En la propiedad CSS `content:`, las entidades HTML (`&#8226;`) se renderizan como texto literal. Usar siempre `content: "\2022"`.
-
-3. **Layout flex obligatorio.** El body y `.contenido` ya tienen `display: flex; flex-direction: column` en el template. No eliminar — es lo que distribuye las secciones para llenar la página completa sin espacios en blanco.
-
-4. **Escritura del archivo: usar `[System.IO.File]::WriteAllText` con UTF-8 explícito** para preservar acentos y caracteres especiales. No usar `Out-File` por defecto (genera UTF-16).
-
-5. **Fechas legibles por ATS.** Reglas salidas del informe de TopCV (sep 2026), cuyo ATS
-   leyó "0 años de experiencia" sobre un CV correcto:
-   - Puesto, empresa y fechas van en UNA línea de texto continua dentro de `.job-cabecera`.
-     Nunca en contenedores separados con `flex: space-between` — el parser no los asocia.
-   - Todo proyecto lleva fecha inline en `.proyecto-nombre`: sin ellas el ATS ve un hueco
-     desde Jun 2025 (fin del último empleo) hasta hoy.
-   - El máster de Evolve está **completado** (jul 2026). Nunca escribir "en curso" ni "Actualidad".
-
-6. **Nunca `letter-spacing` por encima de 0.5px en los títulos de sección.**
-   Verificado midiendo el PDF real con el evaluador de Aplico (sep 2026):
-
-   | letter-spacing | Cómo lo lee el ATS |
-   |---|---|
-   | 1.6px | `E X P E R I E N C I A` — sección irreconocible |
-   | 0.6px | `IA & AUTOMATIZACIÓN` — correcto |
-   | 0.5px | `EXPERIENCIA` — correcto, y conserva el aire visual |
-
-   Es más grave de lo que parece: si el parser no reconoce el encabezado, no
-   identifica la sección de experiencia laboral, y sin sección no cuenta ningún
-   empleo. Es la vía por la que un CV correcto acaba reportando **cero años de
-   experiencia** — que es justo lo que devolvió el ATS de TopCV.
-
-   Corregido a 0.5px en la plantilla y en los 78 CVs generados el 2026-09-08.
-   Medido: el CV genérico pasó de 37/100 a 63/100 solo con este cambio.
-
-7. **UNA SOLA COLUMNA. Nunca `display: grid` con varias columnas para el contenido.**
-   Un ATS lee línea a línea de izquierda a derecha: en rejilla, el texto de las
-   columnas se entrelaza. Casos reales medidos en el CV de Pablo:
-
-   - `"IA & AUTOMATIZACIÓNLENGUAJES & FRAMEWORKSDATOS & CLOUD"` (habilidades en 3 columnas)
-   - `"Alfred — Sistema multi-agente IALifeVault — SaaS con IA"` (proyectos en 2 columnas)
-   - `"EDUCACIÓNIDIOMAS & CERTIFICACIONES"` (fila inferior en 2 columnas)
-
-   Formato correcto de cada sección:
-   - **Habilidades:** una línea por categoría — `<p><span class="skill-cat">Cat:</span> A · B · C</p>`
-   - **Proyectos:** apilados en `.proyectos-lista`, cada uno en su `.proyecto`
-   - **Educación:** una línea por entrada, `título — centro | fechas`
-
-   Convertido en la plantilla y en los 77 CVs el 2026-09-08. El CV genérico pasó
-   de 63/100 a **89/100** y sigue cabiendo en una página. Al desaparecer las
-   columnas también desapareció un falso hueco temporal de 27 meses: las fechas
-   de formación por fin se leían.
-
-8. **`min-height: 297mm`, nunca `height` + `overflow: hidden`.**
-   Con `overflow: hidden`, si el contenido crece se corta en silencio y nadie se
-   entera. Es preferible una segunda página visible a perder texto sin aviso.
-
-9. **Sin emoji en el bloque de contacto.** Se colaban en el texto extraído pegados
-   al dato (`"📞 664 549 627"`) y el parser no reconocía el teléfono ni el correo.
-
-   Además pesan: **cada emoji añade unos 32 KB** al PDF, porque Chrome embebe una
-   fuente de emoji completa. Los seis iconos del contacto sumaban ~215 KB — más que
-   todo el resto del documento junto.
-
-   La separación visual la da un punto medio por CSS, que no interfiere:
-
-       .contacto > *:not(:last-child)::after { content: "·"; color: #bbb; margin-left: 8px; }
-
-   Quitados de la plantilla y de los 88 CVs el 2026-09-08. El CV genérico pasó de
-   89/100 a **97/100** y de 338 KB a 123 KB.
-
-
-6. **Links de contacto: siempre `<a href>`, nunca `<span>`.** GitHub, portfolio y LinkedIn deben ser enlaces clicables:
-   - GitHub → `https://github.com/pmerida08`
-   - Portfolio → `https://pmerida-portfolio.netlify.app`
-   - LinkedIn → `https://linkedin.com/in/pablo-merida-velasco`
-
-**Guardar en dos rutas:**
-1. `D:\Obsidian\Mi Bóveda\Empleos\CV-{Empresa}-{Puesto}.html` — para abrir en navegador e imprimir
-2. `D:\Programas\Alfred\agents\hunter\candidaturas\CV-{Empresa}-{Puesto}.html` — copia local en el proyecto
-
-(la carta HTML se guarda en esas mismas dos rutas como `Carta-{Empresa}-{Puesto}.html`)
-
-(sanitizar nombre: sin espacios, sin caracteres especiales, usar guiones; mismo nombre en ambas rutas)
-
-### 4. Guardar en Notion
-
-1. Buscar la candidatura correspondiente en la BD de Notion.
-   - Si no existe, crearla primero con los datos básicos (empresa, puesto, fecha, estado: "Analizada", fit score).
-2. Crear tres páginas hijo dentro de la candidatura:
-   - **"Carta de presentación"** con el texto generado
-   - **"Notas CV"** con la lista de adaptaciones
-   - **"CV HTML"** con la ruta local del archivo generado: `D:\Obsidian\Mi Bóveda\Empleos\CV-{Empresa}-{Puesto}.html`
-   - En la página de la carta, añadir al final la ruta de su versión HTML: `D:\Obsidian\Mi Bóveda\Empleos\Carta-{Empresa}-{Puesto}.html`
-3. Actualizar el campo estado a "Materiales listos" si existía como "Analizada".
+Crea o actualiza la candidatura (`Estado = Materiales listos`, fecha, fit, URL de la oferta) y tres páginas hijo: «Carta de presentación» (texto, con la ruta del HTML al final), «Notas CV» (hasta 6 viñetas: qué se reordenó, qué keywords reales se metieron, qué pesa menos) y «CV HTML» (la ruta del archivo).
 
 ## Edge cases
 
-- **Fit score < 4:** avisar a Pablo antes de generar. Proceder solo si confirma.
-- **Empresa sin nombre claro:** usar "su empresa" en la carta, marcar para revisión.
-- **CV sin proyectos directamente relevantes:** usar la experiencia más transferible y explicitarlo en las notas CV.
-- **CV HTML no cabe en una página:** reducir márgenes o tamaño de fuente en 0.3pt; nunca eliminar contenido.
+- **Fit < 4:** avisar antes de generar y seguir solo si Pablo confirma.
+- **Empresa sin nombre claro:** «su empresa» en la carta, y señalarlo para revisión.
+- **Ningún proyecto encaja directamente:** usa la experiencia más transferible y dilo en las notas.
