@@ -31,6 +31,7 @@ Cuando el proyecto es pequeño, Pablo prefiere lo mínimo (Atalaya: Node con `no
 - **Tema oscuro:** el texto sobre fotos o un panel que debe ser siempre oscuro necesita tokens declarados solo en `:root`, fuera del `@media (prefers-color-scheme: dark)`; si no, se invierte con el tema y desaparece.
 - **Procesos lanzados desde Claude Desktop** escriben en un AppData virtualizado: cualquier estado que compartas con Pablo (BD de dev, config) va en `D:\`, no en AppData.
 - **tsx:** un `.ts` con top-level await fuera de un paquete `type: module` falla; usa `.mts` dentro del árbol del repo.
+- **Phaser 4:** `setTintFill(color)` ya no existe (`setTint(c).setTintMode(Phaser.TintModes.FILL)`) y `RenderTexture` necesita `render()` tras dibujar. La profundidad por Y del mundo pasa de 1000 enseguida: la UI, en 100000.
 - **electron-vite:** los workspaces TS sin compilar van en `devDependencies` (para que se empaqueten); las librerías con runtime real, en `dependencies`.
 
 ## Límites
