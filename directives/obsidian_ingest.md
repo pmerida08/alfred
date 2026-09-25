@@ -111,7 +111,7 @@ Proyectos/<Nombre>/
 
 Al hablar de un proyecto: leer `README.md` (+ `log.md` si se necesita histórico) antes de responder, y actualizar `README.md` cuando cambie el estado. Registrar cambios relevantes en el `log.md` del propio proyecto, no solo en el `log.md` raíz.
 
-**Excepción: Alfred.** La memoria operativa de Alfred (sesiones, preferencias, arquitectura) vive en el repo (`memory/`, `MEMORY.md`), no en esta carpeta — evita depender del filesystem del vault en cada turno. Puede seguir existiendo una nota ligera `Proyectos/Alfred.md` para que otros proyectos lo enlacen, pero no se convierte en carpeta ni se le duplica memoria.
+**Excepción: Alfred.** La memoria operativa de Alfred (sesiones, preferencias, arquitectura) vive en el repo (`memory/` y `memory/hechos/`), no en esta carpeta — evita depender del filesystem del vault en cada turno. Puede seguir existiendo una nota ligera `Proyectos/Alfred.md` para que otros proyectos lo enlacen, pero no se convierte en carpeta ni se le duplica memoria.
 
 ## Edge cases
 

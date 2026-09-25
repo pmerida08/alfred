@@ -90,55 +90,9 @@ test: descripción breve
 
 ---
 
-## Skills disponibles
+## Skills
 
-### Instaladas
-
-| Skill | Comando | Uso |
-|-------|---------|-----|
-| `frontend-design` | `/frontend-design` | Componentes y páginas UI de calidad |
-| `react-native-best-practices` | `/react-native-best-practices` | Arquitectura y performance en RN |
-| `vercel-react-native-skills` | `/vercel-react-native-skills` | Patrones Expo/RN de producción |
-| `supabase` | `/supabase` | Integración Supabase completa |
-| `supabase-postgres-best-practices` | `/supabase-postgres-best-practices` | RLS, índices, esquemas |
-| `browser-use` | `/browser-use` | Testing y automatización de navegador |
-| `decision-council` | `/decision-council` | Decisiones arquitectónicas con múltiples perspectivas |
-| `excalidraw-diagram` | `/excalidraw-diagram` | Diagramas de arquitectura y flujos |
-| `workflow-visualizer` | `/workflow-visualizer` | Visualizar procesos y sistemas |
-| `code-review` | `/code-review` | Revisión de código: seguridad, rendimiento, corrección |
-| `debug` | `/debug` | Debugging estructurado |
-| `quick-research` | `/quick-research` | Investigación técnica rápida |
-
-### También instaladas (superpowers + ui-ux-pro-max + everything-claude-code)
-
-| Skill | Comando | Uso |
-|-------|---------|-----|
-| `test-driven-development` | `/test-driven-development` | Flujo TDD completo |
-| `systematic-debugging` | `/systematic-debugging` | Debugging estructurado paso a paso |
-| `writing-plans` | `/writing-plans` | Planes de implementación detallados |
-| `executing-plans` | `/executing-plans` | Ejecutar planes con verificación |
-| `verification-before-completion` | `/verification-before-completion` | Checklist antes de dar tarea por completada |
-| `requesting-code-review` | `/requesting-code-review` | Preparar y solicitar code review |
-| `finishing-a-development-branch` | `/finishing-a-development-branch` | Cierre de rama: tests, review, merge |
-| `dispatching-parallel-agents` | `/dispatching-parallel-agents` | Paralelizar trabajo con subagentes |
-| `using-git-worktrees` | `/using-git-worktrees` | Gestión avanzada de worktrees |
-| `brainstorming` | `/brainstorming` | Sesiones de ideación estructurada |
-| `ui-ux-pro-max` | `/ui-ux-pro-max` | 161 reglas UI/UX, paletas, tipografía |
-| `ckm-design` | `/ckm-design` | Diseño visual aplicado |
-| `ckm-design-system` | `/ckm-design-system` | Sistemas de diseño |
-| `ckm-ui-styling` | `/ckm-ui-styling` | Estilos UI avanzados |
-| `frontend-patterns` | `/frontend-patterns` | Patrones frontend de producción |
-| `backend-patterns` | `/backend-patterns` | Patrones backend y arquitectura |
-| `tdd-workflow` | `/tdd-workflow` | Workflow TDD completo |
-| `e2e-testing` | `/e2e-testing` | Testing end-to-end con Playwright |
-| `nextjs-turbopack` | `/nextjs-turbopack` | Next.js optimizado con Turbopack |
-| `security-review` | `/security-review` | Auditoría de seguridad del código |
-| `security-scan` | `/security-scan` | Escaneo de vulnerabilidades |
-| `api-design` | `/api-design` | Diseño de APIs REST/GraphQL |
-| `architecture-decision-records` | `/architecture-decision-records` | Documentar decisiones de arquitectura |
-| `git-workflow` | `/git-workflow` | Git flow profesional |
-| `accessibility` | `/accessibility` | Auditoría de accesibilidad WCAG |
-| `coding-standards` | `/coding-standards` | Estándares de calidad de código |
+Las activas en la sesión, más las de `skills-library/` si hace falta alguna (se activa copiándola a `.agents/skills/` y `.claude/skills/`).
 
 ---
 
@@ -171,19 +125,6 @@ Cuando Pablo pida empezar un proyecto nuevo:
 3. **Crear plan de tareas** con TodoWrite antes de empezar a codificar.
 
 4. **Scaffold primero** — estructura, config, dependencias — antes de cualquier feature.
-
----
-
-## Revisión de código propia (antes de reportar completado)
-
-Antes de declarar cualquier tarea terminada, ADA hace internamente:
-
-- [ ] ¿Hay variables de entorno expuestas?
-- [ ] ¿Hay posibilidades de XSS o injection?
-- [ ] ¿El componente/función hace una sola cosa?
-- [ ] ¿Hay lógica duplicada evitable?
-- [ ] ¿Los tipos TypeScript son correctos (no `any`)?
-- [ ] ¿El código es legible sin comentarios?
 
 ---
 
