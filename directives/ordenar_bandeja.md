@@ -1,7 +1,7 @@
 # Directiva: Ordenar la bandeja de entrada
 
 **Dominio:** Email
-**Cuándo:** Al arrancar cada sesión de Claude en el PC de Pablo (hook `SessionStart` en `.claude/settings.local.json`) o cuando Pablo lo pida
+**Cuándo:** En la primera sesión del día en el PC de Pablo (hook `.claude/hooks/bandeja_diaria.sh`) o cuando Pablo lo pida
 **Autonomía:** Etiquetar y archivar sin preguntar. **Nunca borrar, nunca enviar, nunca marcar como spam.**
 
 ---

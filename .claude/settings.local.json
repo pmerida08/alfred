@@ -4,8 +4,7 @@
       "mcp__651cf300-3969-445f-8086-ff4816cf2b6b__search_threads",
       "WebFetch(domain:github.com)",
       "mcp__eea1299e-3126-42cc-866c-b65ddd58a49a__notion-search",
-      "mcp__2f632180-7e74-4e7a-a724-6857d849c608__execute_sql",
-      "Bash(ls \"D:/Programas/Alfred/memory/2026-09-24.md\" 2>&1; tail -5 \"D:/Obsidian/Mi Bóveda/Proyectos/Streakode/log.md\")"
+      "mcp__2f632180-7e74-4e7a-a724-6857d849c608__execute_sql"
     ]
   },
   "hooks": {
@@ -15,9 +14,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "case \"$(uname -s)\" in MINGW*|MSYS*|CYGWIN*) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"ARRANQUE DE SESION: antes de responder al primer mensaje de Pablo, ordena su bandeja de Gmail siguiendo directives/ordenar_bandeja.md (etiquetar y archivar, nunca borrar ni enviar). Resume el resultado en 1-2 lineas y luego atiende su peticion.\"}}' ;; *) echo '{}' ;; esac",
             "shell": "bash",
-            "statusMessage": "Preparando orden de bandeja..."
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/bandeja_diaria.sh\"",
+            "statusMessage": "Comprobando si toca ordenar la bandeja..."
           }
         ]
       }

@@ -1,32 +1,20 @@
 # Directiva: Inicio de sesión
 
-**Dominio:** Sistema  
-**Cuándo:** Al inicio de cada sesión con Pablo  
-**Autonomía:** Total — ejecutar sin preguntar
+**Dominio:** Sistema
+**Cuándo:** Al inicio de cada sesión
 
 ---
 
-## Objetivo
+Desde el 2026-09-25 el arranque ya no requiere leer nada a mano:
 
-Cargar el contexto completo de Alfred antes de responder al primer mensaje de Pablo.
+- `SOUL.md` y `memory/user.md` entran importados desde `CLAUDE.md`.
+- El índice de hechos (`memory/hechos/MEMORY.md`) lo carga la memoria automática de Claude Code en el PC.
+- Las notas diarias de hoy y ayer las inyecta el hook `.claude/hooks/notas_recientes.sh`.
+- La bandeja de Gmail la pide `.claude/hooks/bandeja_diaria.sh`, solo en la primera sesión del día y solo en Windows.
 
-## Pasos
-
-1. Leer `SOUL.md` — carácter y tono
-2. Leer `memory/user.md` — perfil de Pablo
-3. Leer `MEMORY.md` — hechos curados permanentes
-4. Leer `memory/<hoy>.md` si existe — notas del día actual
-5. Leer `memory/<ayer>.md` si existe — notas del día anterior
-6. Leer `standing-orders/<dominio>.md` relevantes para la sesión
-7. Leer `HEARTBEAT.md` — verificar si hay tareas pendientes para este momento
-
-## Output esperado
-
-Alfred está listo para responder con contexto completo.
-No confirmar la carga salvo que Pablo lo solicite.
+Los `standing-orders/<dominio>.md` se leen cuando la tarea toca ese dominio, no al arrancar.
 
 ## Edge cases
 
-- Si un archivo no existe, ignorarlo y continuar.
-- Si hay tareas de HEARTBEAT pendientes para el momento actual, ejecutarlas antes de responder.
-- Si la última nota diaria tiene más de 2 días, añadir una nota interna de que el contexto reciente puede estar incompleto.
+- **Servidor Linux:** no hay memoria automática. Si hace falta un hecho permanente, leer `memory/hechos/MEMORY.md` y el fichero que corresponda.
+- **La última nota diaria tiene más de 2 días:** el contexto reciente puede estar incompleto; mirar las notas anteriores si la tarea lo pide.

@@ -1,3 +1,5 @@
+> **Retirada el 2026-09-25.** Nunca llegó a ejecutarse y su función la cubre la memoria automática, que escribe en `memory/hechos/`. El cron del servidor (`setup_cron.sh`, 23:00) sigue llamando a `memory_dreaming.py`: conviene quitarlo.
+
 # Directiva: Consolidación nocturna de memoria (Dreaming)
 
 **Dominio:** Sistema  
