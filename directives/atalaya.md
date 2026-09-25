@@ -17,6 +17,7 @@
    `python execution/atalaya.py nuevo "Nombre" estado=activo "ruta=D:\Proyectos\X" "descripcion=..."`.
    Atalaya también lista las carpetas sin registrar en el resumen.
 5. **HUNTER, al adaptar un CV**: `python execution/atalaya.py cv` da los proyectos marcados para el CV con su texto (`cv_resumen`; si está vacío, `descripcion`). Respetar además la regla de proyectos destacados (LifeVault, Alfred, Estudiante Élite).
+6. **Pablo pide arrancar o abrir un proyecto** («arráncame Remopo», «ábreme Streakode»): `python execution/atalaya.py iniciar <slug>`. Abre una consola con el comando de arranque y el navegador cuando responde. Necesita el lanzador, que arranca solo al iniciar sesión (tarea programada «Atalaya - lanzador»); si no responde, relanzarlo con `Start-ScheduledTask -TaskName 'Atalaya - lanzador'`. El comando y la URL de cada proyecto se guardan en Atalaya (`comando_inicio`, `url_local`) y se editan con `set`.
 
 ## Qué no hacer
 

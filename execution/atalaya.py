@@ -7,6 +7,7 @@ Uso:
     python execution/atalaya.py nuevo "Nombre" [campo=valor...]
     python execution/atalaya.py cv                        # proyectos que cuentan para el CV (JSON)
     python execution/atalaya.py sync                      # relee git ahora
+    python execution/atalaya.py iniciar <slug>            # arranca el proyecto y lo abre (necesita el lanzador)
 
 Valores de `set` y `nuevo`: prioridad=1|2|3, en_cv=true|false, stack=a,b,c; el resto, texto.
 La URL se puede cambiar con la variable ATALAYA_URL (por defecto http://localhost:4770).
@@ -63,7 +64,7 @@ def parsear(pares):
             datos[k] = v.lower() in ("true", "1", "si", "sí")
         elif k == "stack":
             datos[k] = [s.strip() for s in v.split(",") if s.strip()]
-        elif k in ("ruta", "repo_url", "url", "fecha_inicio", "fecha_fin") and v == "":
+        elif k in ("ruta", "repo_url", "url", "url_local", "fecha_inicio", "fecha_fin") and v == "":
             datos[k] = None
         else:
             datos[k] = v
@@ -91,6 +92,23 @@ def main(args):
         campos = ("nombre", "estado", "fecha_inicio", "fecha_fin", "cv_resumen", "descripcion", "stack", "url", "repo_url")
         cv = [{k: p[k] for k in campos} for p in api("proyectos") if p["en_cv"]]
         print(json.dumps(cv, ensure_ascii=False, indent=2))
+    elif orden == "iniciar":
+        p = buscar(resto[0])
+        lanzador = os.environ.get("ATALAYA_LANZADOR", "http://127.0.0.1:4771")
+        req = urllib.request.Request(
+            f"{lanzador}/iniciar", data=json.dumps({"id": p["id"]}).encode(), method="POST",
+            headers={"content-type": "application/json"},
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                estado = json.loads(r.read().decode())["estado"]
+        except urllib.error.HTTPError as e:
+            sys.exit(f"El lanzador respondió {e.code}: {e.read().decode()}")
+        except urllib.error.URLError:
+            sys.exit("El lanzador no responde. Relánzalo con: Start-ScheduledTask -TaskName 'Atalaya - lanzador'")
+        print({"abierto": f"{p['nombre']} ya estaba en marcha; abierto en el navegador.",
+               "arrancando": f"Arrancando {p['nombre']}; se abrirá en el navegador cuando responda.",
+               "lanzado": f"{p['nombre']} arrancado en una consola nueva."}[estado])
     elif orden == "sync":
         r = api("sync", "POST")
         print(f"{r['git']} repos y {r['archivos']} carpetas leídos en {r['duracion_ms'] / 1000:.1f} s; errores: {len(r['errores'])}")
