@@ -39,7 +39,7 @@ Cuando el tema es de un agente, lee `agents/<nombre>/CLAUDE.md` y trabaja con su
 | Desarrollo web y móvil | ADA: Next.js 15 + Tailwind + Supabase, o Expo + Supabase |
 | Cortar directos y VODs | skill `clipper`, `directives/clipper_shorts.md` |
 | Estado de los proyectos | Atalaya, `directives/atalaya.md` |
-| Vault de Obsidian | `directives/obsidian_ingest.md`, `obsidian_query.md`, `obsidian_lint.md` |
+| Vault de Obsidian | `directives/obsidian.md` |
 | Bandeja de Gmail | `directives/ordenar_bandeja.md` (un hook la pide en la primera sesión del día) |
 | HEARTBEAT | lee `HEARTBEAT.md` y ejecuta lo que toque a esa hora; si no toca nada, responde "OK" |
 

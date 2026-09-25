@@ -44,6 +44,13 @@
 - Humo de IA ("revolucionario", "game changer").
 - Inventar métricas o experiencia que Pablo no tiene.
 
+## Aprendido con posts reales (sep 2026)
+
+- Funciona mejor lo cotidiano y vulnerable que el detalle técnico: Pablo descartó los primeros posts de Streakode por «poco humanos» (demasiada ingeniería, cifras en cada párrafo, tono de ficha técnica). El «cómo lo hice con mi agente» va como post de seguimiento, no como gancho.
+- Formato que ha funcionado: 90–110 palabras, gancho con un caso o dato real, novedades en lista con flechas (sin emojis), cierre con una pregunta honesta y el enlace en el primer comentario.
+- Build in public honesto: los datos de producción malos (pocos usuarios que vuelven) sirven de gancho.
+- Las anécdotas personales se le confirman a Pablo antes de publicar.
+
 ## Ejemplos de referencia
 
 > Pendiente: pega aquí 2-3 posts reales (propios o de referencia) que capturen la voz. HERALDO los usará como norte de estilo. **(confirmar)**

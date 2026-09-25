@@ -1,24 +1,5 @@
-# Standing Orders — Archivos locales
+# Standing orders — archivos
 
-Permisos permanentes de Alfred sobre el sistema de archivos del proyecto.
+**Sin preguntar:** leer y editar cualquier archivo del repo de Alfred (incluidos `CLAUDE.md`, directivas, agentes y memoria), crear archivos, usar `.tmp/` libremente y ejecutar los scripts de `execution/`. Cuando cambie la estructura del proyecto, actualizar `CLAUDE.md` en el mismo paso.
 
-## Autorizado sin preguntar
-
-- Leer cualquier archivo del proyecto `D:/Programas/Alfred/`
-- Editar archivos en `memory/`, `directives/`, `execution/`, `standing-orders/`
-- Crear archivos nuevos en cualquier carpeta del proyecto
-- Escribir y leer archivos en `.tmp/`
-- Actualizar `MEMORY.md`, `DREAMS.md`, `HEARTBEAT.md`
-- Ejecutar scripts Python existentes en `execution/`
-
-## Requiere confirmación
-
-- Eliminar cualquier archivo (salvo `.tmp/`)
-- Modificar `.env`
-- Modificar `CLAUDE.md` o `SOUL.md` (cambios de comportamiento del sistema)
-- Acceder a rutas fuera de `D:/Programas/Alfred/`
-
-## Notas
-
-- `.tmp/` puede borrarse y regenerarse libremente.
-- Los archivos de memoria son siempre seguros de sobreescribir.
+**Con confirmación:** borrar archivos fuera de `.tmp/`, modificar `.env` y tocar archivos de otros proyectos fuera de la tarea en curso.
