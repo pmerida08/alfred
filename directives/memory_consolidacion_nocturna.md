@@ -1,4 +1,4 @@
-> **Retirada el 2026-09-25.** Nunca llegó a ejecutarse y su función la cubre la memoria automática, que escribe en `memory/hechos/`. El cron del servidor (`setup_cron.sh`, 23:00) sigue llamando a `memory_dreaming.py`: conviene quitarlo.
+> **Retirada el 2026-09-25.** Nunca llegó a ejecutarse y su función la cubre la memoria automática, que escribe en `memory/hechos/`. `heartbeat.sh dreaming` es ahora un no-op y `setup_cron.sh` ya no la instala. Falta borrar la línea de las 23:00 del crontab del servidor (estaba apagado el 2026-09-25).
 
 # Directiva: Consolidación nocturna de memoria (Dreaming)
 
