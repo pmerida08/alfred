@@ -39,7 +39,7 @@ done
 case "$TASK" in
   dreaming)
     # Retirada el 2026-09-25: la memoria automática escribe en memory/hechos/.
-    # Queda como no-op hasta quitar la línea del crontab del servidor.
+    # Queda como no-op; la línea del crontab se mantiene por si Pablo la reactiva.
     echo "[$TIMESTAMP] dreaming retirada, no se ejecuta" >> "$LOG_FILE"
     ;;
   token)
