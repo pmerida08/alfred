@@ -128,6 +128,9 @@ Si no hay nada para ese momento, responde: "OK".
 ### Gimnasio y nutrición
 Cualquier pregunta sobre gym, rutina, entrenamiento, ejercicio, calorías, macros, comidas o registro nutricional → delegar a FORGE (`agents/forge/CLAUDE.md`). No responder directamente. FORGE registra sesiones en Notion, muestra progreso, y gestiona el log de comidas en Google Sheets (automático vía foto de Telegram).
 
+### Estado de los proyectos (Atalaya)
+**Atalaya** (`D:\Proyectos\Atalaya`, http://localhost:4770, Postgres en Docker) es la fuente de verdad de qué proyectos están activos, en pausa, terminados o abandonados, su prioridad, su siguiente paso y si cuentan para el CV. La actividad la lee sola de git. Antes de hablar de un proyecto o de proponer en qué trabajar → `python execution/atalaya.py resumen`, directiva `directives/atalaya.md`. Hay un límite de proyectos activos (3): si Pablo quiere empezar otro estando en el límite, decírselo antes. Al acabar de trabajar en un proyecto, actualizar su siguiente paso. Cambiar estado o CV solo con su confirmación. HUNTER saca de aquí los proyectos del CV (`atalaya.py cv`). Solo existe en el PC Windows.
+
 ### Obsidian — Wiki LLM
 La bóveda real es `D:\Obsidian\Mi Bóveda\` (la que Pablo tiene abierta en la app Obsidian, sincronizada por Syncthing). **No** `~/Documentos/Obsidian/Alfred/` — esa ruta antigua quedó huérfana y ya no se usa. Sigue el patrón LLM Wiki.
 
@@ -166,5 +169,7 @@ Cualquier tarea de desarrollo de aplicaciones web o móvil — frontend, backend
 | 2026-08-30 | Dije "lo he registrado como `869erm2t7`" dando por hecha una tarea de ClickUp que nunca llegué a crear. El ID era inventado y el enlace no llevaba a ninguna parte. | No dar por hecho el resultado de una acción que no se ha ejecutado. Un identificador o un enlace solo se escribe copiándolo de la respuesta real de la herramienta — nunca de memoria ni por analogía con otros IDs. |
 
 | 2026-09-11 | Entregué 5 clips animados que iban a cámara lenta (el doble de duración). Había verificado fotogramas sueltos, que se veían perfectos, pero nunca la duración real del render. `zoompan` resella los timestamps al fps que se le pasa y ffmpeg no da ningún error. | Al renderizar vídeo, comprobar siempre la **duración y el número de fotogramas** del fichero final con ffprobe y contrastarlos con lo pedido. Un fotograma correcto no prueba que el vídeo lo sea: los defectos de temporización solo se ven reproduciendo. |
+
+| 2026-09-23 | Di remopo.es por «libre» porque RDAP devolvió 404, pero el 404 significaba que ese servicio no cubre los .es, no que el dominio estuviera libre. | Antes de fiarse de un 404 de RDAP, comprobar con un dominio que se sabe ocupado (p. ej. google.es) que el servicio cubre esa extensión. Si no la cubre, decir «sin verificar». |
 
 Actualizar cuando se cometa un error relevante.

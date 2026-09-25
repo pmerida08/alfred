@@ -266,12 +266,37 @@
       "port": 4740
     },
     {
+      "name": "legajo",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Legajo/tools/serve.mjs"
+      ],
+      "port": 4750
+    },
+    {
+      "name": "remopo-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Remopo/node_modules/next/dist/bin/next",
+        "dev",
+        "D:/Proyectos/Remopo",
+        "-p",
+        "4760"
+      ],
+      "port": 4760
+    },
+    {
       "name": "clipper",
       "runtimeExecutable": "python",
       "runtimeArgs": [
         "D:/Proyectos/Clipper/src/server.py"
       ],
       "port": 8730
+    },
+    {
+      "name": "atalaya",
+      "url": "http://localhost:4770",
+      "port": 4770
     }
   ]
 }
