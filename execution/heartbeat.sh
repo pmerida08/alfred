@@ -38,8 +38,9 @@ done
 
 case "$TASK" in
   dreaming)
-    # Dreaming usa script Python directo (sin necesidad de Claude CLI)
-    "$ALFRED_PY" "$ALFRED_DIR/execution/memory_dreaming.py" >> "$LOG_FILE" 2>&1
+    # Retirada el 2026-09-25: la memoria automática escribe en memory/hechos/.
+    # Queda como no-op; la línea del crontab se mantiene por si Pablo la reactiva.
+    echo "[$TIMESTAMP] dreaming retirada, no se ejecuta" >> "$LOG_FILE"
     ;;
   token)
     # Sonda de salud de la auth de Claude Code. El script invoca el CLI y, si la
