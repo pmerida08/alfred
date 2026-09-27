@@ -32,6 +32,7 @@ Cuando el proyecto es pequeño, Pablo prefiere lo mínimo (Atalaya: Node con `no
 - **Procesos lanzados desde Claude Desktop** escriben en un AppData virtualizado: cualquier estado que compartas con Pablo (BD de dev, config) va en `D:\`, no en AppData.
 - **tsx:** un `.ts` con top-level await fuera de un paquete `type: module` falla; usa `.mts` dentro del árbol del repo.
 - **Phaser 4:** `setTintFill(color)` ya no existe (`setTint(c).setTintMode(Phaser.TintModes.FILL)`) y `RenderTexture` necesita `render()` tras dibujar. La profundidad por Y del mundo pasa de 1000 enseguida: la UI, en 100000.
+- **three.js y texturas:** un `texture.clone()` hecho antes de que cargue la imagen no se sube nunca a la GPU (hay que poner `needsUpdate` al cargar), y `visible = undefined` no oculta: three solo oculta con `false`. Cualquier cálculo que dependa de la transparencia de las texturas (render de alturas, picking) tiene que esperar a que carguen.
 - **electron-vite:** los workspaces TS sin compilar van en `devDependencies` (para que se empaqueten); las librerías con runtime real, en `dependencies`.
 
 ## Límites
