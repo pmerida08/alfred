@@ -297,6 +297,17 @@
       "name": "atalaya",
       "url": "http://localhost:4770",
       "port": 4770
+    },
+    {
+      "name": "teselia",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "D:/Proyectos/Teselia"
+      ],
+      "port": 4780
     }
   ]
 }
