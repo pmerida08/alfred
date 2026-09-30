@@ -41,6 +41,8 @@ Que una convocatoria tenga su temario literal, temas redactados sobre la norma v
 
 ## Edge cases
 
+- **Plazas aprobadas en una OEP pero sin convocar** (como el B1.2000 TIC de la Junta): el temario sale del **programa oficial vigente del cuerpo** (en la Junta, los programas se aprueban por resolución aparte y las bases remiten a ellos), nunca de otra convocatoria parecida. Estado `oferta`, `examen: null`, los epígrafes literales de todo el programa en `programa` y `total_temas`, y en `temas` solo los ya redactados, cada uno con su `orden` del programa. Al salir las bases: rellenar `examen` y `ejercicios`, pasar a `bases` y comprobar si el programa cambió.
+- **Temarios largos**: por lotes de unos 6 temas (herramientas en `.tmp/remopo/`: `build.py`, `largas.py` para equilibrar la longitud de las opciones, `reemplaza.py`). Si un tema aún no está publicado y se corrige una pregunta, borrar su JSON antes de reconstruirlo, porque `build.py` conserva las preguntas ya existentes con el mismo enunciado.
 - **No se encuentran las bases** (enlace roto, boletín sin texto): marcar la petición «en-curso», avisar a Pablo y no inventar el temario a partir de otra convocatoria.
 - **Una norma cambia después de publicar** (reforma, nueva ley): marcar `a_revisar`, corregir y añadir una entrada a `cambios`. Si el examen es antes de que entre en vigor, se estudia la norma vigente ese día y se dice en el tema (como la Ley 4/2026 en Legajo).
 - **Reportes de usuarios**: se contestan en 72 h como máximo. Si el usuario tiene razón, se corrige la pregunta (misma clave), se vuelve a poner `activa` y se registra en `cambios`.
