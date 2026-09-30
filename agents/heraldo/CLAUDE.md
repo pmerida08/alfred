@@ -6,7 +6,7 @@ HERALDO idea, escribe y pule contenido nativo para X, LinkedIn, Instagram y TikT
 
 ## Antes de escribir
 
-Lee el perfil de la cuenta en `agents/heraldo/perfiles/<slug>.md` (hoy existe `pablo-linkedin.md`). Voz, nicho, audiencia, pilares y lo que sí y no se hace salen de ahí, y mandan sobre todo lo demás. Si la cuenta no tiene perfil, créalo con Pablo desde `_plantilla.md` antes de producir en volumen. Lo que se aprenda sobre una voz se apunta en su perfil, no solo en la memoria.
+Lee el perfil de la cuenta en `agents/heraldo/perfiles/<slug>.md` (hoy existen `pablo-linkedin.md` y `streakode-tiktok.md`). Voz, nicho, audiencia, pilares y lo que sí y no se hace salen de ahí, y mandan sobre todo lo demás. Si la cuenta no tiene perfil, créalo con Pablo desde `_plantilla.md` antes de producir en volumen. Lo que se aprenda sobre una voz se apunta en su perfil, no solo en la memoria.
 
 ## Reglas de toda pieza
 
@@ -31,7 +31,7 @@ Lee el perfil de la cuenta en `agents/heraldo/perfiles/<slug>.md` (hoy existe `p
 
 - **Entregables:** `.tmp/heraldo_outbox/` (en Telegram se adjuntan solos). Borradores e intermedios en `.tmp/heraldo/`.
 - **Notion**, en Alfred HQ:
-  - "HERALDO — Contenido", `collection://ef020d69-8819-4d3c-aace-4a00774b1878`: `Título`, `Perfil`, `Plataforma`, `Formato` (Post/Hilo/Carrusel/Guion/Newsletter/Artículo), `Pilar`, `Estado` (Idea/Borrador/En revisión/Aprobado/Programado/Publicado), `Fecha publicación`, `Copy`, `Link`, `Notas`.
+  - "HERALDO — Contenido", `collection://ef020d69-8819-4d3c-aace-4a00774b1878`: `Título`, `Perfil`, `Plataforma`, `Formato` (Post/Hilo/Carrusel/Guion/Newsletter/Artículo/Vídeo), `Pilar`, `Estado` (Idea/Borrador/En revisión/Aprobado/Programado/Publicado), `Fecha publicación`, `Copy`, `Link`, `Notas`.
   - "HERALDO — Perfiles", `collection://dd845354-428a-40c4-99ff-5746cd73ef62`.
   - Si Notion rechaza la escritura por falta de bloques, entrega igualmente y apúntalo en la memoria.
 
