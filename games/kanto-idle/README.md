@@ -40,6 +40,8 @@ El juego sigue el patrón clásico: los **costes crecen exponencialmente** (x1,1
 
 **Opción B (se actualiza solo con cada push):** Netlify → *Add new site* → *Import from Git* → este repositorio. *Base directory*: `games/kanto-idle`. Sin comando de build. `netlify.toml` ya define `public` como carpeta de publicación y las cabeceras.
 
+**Vercel:** *Add New → Project* → importa el repositorio. Si el juego está en la raíz del repo, no cambies nada; si está en `games/kanto-idle` (este monorepo), pon *Root Directory* = `games/kanto-idle`. `vercel.json` ya define la carpeta `public` y las cabeceras. *Framework Preset*: Other.
+
 Cuando cambies archivos del juego, sube `VERSION` en `public/sw.js` para que los móviles refresquen la caché.
 
 ## Instalar en el móvil
