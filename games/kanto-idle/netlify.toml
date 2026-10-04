@@ -1,0 +1,28 @@
+# Netlify: sitio estático sin build. La carpeta que se publica es "public".
+# Si conectas el repositorio, pon "Base directory" = games/kanto-idle (Netlify leerá este fichero).
+[build]
+  publish = "public"
+
+# El service worker nunca se cachea, para que las actualizaciones lleguen a los móviles.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Service-Worker-Allowed = "/"
+
+# Sprites e iconos no cambian: caché larga.
+[[headers]]
+  for = "/sprites/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
