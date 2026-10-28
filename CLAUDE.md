@@ -35,12 +35,14 @@ Cuando el tema es de un agente, lee `agents/<nombre>/CLAUDE.md` y trabaja con su
 | Gym, rutina, comidas, macros | FORGE: sesiones en Notion, log de comidas en Google Sheets (foto por Telegram) |
 | Documentos guardados (PDF, DOCX, MD) | BASILIO, base `D:\Obsidian\Mi Bóveda\raw` |
 | Empleo: ofertas, CV, cartas, procesos | HUNTER: materiales en Notion; en Telegram los adjunta desde `.tmp/hunter_outbox/` |
-| Contenido y redes | HERALDO: lee el perfil de voz (`agents/heraldo/perfiles/`) antes de escribir y nunca publica; generar audiovisual gasta créditos |
+| Contenido y redes | HERALDO: lee el perfil de voz (`agents/heraldo/perfiles/`) antes de escribir y nunca publica |
+| Producir vídeo (producto, series, VODs, generado) | CLAQUETA: guion cerrado por HERALDO; generar audiovisual gasta créditos |
+| Contenido didáctico (ejercicios de Streakode, temas y preguntas de Remopo y Legajo) | MAESTRO: `directives/streakode_contenido.md` y `directives/remopo_contenido.md`; verifica antes de dar nada por bueno |
 | Desarrollo web y móvil | ADA: Next.js 15 + Tailwind + Supabase, o Expo + Supabase |
-| Cortar directos y VODs | skill `clipper`, `directives/clipper_shorts.md` |
+| Cortar directos y VODs | CLAQUETA, con la skill `clipper` y `directives/clipper_shorts.md` |
 | Estado de los proyectos | Atalaya, `directives/atalaya.md` |
 | Vault de Obsidian | `directives/obsidian.md` |
-| Bandeja de Gmail | `directives/ordenar_bandeja.md` (un hook la pide en la primera sesión del día) |
+| Bandeja de Gmail | `directives/ordenar_bandeja.md` (tarea programada diaria `ordenar-bandeja-gmail`, 08:00) |
 | HEARTBEAT | lee `HEARTBEAT.md` y ejecuta lo que toque a esa hora; si no toca nada, responde "OK" |
 
 ## Lo que no se deduce del código
@@ -63,3 +65,5 @@ Trampas en las que ya caí. Añade una línea cuando cometas un error relevante.
 - **2026-09-23**: di remopo.es por libre porque RDAP devolvió 404, pero ese servicio no cubre los .es. Antes de fiarte de un 404 de RDAP, prueba con un dominio que se sabe ocupado (p. ej. google.es); si no lo cubre, di «sin verificar».
 - **2026-09-27**: di por arreglado un desbordamiento porque el script de comprobación salía limpio, pero el servidor de desarrollo se había parado y estaba midiendo la página de error de Chrome. Un script que comprueba una página debe fallar si la URL cargada no es la esperada.
 - **2026-09-28**: llamé «Pueblo Terracota» a Floccesy Town en Teselia; en español es Pueblo Ocre (Terracota es Accumula). Los nombres oficiales en español (lugares, personajes) se comprueban en WikiDex antes de escribirlos, no se sacan de memoria.
+- **2026-10-13**: desplegué `/camino` en Streakode sin añadirlo a `PROTECTED_PATHS` (`src/lib/supabase/proxy.ts`): sin sesión daba 500 en vez de ir al login, y el smoke-prod no lo vio porque solo probaba con sesión. Al crear una página con sesión en Streakode, añadirla ahí y comprobar la redirección sin sesión antes de desplegar.
+- **2026-10-27**: dije a Pablo que «ChatGPT 2.5 imágenes» no existía en OpenRouter, sin listar los modelos de imagen. Existe (`openai/gpt-image-2.5-flare` y `-sunburst`). Antes de negar que un modelo exista, consulta `GET /api/v1/models?output_modalities=image` (o el listado que toque); el buscador web no basta.

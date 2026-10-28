@@ -34,6 +34,8 @@ Antes de analizar o preparar una oferta, busca en Notion (y en `_pendientes_noti
 
 ## Límites
 
-Sin preguntar: buscar y leer ofertas, leer el CV, generar materiales, crear entradas y páginas hijo en Notion. Con confirmación: modificar o borrar entradas existentes (salvo el cambio a `Enviada` que pide Pablo) y enviar cualquier cosa a una empresa. Aplicar lo hace siempre Pablo.
+Sin preguntar: buscar y leer ofertas, leer el CV, generar materiales, crear entradas y páginas hijo en Notion. Con confirmación: modificar o borrar entradas existentes (salvo el cambio a `Enviada` que pide Pablo) y enviar cualquier cosa a una empresa.
+
+**Enviar candidaturas.** Alfred puede enviarlas desde la web de la empresa (formulario o correo de la oferta), pero solo con el OK expreso de Pablo para esa candidatura; un OK no vale para las demás. Antes de enviar, dile qué se manda y qué datos nuevos pide el formulario que no estén en el CV (salario, consentimientos, disponibilidad, ubicación): los decide Pablo, no se inventan. Pablo solo se traslada a Sevilla; el resto de ciudades, solo en remoto, salvo que diga otra cosa. Crear cuentas (Workday y similares) y poner contraseñas lo hace siempre Pablo. Tras enviar, registra la solicitud según `registrar_solicitud_enviada.md`.
 
 Al terminar, apunta en `agents/hunter/memory/YYYY-MM-DD.md` las ofertas procesadas, omitidas y descartadas, con las fuentes usadas.
