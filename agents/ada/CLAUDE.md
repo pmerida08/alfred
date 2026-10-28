@@ -22,7 +22,7 @@ Cuando el proyecto es pequeño, Pablo prefiere lo mínimo (Atalaya: Node con `no
 - Deuda técnica que veas de paso: menciónala en una línea, sin arreglarla por tu cuenta. Una vulnerabilidad sí se reporta en el momento, aunque no sea parte de la tarea.
 - Commits semánticos (`feat:`, `fix:`, `chore:`, `refactor:`, `test:`).
 - Los proyectos viven en `D:\Proyectos\<Nombre>`. Los dev servers se declaran en `.claude/launch.json` de Alfred (mira los puertos ocupados antes de elegir uno). Al acabar, actualiza el siguiente paso del proyecto en Atalaya (`python execution/atalaya.py set <slug> siguiente_paso=...`).
-- Skills: las activas de la sesión (`design-taste-frontend` para UI, `supabase` para base de datos). Si hace falta otra de `skills-library/`, cópiala a `.agents/skills/` y `.claude/skills/`.
+- Skills: las activas de la sesión (`design-taste-frontend` v2 para UI, `supabase` para base de datos). `design-taste-frontend` abre Chrome para inspeccionar y revisar capturas (Node 22+) y una construcción completa gasta unos cientos de miles de tokens: úsala en landings y pantallas nuevas, no en retoques pequeños. Si hace falta otra de `skills-library/`, cópiala a `.agents/skills/` y `.claude/skills/`.
 
 ## Trampas ya encontradas
 
@@ -33,7 +33,12 @@ Cuando el proyecto es pequeño, Pablo prefiere lo mínimo (Atalaya: Node con `no
 - **tsx:** un `.ts` con top-level await fuera de un paquete `type: module` falla; usa `.mts` dentro del árbol del repo.
 - **Phaser 4:** `setTintFill(color)` ya no existe (`setTint(c).setTintMode(Phaser.TintModes.FILL)`) y `RenderTexture` necesita `render()` tras dibujar. La profundidad por Y del mundo pasa de 1000 enseguida: la UI, en 100000.
 - **three.js y texturas:** un `texture.clone()` hecho antes de que cargue la imagen no se sube nunca a la GPU (hay que poner `needsUpdate` al cargar), y `visible = undefined` no oculta: three solo oculta con `false`. Cualquier cálculo que dependa de la transparencia de las texturas (render de alturas, picking) tiene que esperar a que carguen.
+- **create-next-app:** rechaza nombres con mayúsculas; créalo en minúsculas y renombra la carpeta. Activa `cacheComponents` por defecto: en una app local con todo dinámico, quítalo y usa `force-dynamic`.
+- **Seguridad en apps locales que lanzan procesos:** las mutaciones van en Server Actions (Next comprueba el origen), nunca en route handlers; si no, cualquier web abierta en el navegador puede dispararlas contra `localhost`.
+- **Regex dentro de plantillas de JS:** `` `\b` `` es un retroceso; hay que escribir `\\b`. Al generar ficheros con scripts, revisa las barras invertidas en el resultado.
 - **electron-vite:** los workspaces TS sin compilar van en `devDependencies` (para que se empaqueten); las librerías con runtime real, en `dependencies`.
+- **OpenRouter (imagen):** los modelos de imagen van por `POST /api/v1/images`, no por `/chat/completions`, y exigen saldo en la cuenta (no solo límite en la clave): `GET /api/v1/credits` antes de prometer pruebas. No lances `npm install` y `npx expo install` a la vez.
+- **Expo/RN en Windows, build nativo local:** con la nueva arquitectura, CMake/ninja rompe el límite de 260 caracteres de ruta (`react_codegen_rngesturehandler_codegen`) incluso con `subst` o carpeta corta (≈290 caracteres mínimo); un `subst` en la raíz de unidad además rompe el autolinking (no encuentra `package.json`). Para un APK, usar EAS Build (nube), no `gradlew assembleRelease` local. Si hay `android/`, EAS lo trata como proyecto bare y ya no regenera desde `app.json`.
 
 ## Límites
 

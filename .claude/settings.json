@@ -1,4 +1,10 @@
 {
+  "permissions": {
+    "deny": [
+      "Edit(//d/Obsidian/Mi Bóveda/raw/**)",
+      "Edit(./gen-lang-client-*.json)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
