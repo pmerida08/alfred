@@ -12,8 +12,13 @@ import json
 import os
 import re
 import sys
+import time
 from pathlib import Path
 from dotenv import load_dotenv
+
+# Bajo systemd stdout va a un pipe y Python lo bufferiza por bloques: los print
+# no llegaban a journalctl hasta parar el servicio.
+sys.stdout.reconfigure(line_buffering=True)
 
 PROJECT_ROOT = Path(__file__).parent.parent
 load_dotenv(PROJECT_ROOT / ".env", override=True)
@@ -26,7 +31,12 @@ TMP_DIR = PROJECT_ROOT / ".tmp"
 # adjuntan al chat tras la respuesta de texto y luego se borran.
 HUNTER_OUTBOX = TMP_DIR / "hunter_outbox"
 
-WHISPER_MODEL = "small"  # opciones: tiny, base, small, medium, large
+# Transcripción: Groq (gratis, whisper-large-v3-turbo) si hay GROQ_API_KEY en .env;
+# si no hay clave o Groq falla, Whisper local. El servidor Linux es un i5 de 2010
+# sin AVX: "small" tarda ~85 s por nota de 2 s, "tiny" ~12 s. En Windows, "small".
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
+GROQ_MODEL = "whisper-large-v3-turbo"
+WHISPER_MODEL = os.getenv("WHISPER_MODEL") or ("tiny" if sys.platform.startswith("linux") else "small")
 
 
 def strip_markdown(text: str) -> str:
@@ -69,8 +79,27 @@ def load_whisper_model():
         sys.exit(1)
 
 
+def transcribe_groq(audio_path: Path) -> str:
+    import requests
+    with audio_path.open("rb") as fh:
+        resp = requests.post(
+            "https://api.groq.com/openai/v1/audio/transcriptions",
+            headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
+            files={"file": (audio_path.name, fh, "audio/ogg")},
+            data={"model": GROQ_MODEL, "language": "es", "response_format": "json"},
+            timeout=60,
+        )
+    resp.raise_for_status()
+    return resp.json()["text"].strip()
+
+
 def transcribe(whisper_model, audio_path: Path) -> str:
-    result = whisper_model.transcribe(str(audio_path), language="es")
+    if GROQ_API_KEY:
+        try:
+            return transcribe_groq(audio_path)
+        except Exception as e:
+            print(f"[voz] Groq falló ({e}); uso Whisper local '{WHISPER_MODEL}'.", file=sys.stderr)
+    result = whisper_model.transcribe(str(audio_path), language="es", fp16=False)
     return result["text"].strip()
 
 
@@ -120,15 +149,21 @@ async def ask_alfred(message: str, session_id: str | None = None) -> tuple[str, 
         raise
 
 
-async def send_outbox_files(update) -> None:
+async def send_outbox_files(update, since: float) -> None:
     """Envía como documentos los ficheros que HUNTER haya dejado en el outbox y los borra.
 
     Decoupla el bot de la skill: cualquier respuesta puede traer adjuntos sin que
-    el bot tenga que parsear el texto. Solo actúa si hay ficheros pendientes.
+    el bot tenga que parsear el texto. Solo toca los ficheros escritos desde `since`
+    (inicio de esta respuesta): el outbox se sincroniza con el PC por Syncthing y
+    puede tener material de otras sesiones que no hay que enviar ni borrar.
     """
     if not HUNTER_OUTBOX.exists():
         return
-    files = sorted(p for p in HUNTER_OUTBOX.iterdir() if p.is_file())
+    files = sorted(
+        # Margen de 2 s: el mtime del sistema de ficheros puede quedar unos ms
+        # por detrás de time.time().
+        p for p in HUNTER_OUTBOX.iterdir() if p.is_file() and p.stat().st_mtime >= since - 2
+    )
     for f in files:
         try:
             with f.open("rb") as fh:
@@ -191,6 +226,7 @@ def main():
         conv = store.get_or_create_active_conversation(chat_id)
 
         store.save_message(conv.id, "user", user_text, update.message.message_id)
+        started_at = time.time()
 
         stop_typing = asyncio.Event()
         typing_task = asyncio.create_task(keep_typing(update.message.chat, stop_typing))
@@ -211,7 +247,7 @@ def main():
         for i in range(0, max(len(response), 1), 4096):
             await update.message.reply_text(response[i:i + 4096])
 
-        await send_outbox_files(update)
+        await send_outbox_files(update, started_at)
 
     async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
@@ -329,15 +365,23 @@ def main():
         voice = update.message.voice
 
         audio_path = TMP_DIR / f"voice_{update.message.message_id}.ogg"
+        stop_typing = asyncio.Event()
+        typing_task = asyncio.create_task(keep_typing(update.message.chat, stop_typing))
         try:
             file = await context.bot.get_file(voice.file_id)
             await file.download_to_drive(audio_path)
-            text = transcribe(whisper_model, audio_path)
+            # Whisper es CPU puro y en el servidor tarda: fuera del event loop,
+            # o el bot deja de atender cualquier otro mensaje mientras transcribe.
+            text = await asyncio.get_running_loop().run_in_executor(
+                None, transcribe, whisper_model, audio_path
+            )
             print(f"[voz transcrita] {text}")
-            await reply_to(update, text)
         finally:
+            stop_typing.set()
+            typing_task.cancel()
             if audio_path.exists():
                 audio_path.unlink()
+        await reply_to(update, text)
 
     async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not await is_authorized(update): return
