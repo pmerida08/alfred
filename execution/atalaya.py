@@ -11,7 +11,8 @@ Uso:
 
 Valores de `set` y `nuevo`: prioridad=1|2|3, en_cv=true|false, stack=a,b,c; el resto, texto.
 La URL se puede cambiar con la variable ATALAYA_URL (por defecto http://localhost:4770).
-Solo funciona en el PC de Windows: el servidor Linux no tiene Atalaya.
+Atalaya corre en el servidor Linux; en el PC, localhost:4770 es el lanzador, que reenvía allí.
+`iniciar` solo funciona en el PC, y `sync` necesita el PC encendido (es quien lee los repos).
 """
 
 import json
@@ -40,8 +41,9 @@ def api(ruta, metodo="GET", datos=None):
         sys.exit(f"Atalaya respondió {e.code}: {e.read().decode()}")
     except urllib.error.URLError:
         sys.exit(
-            "Atalaya no responde en " + BASE + ". Arráncalo con: "
-            "docker compose -f D:/Proyectos/Atalaya/docker-compose.yml up -d"
+            "Atalaya no responde en " + BASE + ". En el PC, relanza el lanzador "
+            "(Start-ScheduledTask -TaskName 'Atalaya - lanzador'); si el servidor está apagado, "
+            "en él: cd ~/Documentos/Atalaya && docker compose up -d"
         )
 
 
