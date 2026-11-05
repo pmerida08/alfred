@@ -1,7 +1,7 @@
 # Directiva: Atalaya, estado de los proyectos
 
 **Dominio:** Proyectos
-**Qué es:** panel de control de todos los proyectos de Pablo, en `D:\Proyectos\Atalaya` (Postgres en Docker + web en http://localhost:4770). Es la **fuente de verdad** de qué proyecto está activo, en pausa, terminado o abandonado, su prioridad, su siguiente paso y si cuenta para el CV.
+**Qué es:** panel de control de todos los proyectos de Pablo. El código está en `D:\Proyectos\Atalaya`; corre en el servidor Linux (Postgres + web en Docker, http://192.168.1.200:4770) y en el PC se usa como http://localhost:4770 (el lanzador reenvía al servidor). Es la **fuente de verdad** de qué proyecto está activo, en pausa, terminado o abandonado, su prioridad, su siguiente paso y si cuenta para el CV.
 **Herramienta:** `python execution/atalaya.py` (ver `--help`).
 **Autonomía:** leer siempre sin preguntar. Actualizar el siguiente paso, la descripción o las notas tras trabajar en un proyecto, sin preguntar. **Cambiar el estado o el interruptor del CV solo si Pablo lo dice** o lo confirma: son decisiones suyas.
 
@@ -27,6 +27,7 @@
 
 ## Edge cases
 
-- **Atalaya no responde**: el script lo dice. Arrancarlo con `docker compose -f D:/Proyectos/Atalaya/docker-compose.yml up -d` (Docker Desktop tiene que estar abierto).
-- **Servidor Linux / Telegram**: Atalaya solo corre en el PC de Windows. Desde el servidor, decir que no está disponible en vez de improvisar el estado.
+- **Atalaya no responde en el PC**: o el lanzador no está en marcha (`Start-ScheduledTask -TaskName 'Atalaya - lanzador'`) o el servidor está apagado (`curl http://192.168.1.200:4770/api/salud`). En el servidor se levanta con `cd ~/Documentos/Atalaya && docker compose up -d`.
+- **Servidor Linux / Telegram**: Atalaya corre ahí mismo, así que `resumen`, `ver`, `set`, `nuevo` y `cv` funcionan igual. La actividad de git la lee el PC: si está apagado, el resumen lo avisa y los días sin actividad son de la última lectura, y `sync` falla con ese aviso. `iniciar` no funciona desde el servidor (abre ventanas en el PC).
+- **Código de Atalaya**: se edita en el PC; Syncthing lo copia al servidor (carpeta «Atalaya», solo PC → servidor, sin `node_modules` ni `.git`). Cambios en `public/` o `server/`: `docker restart atalaya-app` en el servidor; en `package.json` o el `Dockerfile`: `docker compose up -d --build`. Si cambia el lanzador (`lanzador/`), reiniciarlo en el PC.
 - **Proyectos marcados «por confirmar»** (`revisar = true`): su estado lo dedujo Alfred al crear el inventario. Tratarlo como provisional y, si sale el tema, pedir a Pablo que lo confirme.
