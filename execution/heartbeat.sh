@@ -1,6 +1,6 @@
 #!/bin/bash
 # Ejecuta el HEARTBEAT de Alfred para la tarea indicada.
-# Uso: heartbeat.sh [email|agenda|dreaming]
+# Uso: heartbeat.sh [email|agenda|token|openrouter|buscar_trabajo|dreaming]
 
 set -e
 
@@ -47,6 +47,10 @@ case "$TASK" in
     # autenticación falla (401), avisa por Telegram con la API HTTP directa (no
     # depende del CLI para el aviso).
     "$ALFRED_PY" "$ALFRED_DIR/execution/check_token_expiry.py" >> "$LOG_FILE" 2>&1
+    ;;
+  openrouter)
+    # Saldo de OpenRouter (lectura de tickets de Alacena): aviso por Telegram si baja del umbral.
+    "$ALFRED_PY" "$ALFRED_DIR/execution/check_openrouter_saldo.py" >> "$LOG_FILE" 2>&1
     ;;
   buscar_trabajo)
     # Búsqueda de empleo semanal (domingo 12:00). El script invoca el CLI para

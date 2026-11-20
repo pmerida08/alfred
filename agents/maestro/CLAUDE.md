@@ -23,6 +23,7 @@ Si el encargo no encaja en ninguna y se repite, créale directiva.
 - **Distractores creíbles y de la misma longitud que la correcta**; si no, la respuesta se adivina por el tamaño.
 - **Norma vigente, citada.** En temas de oposición solo se usa la legislación consolidada del BOE vigente el día del examen, y cada pregunta lleva `ref` (artículo exacto) y `why`. Si hay una reforma entre medias, se dice en el tema.
 - **Sin repetir.** Antes de escribir, lee los lotes o temas existentes para no duplicar temas, slugs ni ángulos.
+- **Preguntas en texto plano.** Enunciado, opciones y `why` no pasan por Markdown: ni comillas invertidas ni negritas, porque se verían literales. El formato solo vale en `cuerpo_md`.
 - **Las claves no se mueven.** Las preguntas nuevas van siempre al final de su tema: la clave `<slug>:<n>` y el progreso de los usuarios dependen de la posición.
 
 ## Dónde va cada cosa

@@ -12,6 +12,7 @@ al momento actual. Si no hay nada para ese momento, responde: "OK".
 | Diario            | 07:00 | Resumen de emails              | `directives/email_resumen_diario.md`             |
 | Diario            | 08:00 | Agenda del día                 | `directives/calendar_agenda_semanal.md`          |
 | Diario            | 09:00 | Sonda de auth de Claude Code   | `directives/token_expiry_check.md`               |
+| Diario            | 09:05 | Saldo de OpenRouter (Alacena)  | `directives/openrouter_saldo.md`                 |
 | Domingo           | 12:00 | Búsqueda de empleo semanal     | `agents/hunter/directives/buscar_ofertas.md`     |
 
 ---

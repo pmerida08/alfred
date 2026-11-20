@@ -1,7 +1,7 @@
 # Perfil — Pablo (Reddit)
 
 > Cuenta personal de Pablo en Reddit, creada para dar a conocer Streakode sin que parezca un perfil de marca. La voz definida aquí manda sobre cualquier idea o directiva.
-> Creado el 17/10/2026. Lo marcado con **(confirmar)** es una hipótesis o algo que Pablo debe decidir. Las reglas de cada subreddit no se han podido leer todavía (Reddit bloquea la lectura automática): se revisan en la barra lateral antes de cada post.
+> Creado el 17/10/2026. Lo marcado con **(confirmar)** es una hipótesis o algo que Pablo debe decidir. Las reglas de cada subreddit no se han podido leer todavía: WebFetch, el navegador integrado y Claude in Chrome tienen reddit.com bloqueado (comprobado el 06/11/2026). Las revisa Pablo en la barra lateral antes de cada post y las pega en el chat; no usar espejos de Reddit para saltarse el bloqueo.
 
 ## Identidad
 
@@ -34,7 +34,7 @@
 
 **Sí:**
 - Leer las reglas y los posts fijados de cada subreddit antes de publicar. Si piden karma o antigüedad mínimos, se espera.
-- Declarar que eres el autor cada vez que se menciona Streakode.
+- Declarar que eres el autor cada vez que se menciona Streakode, y que se programó con mucha ayuda de IA cuando se presente el proyecto o alguien lo pregunte (decisión de Pablo, 06/11/2026).
 - Un enlace por post, y solo cuando el subreddit lo permite: `https://streakode.com/probar?utm_source=reddit&utm_campaign=<sub>-<pieza>` (en Reddit sí se pueden pulsar, así que lleva el UTM completo). Valores en minúsculas, cifras, `-` y `_`, hasta 40 caracteres. Ejemplo: `utm_campaign=programacion-bip`.
 - Contestar todos los comentarios las primeras horas, y más a los críticos. Dar las gracias a los mods y aceptar un «no».
 - Cifras reales de `/admin`, copiadas del panel el día de publicar. Nunca de memoria.
@@ -51,14 +51,14 @@
 
 ## Subreddits objetivo
 
-Fase 1, en español. **Existencia, tamaño y reglas por verificar** antes de empezar; lo que sigue son candidatos, no una lista contrastada.
+Fase 1, en español. Reglas pegadas por Pablo el 06/11/2026; su wiki y la actividad real siguen sin ver.
 
 | Subreddit | Para qué | Notas |
 |---|---|---|
-| r/programacion | Comentar y, más adelante, discusión de trampas y build in public | El más general en español. **(verificar reglas de autopromoción)** |
-| r/aprendeprogramacion | Contestar dudas; es donde está el público de Streakode | **(verificar que existe y está activo)** |
-| r/devsarg | Comentar, mirar si admiten posts de proyectos propios | Comunidad de devs argentinos; vale por el público de Latinoamérica. **(verificar)** |
-| Otros en español | Descubrir en las dos primeras semanas leyendo | Evitar los generalistas (r/spain, r/es): el tema no encaja. |
+| r/programacion | Comentar y todos los posts propios | Enlaces propios solo con la regla del 10 % (posts y comentarios sobre tu sitio). En español, código entre ` ``` `, títulos descriptivos, sin temas repetidos ni cubiertos en el wiki, sin resolver deberes, sin promocionar otras comunidades. |
+| r/devsarg | Solo comentar en hilos técnicos | Prohíbe apps «vibecodeadas»: mostrar una app exige publicar el repo y contar arquitectura y desafíos (el de Streakode es privado). Prohíbe posts de poco esfuerzo, preguntas googleables y dudas de principiante. Quien mencione a los mods debe llamarlos «Honorable Cámara de Moderadores» o se arriesga a un ban: no mencionarlos. |
+| r/aprendeprogramacion | Descartado de momento | «Página no encontrada» en la ruta `/mod/` (no del todo concluyente; falta abrir `/r/aprendeprogramacion`). |
+| Otros en español | Descubrir leyendo | Evitar los generalistas (r/spain, r/es): el tema no encaja. |
 
 Fase 2, en inglés (no antes de la semana 4, y solo si Pablo quiere): r/SideProject, el hilo de Showoff Saturday de r/webdev y r/IMadeThis. Aviso: la interfaz está en inglés pero los ejercicios siguen en español, y hay que decirlo en el post. En r/learnprogramming no se promociona nada, solo se participa.
 
@@ -68,7 +68,7 @@ Fase 2, en inglés (no antes de la semana 4, y solo si Pablo quiere): r/SideProj
 
 ## Cadencia
 
-- **Frecuencia objetivo:** semanas 1–2, 3–5 comentarios útiles al día repartidos entre dos o tres subreddits, 0 posts propios con enlace. Desde la semana 3, como mucho 1–2 posts propios por semana (uno de ellos con enlace) y como máximo un subreddit por día.
+- **Frecuencia objetivo:** semanas 1–2, 3–5 comentarios útiles al día, sobre todo en r/programacion, 0 posts propios con enlace. Desde la semana 3, como mucho 1 post propio por semana mientras r/programacion sea el único subreddit para posts, y nunca más del 10 % de la actividad sobre Streakode.
 - **Mejores horarios:** primera hora de la mañana y tarde-noche en horario de España (hipótesis; ajustar mirando la actividad de cada sub). **(confirmar)**
 
 ## Medición

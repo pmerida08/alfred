@@ -5,7 +5,11 @@ description: "Convierte un directo largo de YouTube en una recopilación horizon
 
 # Clipper — VOD a vídeo largo y a Shorts
 
-Sigue de principio a fin la directiva `directives/clipper_shorts.md`. Contiene el
+**Shorts verticales de un nicho** (buscar vídeos virales, sacar varios clips 9:16
+con subtítulos animados, gancho, título y descripción, render con HyperFrames):
+sigue `directives/canal_shorts.md` (`src/buscar.py` + `src/shorts.py`).
+
+Para recopilaciones y para los Shorts de la cola web, sigue de principio a fin la directiva `directives/clipper_shorts.md`. Contiene el
 proceso completo y, sobre todo, el criterio para elegir el material, que es la
 única parte que no puede hacer el código.
 

@@ -19,6 +19,7 @@ Skills disponibles para Alfred. Cada skill tiene su propio archivo en esta carpe
 | Crear agente especializado nuevo | [crear-agente.md](crear-agente.md) |
 | Subir cambios a Alfred (GitHub) | [deploy-alfred.md](deploy-alfred.md) |
 | Clipper — VOD a recopilación horizontal o Shorts | [clipper.md](clipper.md) |
+| Tanda de Shorts para un canal (`/tanda-shorts <canal> [N]`) | [tanda-shorts.md](tanda-shorts.md) |
 | BASILIO — Archivero de documentos | [basilio.md](basilio.md) |
 | HUNTER — Buscar ofertas y generar candidaturas | [hunter-buscar-ofertas.md](hunter-buscar-ofertas.md) |
 | HERALDO — Contenido y redes (estrategia, ideas, posts, copy, vídeo) | [agents/heraldo/CLAUDE.md](../agents/heraldo/CLAUDE.md) |

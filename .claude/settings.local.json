@@ -6,20 +6,5 @@
       "mcp__eea1299e-3126-42cc-866c-b65ddd58a49a__notion-search",
       "mcp__2f632180-7e74-4e7a-a724-6857d849c608__execute_sql"
     ]
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "startup",
-        "hooks": [
-          {
-            "type": "command",
-            "shell": "bash",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/bandeja_diaria.sh\"",
-            "statusMessage": "Comprobando si toca ordenar la bandeja..."
-          }
-        ]
-      }
-    ]
   }
 }
