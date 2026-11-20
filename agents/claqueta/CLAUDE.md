@@ -12,6 +12,7 @@ Un encargo con: perfil o cuenta (de `agents/heraldo/perfiles/`), texto en pantal
 
 - **onetake** (0 créditos): composición HTML renderizada fotograma a fotograma. Motor en `.tmp/onetake_engine/src` (clon con parches: `chromium.launch(channel="chrome")` y tamaño por entorno `STK_W`/`STK_H` en `probe.py`). Pasos por caso, plantillas y fuentes de los vídeos ya hechos en `.tmp/heraldo/streakode-producto/README.md` y `.tmp/heraldo/streakode-hoy/`. Licencia PolyForm Noncommercial: avisar si el vídeo es comercial.
 - **Clipper** (0 créditos): skill `clipper` y `directives/clipper_shorts.md`. Recopilación horizontal de 20–35 min por defecto; Shorts como derivado. Sin pegatinas ni efectos de sonido: el énfasis es zoom, temblor, rótulos, congelados y censura en silencio.
+- **HyperFrames** (0 créditos, `npx hyperframes` en `D:\Proyectos\Clipper`, skills `hyperframes*` instaladas): render de los Shorts de `src/shorts.py` (`directives/canal_shorts.md`). No usar `publish`, `cloud` ni `--engine heygen`: suben fuera o gastan.
 - **Higgsfield** (MCP: `generate_video`, `generate_image`, `reframe`, `upscale_*`): **gasta créditos, así que confirma antes** enseñando prompt, modelo, formato y coste, tras mirar `balance`. Prompt en inglés, texto sobreimpreso en el idioma del perfil, 9:16 por defecto, un movimiento de cámara por clip. Si el resultado es pobre, ajusta el prompt antes de volver a gastar.
 
 Antes de elegir onetake para algo nuevo, mira si ya existe un caso parecido en `.tmp/onetake_engine/src/cases/` y parte de él.
@@ -25,7 +26,10 @@ Antes de elegir onetake para algo nuevo, mira si ya existe un caso parecido en `
 - **Cámara con zoom:** los elementos anchos (fila de logos, tarjetas) se salen si el zoom total pasa de ~1,12.
 - **`OM.popIn`:** termina en `s0 + ds`; si cambias `s0`, pasa `ds = 1 - s0`.
 - **Audio:** Kokoro no habla español, así que no hay locución. Para cambiar solo el audio, remux con ffmpeg y copia `draft.render.json` con el nombre del vídeo nuevo, o la prueba de curvas falla.
+- **Fotogramas tras el mix:** `mixit.sh` (`-shortest`) deja el mp4 final 2–5 fotogramas más corto que el render (la pausa del logo). La ficha usa la cifra de ffprobe del final.
+- **Oficina de Atalaya:** un render en segundo plano no genera llamadas, así que al acabar el mensaje la Oficina te da por libre. Mientras renderizas, mantén el turno con esperas en primer plano (`until … sleep`).
 - **Cifras y código de pantalla:** el código que se muestra se ejecuta antes de renderizar; las cifras de ejemplo se marcan como tales en la ficha.
+- **Plantilla «Adivina el output»:** la pregunta (`EP.q`) no pasa de 18 caracteres o choca con el «3» de la cuenta atrás. Revisa los fotogramas clave con `grab.py` antes de renderizar. Para comprobar Java usa el JDK 17 de `C:\Program Files\Eclipse Adoptium`: el `java` del PATH es el 8 (sin records ni text blocks).
 
 ## Entrega
 

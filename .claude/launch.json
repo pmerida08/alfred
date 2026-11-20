@@ -304,6 +304,103 @@
         "D:/Proyectos/Teselia"
       ],
       "port": 4780
+    },
+    {
+      "name": "butaca",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "D:/Proyectos/Butaca"
+      ],
+      "port": 4800
+    },
+    {
+      "name": "butaca-prueba",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "prueba",
+        "--prefix",
+        "D:/Proyectos/Butaca"
+      ],
+      "port": 4801
+    },
+    {
+      "name": "estancia-demo",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "demo",
+        "--prefix",
+        "D:/Proyectos/Estancia",
+        "--",
+        "4810"
+      ],
+      "port": 4810
+    },
+    {
+      "name": "overfarm",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "D:/Proyectos/Overfarm/node_modules/vite/bin/vite.js",
+        "D:/Proyectos/Overfarm",
+        "--port",
+        "4820",
+        "--strictPort"
+      ],
+      "port": 4820
+    },
+    {
+      "name": "alacena",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "web",
+        "--prefix",
+        "D:/Proyectos/Alacena"
+      ],
+      "port": 4830
+    },
+    {
+      "name": "alacena-admin",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "D:/Proyectos/Alacena/admin",
+        "--",
+        "-p",
+        "4831"
+      ],
+      "port": 4831
+    },
+    {
+      "name": "alacena-admin-nube",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "admin:nube",
+        "--prefix",
+        "D:/Proyectos/Alacena"
+      ],
+      "port": 4832
+    },
+    {
+      "name": "alacena-enlaces",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4836",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "D:/Proyectos/Alacena/enlaces"
+      ],
+      "port": 4836
     }
   ]
 }

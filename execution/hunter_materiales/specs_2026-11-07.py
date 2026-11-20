@@ -1,0 +1,271 @@
+FECHA_ES = "Montilla, 7 de noviembre de 2026"
+FECHA_EN = "Montilla, Córdoba (Spain) · 7 November 2026"
+
+OFERTAS = [
+# 1 ------------------------------------------------------------------
+{
+ "slug": "Aircall-SoftwareEngineerGraduate", "lang": "en", "wm": False,
+ "empresa": "Aircall", "puesto_ref": "Software Engineer – Graduate (6-month Professional Practice Contract), Madrid",
+ "subtitulo": "Graduate Software Engineer · TypeScript, Node.js, Python and LLM features",
+ "perfil": "Graduate software developer (Higher VET in Web Application Development, 2025; Master's in Generative AI and Innovation, 2026) with solid foundations in TypeScript/JavaScript and Python, Git, REST APIs and PostgreSQL. I have shipped projects to production with automated tests and CI/CD, and I build LLM-powered features with agents, tool calling and RAG. Looking for my first professional practice contract. Spanish native, English B2 (Cambridge, 2025). Available in Madrid.",
+ "skills": [
+    ("Code", ["TypeScript", "JavaScript", "Node.js", "Python", "React", "Next.js", "PHP", "Laravel"]),
+    ("Data & APIs", ["REST APIs", "PostgreSQL", "MySQL", "SQL", "Supabase", "Webhooks"]),
+    ("Engineering", ["Git", "GitHub pull requests", "Vitest (automated tests)", "CI/CD (Netlify, Vercel)", "Linux", "AWS Academy (cloud foundations)"]),
+    ("AI", ["Claude API", "OpenAI API", "LLM features", "Tool calling", "RAG", "Embeddings", "Whisper"]),
+ ],
+ "bullets": ["laravel", "sync", "paneles", "proxmox"],
+ "proyectos": ["streakode", "alfred", "lifevault", "elite"],
+ "saludo": "Dear Aircall team,",
+ "parrafos": [
+  "I am applying for the Software Engineer Graduate position under the professional practice contract. I meet the conditions you set out: I finished my Higher VET in Web Application Development in 2025, within your three-year window, and I have not used up a practice contract for this degree. My Master's in Generative AI and Innovation followed in 2026.",
+  "Streakode is a live PWA I built with Next.js, TypeScript and Supabase: a server-timed daily challenge, PostgreSQL with row-level security and scheduled jobs, and automated tests with Vitest. Alfred, my multi-agent system on the Claude API, runs 24/7 on a Linux server with tool calling and API integrations, which is my closest experience to your LLM-powered features. At the Agencia de Digitalización Andaluza I spent four months maintaining a production system in Laravel, JavaScript and SQL, fixing issues in code I had not written.",
+  "What attracts me is the structure of the programme: a mentor, a training plan and a path to owning a feature end to end, in a product team shipping AI voice agents to real customers. To be clear about the gaps: I have not worked on AWS beyond an introductory AWS Academy course, nor with GraphQL or DynamoDB. My English is B2 and I use it daily to read technical documentation; I expect it to grow in an English-speaking team.",
+  "I can start immediately and move to Madrid for the three office days. I would be glad to walk you through the code in an interview.",
+ ],
+},
+# 2 ------------------------------------------------------------------
+{
+ "slug": "Shakers-AIBuilderFullStack", "lang": "es", "wm": True,
+ "empresa": "Shakers (para grupo global de retail)", "puesto_ref": "AI Builder Full Stack (React + Node) · Agentes de IA y MCPs, 100 % remoto",
+ "subtitulo": "AI Builder Full Stack · React, Node, agentes de IA y MCPs",
+ "perfil": "Desarrollador full stack (CFGS en Desarrollo de Aplicaciones Web, 2025; Máster en IA Generativa e Innovación, 2026) que programa a diario apoyado en agentes desde hace meses: Claude Code con MCPs, skills, subagentes y hooks. Frontend en React y Next.js, backend en Node.js y Python, PostgreSQL. He construido un agente personal 24/7 y una app de agentes locales con integraciones MCP. Disponible en remoto desde España. Inglés B2 (Cambridge, 2025).",
+ "skills": [
+    ("Agentes", ["Claude Code", "MCP", "Skills", "Subagentes", "Hooks", "Tool calling", "Claude API", "Vercel AI SDK", "RAG"]),
+    ("Frontend", ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind", "HTML5", "CSS3"]),
+    ("Backend & datos", ["Node.js", "Python", "APIs REST", "PostgreSQL", "Supabase", "SQL", "Webhooks"]),
+    ("Ingeniería", ["Git", "Pull requests en GitHub", "Vitest (tests automáticos)", "CI/CD (Netlify, Vercel)", "Linux"]),
+ ],
+ "bullets": ["sync", "laravel", "paneles", "proxmox"],
+ "proyectos": ["alfred", "streakode", "lifevault", "elite"],
+ "proy_desc": {"alfred": "Agente personal sobre Claude Code y la Claude API, 24/7 en un servidor Linux y por Telegram: agentes especializados con memoria persistente, MCPs, skills, subagentes y hooks, integrados con Gmail, Notion y Google Sheets. Genera candidaturas a medida, como esta."},
+ "saludo": "Estimado equipo de Shakers:",
+ "parrafos": [
+  "Me presento al puesto de AI Builder Full Stack. Llevo meses desarrollando a diario apoyado en agentes, con MCPs, skills, subagentes y hooks, que es justo el requisito que distingue a esta oferta. Tengo el CFGS en Desarrollo de Aplicaciones Web (2025) y el Máster en IA Generativa e Innovación (2026).",
+  "Alfred es mi agente sobre Claude Code: agentes especializados, memoria persistente y un registro de errores que corrige su propio comportamiento, en marcha 24/7 en un servidor Linux. Streakode es una PWA en producción con Next.js, TypeScript y Supabase con RLS, levantada con ese flujo y con tests automáticos. También he construido Cavum, una aplicación de escritorio en React y TypeScript con agentes locales, integraciones MCP y registro de auditoría.",
+  "Me atrae que sea una herramienta real, tipo v0 o Lovable, atada a un sistema de diseño y que se despliega varias veces al día, en un equipo pequeño donde cada uno decide qué arreglar. Para ser claro: lo mío son herramientas propias, no agentes usados por otros equipos dentro de una empresa grande; mi experiencia en empresa son cuatro meses, y en Node tengo menos recorrido que en React y Python.",
+  "Puedo incorporarme de inmediato, en remoto desde España. Si me dan unos minutos, les enseño estos agentes funcionando y cómo está montado el flujo.",
+ ],
+},
+# 3 ------------------------------------------------------------------
+{
+ "slug": "UnconsciousModeration-ReactNativeDeveloper", "lang": "en", "wm": False,
+ "empresa": "Unconscious Moderation", "puesto_ref": "React Native Developer (Madrid, hybrid)",
+ "subtitulo": "React Native Developer · Expo, TypeScript and REST APIs",
+ "perfil": "Developer (Higher VET in Web Application Development, 2025; Master's in Generative AI and Innovation, 2026) who built LifeVault, a React Native mobile app with Expo, TypeScript, Zustand and EAS builds, integrated with a Supabase backend, REST APIs and streaming responses. Comfortable with Git, debugging and automated tests, and with backend concepts from production web work. Available to start immediately in Madrid. Spanish native, English B2 (Cambridge, 2025).",
+ "skills": [
+    ("Mobile & frontend", ["React Native", "Expo", "EAS Build", "Zustand", "NativeWind", "React", "TypeScript", "JavaScript"]),
+    ("Backend & APIs", ["REST APIs", "Supabase", "PostgreSQL", "Node.js", "Python", "SSE streaming", "Webhooks"]),
+    ("Engineering", ["Git", "GitHub pull requests", "Vitest (automated tests)", "CI/CD (Netlify, Vercel)", "Linux"]),
+    ("AI", ["Claude API", "OpenAI API", "RAG", "n8n"]),
+ ],
+ "bullets": ["laravel", "sync", "paneles", "proxmox"],
+ "proyectos": ["lifevault", "streakode", "alfred", "elite"],
+ "proy_desc": {"lifevault": "React Native mobile app with an AI assistant over the user's documents: Expo, TypeScript, Zustand and NativeWind, RAG with encryption, SSE streaming, Google Calendar and Tasks sync, and builds with EAS, on a Supabase (PostgreSQL) backend."},
+ "saludo": "Dear Unconscious Moderation team,",
+ "parrafos": [
+  "I am applying for the React Native Developer role in Madrid. I built LifeVault, a cross-platform mobile app in React Native and TypeScript with Expo, and I can start immediately, as you ask. I hold a Higher VET in Web Application Development (2025) and a Master's in Generative AI and Innovation (2026).",
+  "LifeVault handles private user documents, so it combines encryption, a Supabase backend, SSE streaming and sync with Google Calendar and Tasks, with builds through EAS. Streakode, my live PWA with Next.js and Supabase, runs retention notifications by push and email, which relates to the daily habits your members build. At the Agencia de Digitalización Andaluza I maintained a production system and debugged code I had not written.",
+  "Your product attracts me because a journaling and habit app lives or dies on being reliable and calm to use every day, and I have spent months on exactly that retention problem with Streakode. To be transparent: my state management experience is Zustand rather than Redux, I have used EAS builds but have not run a store release cycle at scale, and my time in a company is four months.",
+  "I can move to Madrid for the hybrid setup and start right away. I would be happy to show you the app and its code in an interview.",
+ ],
+},
+# 4 ------------------------------------------------------------------
+{
+ "slug": "Supersonik-ForwardDeployedEngineer", "lang": "en", "wm": False,
+ "empresa": "Supersonik", "puesto_ref": "Forward Deployed Engineer (Barcelona)",
+ "subtitulo": "Forward Deployed Engineer · Building AI agents for real processes",
+ "perfil": "Developer who builds AI agents that run real processes (Higher VET in Web Application Development, 2025; Master's in Generative AI and Innovation, 2026). I run my own multi-agent system on the Claude API 24/7, with tool calling, memory and API integrations, and I am comfortable around code, APIs and data in Python and TypeScript. Early-career, hands-on, used to owning things end to end. Willing to relocate to Barcelona. Spanish native, English B2 (Cambridge, 2025).",
+ "skills": [
+    ("AI agents", ["Claude API", "OpenAI API", "Prompting", "Tool calling", "Agent memory", "Multi-agent flows", "MCP", "RAG"]),
+    ("Code & data", ["Python", "TypeScript", "JavaScript", "React", "Next.js", "SQL", "PostgreSQL", "REST APIs", "Webhooks"]),
+    ("Automation", ["n8n", "Make", "Supabase", "Git", "Linux", "CI/CD (Netlify, Vercel)"]),
+ ],
+ "bullets": ["sync", "paneles", "laravel", "proxmox"],
+ "proyectos": ["alfred", "lifevault", "elite", "streakode"],
+ "saludo": "Dear Supersonik team,",
+ "parrafos": [
+  "I am applying for the Forward Deployed Engineer role. You say you want people who build rather than analyse, and who are excited to learn how to build AI agents: I already build them, and I would like to do it for real customers. I hold a Higher VET in Web Application Development (2025) and a Master's in Generative AI and Innovation (2026).",
+  "Alfred, my multi-agent system on the Claude API, runs 24/7 on a Linux server: it sorts my email every day, scores job postings and generates documents, integrated with Gmail, Notion, Google Sheets and Telegram. Estudiante Élite is an AI tutoring assistant for law students with RAG and session memory, built around what real users needed. At the Agencia de Digitalización Andaluza I built automated sync flows between internal systems and real-time dashboards refreshed daily.",
+  "What attracts me is the mix of AI, product and go-to-market, and owning deployments end to end, with agents that do the work and do not merely assist. To be transparent: you ask for one to three years and I have four months in a company plus a year and a half of my own projects; I have not worked in SaaS sales or implementation; and my English is B2, solid for technical work, with room to grow in client calls.",
+  "I can start immediately and relocate to Barcelona. I would be glad to show you these agents working in an interview.",
+ ],
+},
+# 5 ------------------------------------------------------------------
+{
+ "slug": "Dendron-DesarrolladorFullstackJunior", "lang": "es", "wm": False,
+ "empresa": "Dendron", "puesto_ref": "Desarrollador/a Fullstack Junior · Código AP2604 (Cuenca)",
+ "subtitulo": "Desarrollador Fullstack Junior · React, Node.js, PostgreSQL y Python",
+ "perfil": "Desarrollador fullstack junior (CFGS en Desarrollo de Aplicaciones Web, 2025; Máster en IA Generativa e Innovación, 2026) con React, Node.js, PostgreSQL y Python. He llevado proyectos propios desde cero hasta producción y los mantengo, con tests y documentación, además de integrar datos de distintas fuentes en mi primer empleo. Busco crecer con mentoría en un producto que acompañar a largo plazo. Disponible para trasladarme a Cuenca. Inglés B2 (Cambridge, 2025).",
+ "skills": [
+    ("Frontend", ["React", "TypeScript", "JavaScript", "Next.js", "React Native", "HTML5", "CSS3"]),
+    ("Backend", ["Node.js", "Python", "FastAPI", "PHP", "Laravel", "APIs REST"]),
+    ("Datos", ["PostgreSQL", "SQL", "MySQL", "Supabase", "Integración de datos entre sistemas"]),
+    ("Ingeniería", ["Git", "Pull requests en GitHub", "Vitest (tests automáticos)", "CI/CD (Netlify, Vercel)", "Linux"]),
+    ("IA", ["Claude API", "OpenAI API", "RAG", "n8n"]),
+ ],
+ "bullets": ["sync", "laravel", "paneles", "proxmox"],
+ "proyectos": ["streakode", "lifevault", "alfred", "elite"],
+ "saludo": "Estimado equipo de Dendron:",
+ "parrafos": [
+  "Me presento a la oferta AP2604 de desarrollador/a fullstack junior. Su stack (React, Node.js, PostgreSQL y Python) es con el que trabajo, y lo que describen, entrar en un producto en su fase inicial con mentoría y quedarse a mantenerlo, es lo que busco. Tengo el CFGS en Desarrollo de Aplicaciones Web (2025) y el Máster en IA Generativa e Innovación (2026).",
+  "Streakode es una PWA que desarrollé desde cero y sigo manteniendo en producción, con Next.js, TypeScript y Supabase sobre PostgreSQL, tests automáticos y tareas programadas con pg_cron. MyHandStats, una aplicación de estadísticas en tiempo real con FastAPI, PostgreSQL y React, me enseñó a modelar datos que llegan sin parar. En la Agencia de Digitalización Andaluza monté flujos de sincronización entre sistemas internos y paneles con datos actualizados a diario, un trabajo cercano a la integración de fuentes que necesita su plataforma.",
+  "Me atrae que el software sirva para gestionar mejor el monte y que el puesto tenga continuidad: ser responsable de la aplicación una vez lanzada y ganar autonomía de forma progresiva. Para ser transparente: mi experiencia en empresa son cuatro meses, por debajo del año o dos que indican, que completo con proyectos propios en producción; y no he trabajado con datos forestales ni geoespaciales.",
+  "Puedo incorporarme de inmediato y trasladarme a Cuenca. Quedo a su disposición para una entrevista.",
+ ],
+},
+# 6 ------------------------------------------------------------------
+{
+ "slug": "V10Labs-FoundingAIEngineer", "lang": "en", "wm": True,
+ "empresa": "V10 Labs", "puesto_ref": "Founding AI Engineer (Palma de Mallorca or remote)",
+ "subtitulo": "AI Engineer · Agents, Python, PostgreSQL and SQL",
+ "perfil": "AI developer who works with coding agents every day and reviews their output critically (Higher VET in Web Application Development, 2025; Master's in Generative AI and Innovation, 2026). I run a multi-agent system in Python 24/7 and a live product on PostgreSQL with row-level security and scheduled jobs, and I know where LLM features break. Early-career and looking for ownership. Available remotely or in Palma. Spanish native, English B2 (Cambridge, 2025).",
+ "skills": [
+    ("AI & agents", ["Claude API", "OpenAI API", "Claude Code", "Tool calling", "Agent memory", "Multi-agent flows", "MCP", "RAG"]),
+    ("Code & data", ["Python", "PostgreSQL", "SQL", "TypeScript", "JavaScript", "Next.js", "React", "REST APIs", "Webhooks"]),
+    ("Shipping", ["Supabase (RLS, pg_cron)", "Git", "GitHub pull requests", "Vitest (automated tests)", "CI/CD (Netlify, Vercel)", "Linux"]),
+ ],
+ "bullets": ["sync", "paneles", "laravel", "proxmox"],
+ "proyectos": ["alfred", "streakode", "lifevault", "elite"],
+ "saludo": "Dear V10 Labs team,",
+ "parrafos": [
+  "I am applying for the Founding AI Engineer role. I am earlier in my career than a typical founding engineer, so I will be direct about why I am writing: I build agents that run real processes, I work with coding agents every day and review what they produce, and I want the ownership you describe.",
+  "Alfred is my multi-agent system in Python on the Claude API, running 24/7 on a Linux server: it handles my email, logs data to Google Sheets and Notion, and acts only within the limits I set, asking for confirmation before anything irreversible. It keeps a written log of its own mistakes, so I know first-hand where LLM agents fail. Streakode is a live product on PostgreSQL with row-level security and pg_cron, where the daily challenge is timed on the server so the client cannot be trusted with the result.",
+  "What attracts me is the bar you set: every figure exact to the cent, and approvals tied to exactly what gets written. Rules, audit trails and deterministic scripts around a model are the part of agent work I find most interesting. The gaps are real: four months of company experience, no fintech, accounting or ERP background, and nothing yet in production where a mistake costs money.",
+  "I hold a Higher VET in Web Application Development (2025) and a Master's in Generative AI and Innovation (2026). I can start immediately, remotely or in Palma, and I would gladly take a technical test.",
+ ],
+},
+# 7 ------------------------------------------------------------------
+{
+ "slug": "Minsait-AISpecialist", "lang": "es", "wm": True,
+ "empresa": "Minsait (Indra Group)", "puesto_ref": "Deploying AI Specialist · proyecto sector retail",
+ "subtitulo": "AI Specialist · Agentes de IA, RAG e integración de sistemas",
+ "perfil": "Desarrollador de IA (CFGS en Desarrollo de Aplicaciones Web, 2025; Máster en IA Generativa e Innovación, 2026) centrado en agentes, RAG e integración por API. Programo a diario con Claude Code y mantengo un sistema multi-agente 24/7 en Linux. Python y TypeScript, PostgreSQL, CI/CD; he usado Ollama para modelos locales en una app de agentes con MCP. Perfil junior que quiere crecer en despliegue de IA. Inglés B2 (Cambridge, 2025).",
+ "skills": [
+    ("IA y agentes", ["Claude Code", "Ollama (modelos locales)", "Agentes y tool calling", "Sistemas multiagente", "RAG", "Embeddings", "MCP", "Claude API", "OpenAI API", "Vercel AI SDK"]),
+    ("Programación", ["Python", "TypeScript", "JavaScript", "SQL", "React", "Next.js", "Node.js"]),
+    ("Integración", ["APIs REST", "Webhooks", "n8n", "Make", "PostgreSQL", "Supabase"]),
+    ("Ingeniería", ["Git", "CI/CD (Netlify, Vercel)", "Vitest (tests automáticos)", "Linux", "AWS Academy (fundamentos de nube)"]),
+ ],
+ "bullets": ["sync", "paneles", "laravel", "proxmox"],
+ "proyectos": ["alfred", "lifevault", "elite", "streakode"],
+ "saludo": "Estimado equipo de Minsait:",
+ "parrafos": [
+  "Me presento al puesto de Deploying AI Specialist. Dicen que no hace falta cumplir el 100 % de lo que buscan, así que les cuento qué parte cubro: agentes, RAG, integración por API y uso avanzado de Claude Code a diario. Tengo el CFGS en Desarrollo de Aplicaciones Web (2025) y el Máster en IA Generativa e Innovación (2026).",
+  "Alfred, mi sistema multi-agente sobre la Claude API, funciona 24/7 en un servidor Linux e integra Gmail, Notion, Google Sheets y Telegram, con memoria persistente y scripts deterministas alrededor del modelo. LifeVault y Estudiante Élite usan RAG en aplicaciones reales. En Cavum, una app de escritorio de agentes con MCP, elegí entre Ollama y API como motor. En la Agencia de Digitalización Andaluza monté sincronizaciones entre sistemas internos y lideré una migración a Linux en Proxmox.",
+  "Me atrae que el puesto sea de despliegue real en un proyecto de retail, más cerca del uso que del prototipo. Para ser claro sobre lo que no tengo: no he usado Docker ni Kubernetes en producción, LangSmith ni Langfuse; mis agentes están construidos sobre las APIs más que sobre LangChain o LlamaIndex; mi experiencia en nube es un curso de AWS Academy; y llevo cuatro meses en empresa. Si buscan a alguien ya autónomo en todo eso, no soy yo; si valoran a un junior con agentes reales funcionando, sí.",
+  "Puedo incorporarme de inmediato. Quedo a su disposición para una entrevista.",
+ ],
+},
+# 8 ------------------------------------------------------------------
+{
+ "slug": "Oxigent-FullStackJuniorSymfonyReact", "lang": "es", "wm": False,
+ "empresa": "Oxigent Technologies", "puesto_ref": "Programador/a FullStack Junior (Symfony / React) · L'Hospitalet de Llobregat",
+ "subtitulo": "Desarrollador FullStack Junior · PHP, React y SQL",
+ "perfil": "Desarrollador fullstack junior (CFGS en Desarrollo de Aplicaciones Web, 2025; Máster en IA Generativa e Innovación, 2026) con PHP y Laravel en producción, React y TypeScript en frontend y SQL sobre MySQL y PostgreSQL. He añadido funciones y corregido incidencias en código existente, y trabajo con Git, tests y CI/CD. Sin experiencia aún en Symfony, con base de framework PHP. Disponible para trasladarme a Barcelona. Inglés B2 (Cambridge, 2025).",
+ "skills": [
+    ("Backend", ["PHP", "Laravel", "APIs REST", "Node.js", "Python"]),
+    ("Frontend", ["React", "TypeScript", "JavaScript", "Next.js", "HTML5", "CSS3"]),
+    ("Bases de datos", ["SQL", "MySQL", "PostgreSQL", "Diseño de esquemas", "Supabase"]),
+    ("Ingeniería", ["Git", "Pull requests en GitHub", "Vitest (tests automáticos)", "CI/CD (Netlify, Vercel)", "Linux"]),
+    ("IA", ["Claude API", "OpenAI API", "RAG", "n8n"]),
+ ],
+ "bullets": ["laravel", "sync", "paneles", "proxmox"],
+ "proyectos": ["streakode", "lifevault", "alfred", "elite"],
+ "saludo": "Estimado equipo de Oxigent Technologies:",
+ "parrafos": [
+  "Me presento al puesto de Programador/a FullStack Junior. Su combinación de PHP en backend, React en frontend y SQL es muy cercana a la mía, y el puesto, evolucionar un producto propio resolviendo incidencias en todas las capas, se parece a lo que ya he hecho. Tengo el CFGS en Desarrollo de Aplicaciones Web (2025) y el Máster en IA Generativa e Innovación (2026).",
+  "En la Agencia de Digitalización Andaluza mantuve en producción un sistema de gestión con Laravel, JavaScript y SQL: nuevas funciones, depuración y corrección de incidencias sobre código existente. En Streakode, una PWA en producción con Next.js, TypeScript y Supabase sobre PostgreSQL, diseñé el esquema, las políticas RLS y los tests automáticos. LifeVault añade React Native, útil para el desarrollo móvil que valoran, aunque no con Java.",
+  "Me atrae trabajar sobre un producto digital propio de gestión, con buenas prácticas y CI/CD. Para ser transparente: no he trabajado con Symfony, sino con Laravel, y confío en adaptarme rápido porque comparten muchos conceptos; y mi experiencia en empresa son cuatro meses, por debajo del año que indican, que completo con proyectos propios que siguen en producción.",
+  "Puedo incorporarme de inmediato y trasladarme a la zona de Barcelona para trabajar tres días en oficina. Quedo a su disposición para una entrevista.",
+ ],
+},
+# 9 ------------------------------------------------------------------
+{
+ "slug": "Capgemini-AssociateSoftwareEngineer", "lang": "en", "wm": False,
+ "empresa": "Capgemini", "puesto_ref": "Associate Software Engineer (Langreo, Asturias)",
+ "subtitulo": "Associate Software Engineer · Entry-level software development",
+ "perfil": "Entry-level software developer (Higher VET in Web Application Development, 2025; Master's in Generative AI and Innovation, 2026) with a foundation in programming, software design and maintenance. I have maintained a production system in Laravel and SQL and built my own applications in TypeScript and Python with tests and CI/CD. I learn fast and ask when in doubt. Willing to relocate to Asturias. Spanish native, English B2 (Cambridge, 2025).",
+ "skills": [
+    ("Languages", ["JavaScript", "TypeScript", "Python", "PHP", "SQL"]),
+    ("Frameworks", ["React", "Next.js", "Node.js", "Laravel", "React Native"]),
+    ("Data & tools", ["PostgreSQL", "MySQL", "REST APIs", "Git", "GitHub pull requests", "Vitest (automated tests)", "CI/CD (Netlify, Vercel)", "Linux"]),
+    ("AI", ["Claude API", "OpenAI API", "RAG", "n8n"]),
+ ],
+ "bullets": ["laravel", "sync", "paneles", "proxmox"],
+ "proyectos": ["streakode", "lifevault", "alfred", "elite"],
+ "saludo": "Dear Capgemini team,",
+ "parrafos": [
+  "I am applying for the Associate Software Engineer position in Langreo. You describe an entry-level role for someone with solid programming foundations who works to direction, is eager to learn and knows when to ask, and that fits where I am: a Higher VET in Web Application Development (2025), a Master's in Generative AI and Innovation (2026) and my first months of professional work.",
+  "At the Agencia de Digitalización Andaluza I maintained a production management system in Laravel, JavaScript and SQL, fixing issues in existing code, and built sync flows between internal systems. On my own I have shipped Streakode, a live PWA with Next.js, TypeScript and PostgreSQL with automated tests, and LifeVault, a mobile app in React Native.",
+  "What attracts me is starting in an engineering organisation with established working methods, where I can learn how software is developed and maintained at a scale my own projects do not reach. To be transparent: my time in a company is four months, I have no university degree, and the posting does not name a stack, so I may have to learn yours from scratch.",
+  "I can start immediately and move to Asturias. I would be glad to discuss the role in an interview.",
+ ],
+},
+# 10 ------------------------------------------------------------------
+{
+ "slug": "IGNIS-JuniorFullstackDeveloperOM", "lang": "es", "wm": False,
+ "empresa": "IGNIS", "puesto_ref": "Junior Fullstack Developer (O&M) · Madrid",
+ "subtitulo": "Desarrollador Fullstack Junior · Python, APIs y automatización de procesos",
+ "perfil": "Desarrollador fullstack junior (CFGS en Desarrollo de Aplicaciones Web, 2025; Máster en IA Generativa e Innovación, 2026) con Python y APIs (FastAPI), React, PostgreSQL y MySQL. He automatizado cargas de datos, trabajos programados e integraciones entre sistemas, y mantengo aplicaciones en producción con Git, tests y documentación. Mi experiencia en empresa son cuatro meses, que completo con proyectos propios en producción. Disponible en Madrid. Inglés B2 (Cambridge, 2025).",
+ "skills": [
+    ("Backend", ["Python", "FastAPI", "APIs REST", "Node.js", "PHP", "Laravel", "Webhooks"]),
+    ("Frontend", ["React", "TypeScript", "JavaScript", "Next.js", "HTML5", "CSS3"]),
+    ("Datos", ["PostgreSQL", "MySQL", "SQL", "Supabase", "pg_cron (trabajos programados)", "Modelado de datos"]),
+    ("Ingeniería", ["Git", "Pull requests en GitHub", "Vitest (tests automáticos)", "CI/CD (Netlify, Vercel)", "Linux"]),
+ ],
+ "bullets": ["sync", "paneles", "laravel", "proxmox"],
+ "proyectos": ["streakode", "alfred", "lifevault", "elite"],
+ "saludo": "Estimado equipo de IGNIS:",
+ "parrafos": [
+  "Me presento al puesto de Junior Fullstack Developer para O&M. Desarrollar aplicaciones web, integrar APIs con fuentes de datos y automatizar cargas y trabajos programados es el tipo de trabajo que mejor conozco. Tengo el CFGS en Desarrollo de Aplicaciones Web (2025) y el Máster en IA Generativa e Innovación (2026).",
+  "En la Agencia de Digitalización Andaluza mantuve un sistema de gestión con Laravel, JavaScript y SQL, automaticé la sincronización entre sistemas internos y monté paneles con datos actualizados a diario. MyHandStats es una aplicación de estadísticas en tiempo real con FastAPI, PostgreSQL y React, con integración continua. Streakode, una PWA en producción con Next.js y Supabase, usa trabajos programados con pg_cron y tests automáticos, y en Alfred automatizo procesos con Python en un servidor Linux.",
+  "Me atrae que el software sirva para operar plantas renovables, con datos reales de planta y procesos en los que un fallo se nota. Para ser transparente: mi experiencia en empresa son cuatro meses, por debajo del año o dos que indican, y no he trabajado con datos de planta ni en el sector energético. Con Angular no tengo experiencia; mi framework es React.",
+  "Puedo incorporarme de inmediato y trasladarme a Madrid. Quedo a su disposición para una entrevista.",
+ ],
+},
+# 11 ------------------------------------------------------------------
+{
+ "slug": "Provectus-JuniorAIMLEngineer", "lang": "en", "wm": True,
+ "empresa": "Provectus", "puesto_ref": "Junior AI/ML Engineer (GenAI, AWS), Madrid",
+ "subtitulo": "Junior AI Engineer · RAG, LLM APIs and the Claude ecosystem",
+ "perfil": "Junior AI developer (Higher VET in Web Application Development, 2025; Master's in Generative AI and Innovation, 2026) who builds with the Claude ecosystem every day: Claude Code, CLAUDE.md, hooks, skills files and MCP. I have built RAG systems in real applications and use LLM APIs in Python and TypeScript, with CI/CD and automated tests. Cloud experience is still basic. Available in Madrid. Spanish native, English B2 (Cambridge, 2025).",
+ "skills": [
+    ("AI & agents", ["Claude Code", "CLAUDE.md", "Hooks", "Skills", "MCP", "Claude API", "OpenAI API", "RAG", "Embeddings", "Tool calling", "Multi-agent flows"]),
+    ("Code & data", ["Python", "TypeScript", "JavaScript", "PostgreSQL", "SQL", "REST APIs", "Webhooks", "React", "Next.js"]),
+    ("Shipping", ["Git", "GitHub pull requests", "Vitest (automated tests)", "CI/CD (Netlify, Vercel)", "Linux", "Supabase", "AWS Academy (cloud foundations)"]),
+ ],
+ "bullets": ["sync", "paneles", "laravel", "proxmox"],
+ "proyectos": ["alfred", "lifevault", "elite", "streakode"],
+ "proy_desc": {"alfred": "Personal agent on Claude Code and the Claude API, 24/7 on a Linux server and through Telegram: specialised agents with persistent memory, CLAUDE.md instructions, hooks, skills files and MCP servers, integrated with Gmail, Notion and Google Sheets. It generates tailored applications such as this one."},
+ "saludo": "Dear Provectus team,",
+ "parrafos": [
+  "I am applying for the Junior AI/ML Engineer role. You list hands-on exposure to the Claude ecosystem (Claude Code, CLAUDE.md, hooks, skills files) as a plus, and that is where I work every day. I hold a Higher VET in Web Application Development (2025) and a Master's in Generative AI and Innovation (2026).",
+  "Alfred, my personal agent on Claude Code and the Claude API, runs 24/7 on a Linux server with specialised agents, persistent memory, hooks and MCP integrations, and I have written its directives and the deterministic scripts around the model. I have built RAG in two real applications: LifeVault, over the user's own documents with SSE streaming, and Estudiante Élite, a tutoring assistant over course material with session memory. Streakode is a live PWA with automated tests and CI/CD.",
+  "What attracts me is working in a pod with senior engineers on regulated delivery, and that you treat evaluation as part of the job. I keep an error log for my agents and check their output against it, but I have not owned a formal eval suite. The larger gaps: my AWS knowledge is an introductory AWS Academy course, not Lambda or ECS in production; I have not used containers in real projects; and you ask for two years of engineering experience, while I have four months in a company plus my own projects.",
+  "If that is too far from what you need, I understand. If you value someone already fluent in the Claude tooling, I can start immediately and move to Madrid.",
+ ],
+},
+# 12 ------------------------------------------------------------------
+{
+ "slug": "Ziacom-DesarrolladorWordPressJunior", "lang": "es", "wm": False,
+ "empresa": "Ziacom Medical Group", "puesto_ref": "Desarrollador/a WordPress Junior (Pinto, Madrid)",
+ "subtitulo": "Desarrollador Web Junior · HTML, CSS, JavaScript y PHP",
+ "perfil": "Desarrollador web junior (CFGS en Desarrollo de Aplicaciones Web, 2025; Máster en IA Generativa e Innovación, 2026) con HTML, CSS, JavaScript y PHP, maquetación responsive y publicación y mantenimiento de webs en producción. Sin recorrido profesional en WordPress, Elementor ni WPBakery, con base técnica para aprenderlos rápido. He trabajado con Linux y despliegues continuos. Disponible para trasladarme a Pinto. Inglés B2 (Cambridge, 2025).",
+ "skills": [
+    ("Web", ["HTML5", "CSS3", "JavaScript", "PHP", "Diseño responsive", "Tailwind", "React", "Next.js"]),
+    ("Backend y datos", ["Laravel", "MySQL", "SQL", "PostgreSQL", "APIs REST"]),
+    ("Publicación", ["Netlify", "Vercel", "Git", "Linux", "CI/CD"]),
+    ("IA", ["Claude API", "OpenAI API", "n8n"]),
+ ],
+ "bullets": ["laravel", "paneles", "sync", "proxmox"],
+ "proyectos": ["streakode", "lifevault", "alfred", "elite"],
+ "saludo": "Estimado equipo de Ziacom:",
+ "parrafos": [
+  "Me presento al puesto de Desarrollador/a WordPress Junior. Mantener estables, seguras y rápidas las webs de un grupo es un trabajo técnico que me interesa, y tengo la base que piden en HTML y CSS, además de JavaScript y PHP, el lenguaje sobre el que funciona WordPress. Tengo el CFGS en Desarrollo de Aplicaciones Web (2025) y el Máster en IA Generativa e Innovación (2026).",
+  "En la Agencia de Digitalización Andaluza mantuve en producción un sistema de gestión con Laravel, JavaScript y SQL, y resolví incidencias sobre código existente. Por mi cuenta publico y mantengo webs: Streakode, una PWA con Next.js y Tailwind, responsive y desplegada en Vercel, y mi portfolio en Netlify, con despliegue continuo.",
+  "Me atrae coordinarme con marketing y ocuparme de unas 15 webs reales, donde lo que publico se ve el mismo día. Para ser transparente, y porque es el requisito principal: no tengo experiencia profesional con WordPress, Elementor ni WPBakery. Me apoyo en que conozco PHP y maquetación, y sé que al principio tendría que aprender su flujo de plugins, temas y copias de seguridad. Tampoco tengo experiencia con Figma ni Adobe XD.",
+  "Puedo incorporarme de inmediato y trasladarme a la zona de Pinto. Quedo a su disposición para una entrevista.",
+ ],
+},
+]

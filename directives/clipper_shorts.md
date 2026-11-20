@@ -177,6 +177,11 @@ StarzyEdits —9,9 vistas por suscriptor— del resto.
 
 ## Ruta B — Shorts 9:16
 
+> Desde el 2026-11-13 hay una ruta nueva para Shorts de un vídeo cualquiera (no un
+> directo): `directives/canal_shorts.md`, con `src/shorts.py` y render HyperFrames
+> (subtítulos palabra a palabra, gancho, encuadre por cara). Esta Ruta B sigue
+> valiendo para la cola web y los directos con facecam (`pip`, `split`, overlays).
+
 ### 2. Elegir los momentos
 
 Leer `peaks.md` primero (7 KB). Solo abrir `transcript.md` si los picos no dan

@@ -1,7 +1,7 @@
 # Directiva: Ordenar la bandeja de entrada
 
 **Dominio:** Email
-**Cuándo:** En la primera sesión del día en el PC de Pablo (hook `.claude/hooks/bandeja_diaria.sh`) o cuando Pablo lo pida
+**Cuándo:** Cada día a las 08:00 en el PC de Pablo, con la tarea programada `ordenar-bandeja-gmail` (corre al abrir la app si estaba cerrada a esa hora), o cuando Pablo lo pida. Desde 2026-10-23 ya no se ordena al abrir la primera sesión: el hook `.claude/hooks/bandeja_diaria.sh` sigue en el repo pero está desregistrado.
 **Autonomía:** Etiquetar y archivar sin preguntar. **Nunca borrar, nunca enviar, nunca marcar como spam.**
 
 ---
@@ -34,12 +34,12 @@ Los IDs de etiqueta se obtienen con `list_labels`. Si alguna no existe, crearla 
    Bandeja ordenada: 23 hilos (4 archivados como alertas, 6 newsletters). Nuevo en Empleo/Respuestas: [Remitente] — [asunto].
    ```
    Si no había nada que ordenar: `Bandeja al día.`
-6. Después, atender lo que Pablo haya pedido en su primer mensaje.
+6. Si la ejecución es manual, atender después lo que Pablo haya pedido.
 
 ## Edge cases
 
 - **El conector de Gmail no tiene permiso de escritura** (`This connector requires additional permissions`): avisar a Pablo una vez con "El conector de Gmail solo tiene lectura; reconéctalo en Configuración → Conectores para poder ordenar la bandeja" y seguir con la sesión. No reintentar.
-- **Sesiones desde Telegram / servidor Linux**: el hook está en git, pero solo inyecta la orden en Windows (comprueba `uname`). Si llega aquí por otra vía, no ejecutar salvo que Pablo lo pida.
+- **Sesiones desde Telegram / servidor Linux**: la tarea programada vive solo en el PC Windows. Si llega aquí por otra vía, no ejecutar salvo que Pablo lo pida.
 - **Un correo de Bcas u otro aviso de cobro**: nunca archivar; mencionarlo en el resumen si sigue sin leer.
 - **Correos de personas conocidas** (familia, profesores, contactos de ADA, Manu): no archivar nunca.
 - No marcar como leído: Pablo decide qué ha leído.
